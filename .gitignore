@@ -1,0 +1,15 @@
+/vendor
+/node_modules
+/public/storage
+/storage/*.key
+/.idea
+Homestead.yaml
+Homestead.json
+.env
+supervisord.pid
+_ide_helper.php
+yarn-error.log
+yarn.lock
+npm-debug.*
+laravel-echo-server.json
+composer.lock
