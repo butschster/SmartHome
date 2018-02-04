@@ -2,8 +2,7 @@
 
 namespace App\Entities;
 
-use App\Contracts\Device as DeviceDriverContract;
-use Illuminate\Database\Eloquent\Model;
+use App\Contracts\Mqtt\Device as DeviceDriverContract;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Contracts\Mqtt\DeviceManager as DeviceManagerContract;
 
@@ -13,16 +12,14 @@ class Device extends Model
      * Получение устройства по ключу
      *
      * @param string $key Ключ
-     * @param string $source Источник
      * @param string $type Тип устройства
      *
      * @return Device
      */
-    public static function getByKey(string $key, string $source, string $type): Device
+    public static function register(string $key, string $type): Device
     {
         return static::firstOrCreate([
             'key' => $key,
-            'source' => $source,
             'type' => $type
         ]);
     }
@@ -30,8 +27,7 @@ class Device extends Model
     /**
      * @var array
      */
-    protected $fillable = ['key', 'source', 'type'];
-
+    protected $fillable = ['key', 'type', 'name', 'description'];
 
     /**
      * Добавление лога
@@ -62,12 +58,22 @@ class Device extends Model
      */
     public function setProperties(array $data)
     {
-        foreach ($data as $key => $value) {
+        $driver = $this->driver();
+
+        foreach ($driver->allowedProperties() as $property => $class) {
+
+            /** @var \App\Contracts\Mqtt\DeviceProperty $propertyObject */
+            $propertyObject = app($class);
+            $value = $propertyObject->transform(
+                array_get($data, $property)
+            );
+
             $this->properties()->updateOrCreate([
-                'key' => $key,
+                'key' => $property,
             ], [
                 'value' => $value
             ]);
+
         }
     }
 
@@ -95,27 +101,4 @@ class Device extends Model
 
         return $device;
     }
-
-    /**
-     * Запуск команды через драйвер устройства
-     *
-     * @param string $method
-     * @param array ...$parameters
-     * @return mixed
-     */
-    public function runCommand(string $method, ...$parameters)
-    {
-        $device = $this->driver();
-
-        if (!method_exists($device, $method)) {
-            throw new \BadMethodCallException("Method [{$method}] not found.");
-        }
-
-        $device->setProperties(
-            $this->properties()->pluck('value', 'key')->toArray()
-        );
-
-        return $device->$method(...$parameters);
-    }
-
 }

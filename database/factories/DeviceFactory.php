@@ -9,7 +9,6 @@ $factory->define(Device::class, function (Faker $faker) {
 
     return [
         'key' => $faker->uuid,
-        'source' => \App\Contracts\Device::SOURCE_MQTT,
         'type' => $faker->randomElement($types)
     ];
 });

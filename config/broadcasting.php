@@ -2,6 +2,10 @@
 
 return [
 
+    'websocket' => [
+        'host' => env('SOCKET_HOST', 'http://localhost:6370')
+    ],
+
     /*
     |--------------------------------------------------------------------------
     | Default Broadcaster

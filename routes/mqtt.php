@@ -3,12 +3,13 @@
 $router->namespace('App\\Mqtt\\Controllers\\');
 
 // Sonoff
-$router->listen('tele/{device}/LWT', 'Sonoff\BasicController@lwt');
+$router->listen('tele/{type}/{device}/LWT', 'Sonoff\BasicController@log');
 
-$router->listen('tele/{device}/INFO1', 'Sonoff\BasicTelemetryController@info');
-$router->listen('tele/{device}/STATE', 'Sonoff\BasicTelemetryController@state');
-$router->listen('tele/{device}/UPTIME', 'Sonoff\BasicTelemetryController@uptime');
+$router->listen('tele/{type}/{device}/INFO1', 'Sonoff\BasicController@log');
+$router->listen('tele/{type}/{device}/UPTIME', 'Sonoff\BasicController@log');
+$router->listen('tele/{type}/{device}/STATE', 'Sonoff\BasicTelemetryController@state');
 
-$router->listen('stat/{device}/POWER', 'Sonoff\BasicStatusController@power');
-$router->listen('stat/{device}/RESULT', 'Sonoff\BasicStatusController@result');
-$router->listen('cmnd/{device}/POWER', 'Sonoff\BasicCommandController@power');
+$router->listen('stat/{type}/{device}/POWER', 'Sonoff\BasicController@log');
+$router->listen('stat/{type}/{device}/RESULT', 'Sonoff\BasicStatusController@result');
+
+$router->listen('cmnd/{type}/{device}/POWER', 'Sonoff\BasicController@log');

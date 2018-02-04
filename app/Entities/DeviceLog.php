@@ -2,11 +2,12 @@
 
 namespace App\Entities;
 
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class DeviceLog extends Model
 {
+    protected $primaryKey = null;
+
     /**
      * @var array
      */

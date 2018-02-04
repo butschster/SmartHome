@@ -14,11 +14,14 @@ class CreateDevicePropertiesTable extends Migration
     public function up()
     {
         Schema::create('device_properties', function (Blueprint $table) {
-            $table->increments('id');
+            $table->uuid('id');
 
-            $table->unsignedInteger('device_id');
+            $table->uuid('device_id');
             $table->string('key');
             $table->string('value');
+
+            $table->string('name')->nullable();
+            $table->text('description')->nullable();
 
             $table->unique(['device_id', 'key']);
 
@@ -27,6 +30,7 @@ class CreateDevicePropertiesTable extends Migration
                 ->onDelete('cascade');
 
             $table->timestamps();
+            $table->primary('id');
         });
     }
 

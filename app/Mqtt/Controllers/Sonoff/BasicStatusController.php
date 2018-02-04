@@ -4,7 +4,6 @@ namespace App\Mqtt\Controllers\Sonoff;
 
 use App\Contracts\Mqtt\Response;
 use App\Entities\Device;
-use App\Contracts\Device as DeviceContract;
 use Illuminate\Contracts\Events\Dispatcher;
 
 class BasicStatusController
@@ -23,21 +22,15 @@ class BasicStatusController
     }
 
     /**
-     * @param Response $message
-     * @param string $device
-     */
-    public function power(Response $message, string $device)
-    {
-
-    }
-
-    /**
+     * Получение результата выполнения команды.
+     *
      * @param Response $response
+     * @param string $type
      * @param string $device
      */
-    public function result(Response $response, string $device)
+    public function result(Response $response, string $type, string $device)
     {
-        $device = Device::getByKey($device, DeviceContract::SOURCE_MQTT, DeviceContract::TYPE_SONOFF_BASIC);
+        $device = Device::register($device, $type);
 
         $payload = $response->toArray();
         $device->setProperties(array_only($payload, ['POWER', 'POWER1', 'POWER2', 'POWER3', 'POWER4']));

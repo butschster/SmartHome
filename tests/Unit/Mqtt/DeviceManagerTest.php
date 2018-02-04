@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Mqtt;
 
-use App\Contracts\Device;
+use App\Contracts\Mqtt\Device;
 use App\Mqtt\Devices\Sonoff\BasicRelay;
 use Tests\TestCase;
 use App\Contracts\Mqtt\DeviceManager as DeviceManagerContract;

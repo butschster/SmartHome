@@ -20,7 +20,7 @@ class SonoffBasicRelayTest extends TestCase
         $router = $this->app->make(RouterContract::class);
 
         $router->dispatch(new Response(
-            'tele/test_device/STATE',
+            'tele/sonoff_basic/test_device/STATE',
             '{"Time":"2018-02-01T14:11:58","Uptime":3,"Vcc":3.164,"POWER":"ON","POWER1":"OFF","Wifi":{"AP":1,"SSId":"ButscHNetwork","RSSI":46,"APMac":"04:BF:6D:0D:6B:06"}}'
         ));
 
@@ -30,13 +30,7 @@ class SonoffBasicRelayTest extends TestCase
         $this->assertDatabaseHas((new DeviceProperty)->getTable(), [
             'device_id' => $device->id,
             'key' => 'POWER',
-            'value' => 'ON'
-        ]);
-
-        $this->assertDatabaseHas((new DeviceProperty)->getTable(), [
-            'device_id' => $device->id,
-            'key' => 'POWER1',
-            'value' => 'OFF'
+            'value' => 1
         ]);
     }
 
@@ -46,7 +40,7 @@ class SonoffBasicRelayTest extends TestCase
         $router = $this->app->make(RouterContract::class);
 
         $router->dispatch(new Response(
-            'stat/test_device/RESULT',
+            'stat/sonoff_basic/test_device/RESULT',
             '{"POWER":"ON"}'
         ));
 
@@ -56,18 +50,18 @@ class SonoffBasicRelayTest extends TestCase
         $this->assertDatabaseHas((new DeviceProperty)->getTable(), [
             'device_id' => $device->id,
             'key' => 'POWER',
-            'value' => 'ON'
+            'value' => 1
         ]);
 
         $router->dispatch(new Response(
-            'stat/test_device/RESULT',
+            'stat/sonoff_basic/test_device/RESULT',
             '{"POWER":"OFF"}'
         ));
 
         $this->assertDatabaseHas((new DeviceProperty)->getTable(), [
             'device_id' => $device->id,
             'key' => 'POWER',
-            'value' => 'OFF'
+            'value' => 0
         ]);
     }
 
@@ -77,7 +71,7 @@ class SonoffBasicRelayTest extends TestCase
         $router = $this->app->make(RouterContract::class);
 
         $router->dispatch(new Response(
-            'tele/DVES_807DC9/LWT',
+            'tele/sonoff_basic/DVES_807DC9/LWT',
             'Online'
         ));
 

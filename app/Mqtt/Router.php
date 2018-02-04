@@ -29,7 +29,8 @@ class Router implements RouterContract
      * @var array
      */
     protected $patterns = [
-        'device' => '[0-9a-zA-Z_]+'
+        'device' => '[0-9a-zA-Z_]+',
+        'type' => '[a-z_]+'
     ];
 
     /**

@@ -30,9 +30,15 @@ return [
     ],
 
     'stripe' => [
-        'model' => App\User::class,
+        'model' => App\Entities\User::class,
         'key' => env('STRIPE_KEY'),
         'secret' => env('STRIPE_SECRET'),
     ],
+
+    'openweathermap' => [
+        'key' => env('OPENWEATHERMAP_KEY'),
+        'city' => env('OPENWEATHERMAP_CITY', 'Moscow,Ru'),
+        'units' => env('OPENWEATHERMAP_UNITS', 'metric'),
+    ]
 
 ];

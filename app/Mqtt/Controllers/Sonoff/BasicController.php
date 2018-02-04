@@ -2,7 +2,6 @@
 
 namespace App\Mqtt\Controllers\Sonoff;
 
-use App\Contracts\Device as DeviceContract;
 use App\Contracts\Mqtt\Response;
 use App\Entities\Device;
 
@@ -10,10 +9,11 @@ class BasicController
 {
     /**
      * @param Response $response
+     * @param string $type
      * @param string $device
      */
-    public function lwt(Response $response, string $device)
+    public function log(Response $response, string $type, string $device)
     {
-        Device::getByKey($device, DeviceContract::SOURCE_MQTT, DeviceContract::TYPE_SONOFF_BASIC);
+        Device::register($device, $type);
     }
 }

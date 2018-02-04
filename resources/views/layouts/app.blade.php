@@ -12,6 +12,8 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <script src="{{ asset('api/settings') }}"></script>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
 </head>
 <body>
     <div id="app">
@@ -75,6 +77,8 @@
     </div>
 
     <!-- Scripts -->
+    <script src="{{ asset('js/manifest.js') }}"></script>
+    <script src="{{ asset('js/vendors.js') }}"></script>
     <script src="{{ asset('js/app.js') }}"></script>
 </body>
 </html>

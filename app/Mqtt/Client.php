@@ -65,6 +65,7 @@ class Client implements ClientContract
      */
     public function publish(string $topic, $message): void
     {
+        $this->setClientId('SmartHome' . microtime());
         $this->connect();
 
         $this->client->publish($topic, $message, 1, 1);

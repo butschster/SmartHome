@@ -14,7 +14,7 @@ class CreateDeviceLogsTable extends Migration
     public function up()
     {
         Schema::create('device_logs', function (Blueprint $table) {
-            $table->unsignedInteger('device_id');
+            $table->uuid('device_id');
             $table->text('message')->nullable();
 
             $table->foreign('device_id')

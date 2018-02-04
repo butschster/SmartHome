@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\Device;
 
+use App\Contracts\Mqtt\Device as DeviceContract;
 use App\Entities\Device;
 use App\Entities\DeviceLog;
 use App\Entities\DeviceProperty;
@@ -57,93 +58,48 @@ class DeviceTest extends TestCase
     function test_creates_properties()
     {
         /** @var Device $device */
-        $device = factory(Device::class)->create();
+        $device = factory(Device::class)->create([
+            'type' => \App\Contracts\Mqtt\Device::TYPE_SONOFF_BASIC
+        ]);
 
         $device->setProperties([
-            'key' => 'value',
-            'key1' => 'value'
+            'POWER' => 'on',
         ]);
 
-        $this->assertEquals(2, $device->properties()->count());
+        $this->assertEquals(1, $device->properties()->count());
 
         $this->assertDatabaseHas((new DeviceProperty)->getTable(), [
             'device_id' => $device->id,
-            'key' => 'key',
-            'value' => 'value'
-        ]);
-
-        $this->assertDatabaseHas((new DeviceProperty)->getTable(), [
-            'device_id' => $device->id,
-            'key' => 'key1',
-            'value' => 'value'
+            'key' => 'POWER',
+            'value' => 1
         ]);
     }
 
     function test_updates_properties()
     {
         /** @var Device $device */
-        $device = factory(Device::class)->create();
-
-        $device->setProperties([
-            'key' => 'value',
-            'key1' => 'value'
+        $device = factory(Device::class)->create([
+            'type' => \App\Contracts\Mqtt\Device::TYPE_SONOFF_BASIC
         ]);
 
         $device->setProperties([
-            'key' => 'value1',
-            'key1' => 'value1'
+            'POWER' => 'value',
         ]);
 
-        $this->assertEquals(2, $device->properties()->count());
+        $device->setProperties([
+            'POWER' => 1,
+        ]);
+
+        $this->assertEquals(1, $device->properties()->count());
 
         $this->assertDatabaseHas((new DeviceProperty)->getTable(), [
             'device_id' => $device->id,
-            'key' => 'key',
-            'value' => 'value1'
-        ]);
-
-        $this->assertDatabaseHas((new DeviceProperty)->getTable(), [
-            'device_id' => $device->id,
-            'key' => 'key1',
-            'value' => 'value1'
+            'key' => 'POWER',
+            'value' => 1
         ]);
     }
 
     function test_gets_device_driver()
-    {
-        /** @var Device $device */
-        $device = factory(Device::class)->create([
-            'type' => \App\Contracts\Device::TYPE_SONOFF_BASIC
-        ]);
-
-        $deviceDriver = $device->driver();
-
-        $this->assertInstanceOf(BasicRelay::class, $deviceDriver);
-        $this->assertEquals($device->key, $deviceDriver->getId());
-    }
-
-    function test_gets_model_by_key()
-    {
-        $device = factory(Device::class)->create();
-
-        $foundDevice = Device::getByKey($device->key, $device->source, $device->type);
-
-        $this->assertEquals($device->id, $foundDevice->id);
-    }
-
-    function test_creates_device_if_not_exist()
-    {
-        $device = Device::getByKey('test_device', 'mqtt', \App\Contracts\Device::TYPE_SONOFF_BASIC);
-
-        $this->assertDatabaseHas((new Device)->getTable(), [
-            'id' => $device->id,
-            'key' => 'test_device',
-            'source' => 'mqtt',
-            'type' => \App\Contracts\Device::TYPE_SONOFF_BASIC
-        ]);
-    }
-
-    function test_runs_command()
     {
         $manager = $this->app->make(DeviceManagerContract::class);
         $manager->register('test_type', TestType::class);
@@ -153,49 +109,31 @@ class DeviceTest extends TestCase
             'type' => 'test_type'
         ]);
 
-        $this->assertEquals('hello world', $device->runCommand('testCommand', 'world'));
+        $deviceDriver = $device->driver();
+
+        $this->assertInstanceOf(TestType::class, $deviceDriver);
+        $this->assertEquals($device->key, $deviceDriver->getId());
+    }
+
+    function test_gets_model_by_key()
+    {
+        $device = factory(Device::class)->create();
+
+        $foundDevice = Device::register($device->key, $device->type);
+
+        $this->assertEquals($device->id, $foundDevice->id);
+    }
+
+    function test_creates_device_if_not_exist()
+    {
+        $device = Device::register('test_device', DeviceContract::TYPE_SONOFF_BASIC);
+
+        $this->assertDatabaseHas((new Device)->getTable(), [
+            'id' => $device->id,
+            'key' => 'test_device',
+            'type' => DeviceContract::TYPE_SONOFF_BASIC
+        ]);
     }
 }
 
-class TestType implements \App\Contracts\Device
-{
-    /**
-     * Добавление свойств
-     *
-     * @param array $properties
-     * @return void
-     */
-    public function setProperties(array $properties)
-    {
-        // TODO: Implement setProperties() method.
-    }
-
-    /**
-     * Добавление идентификатора устройства
-     *
-     * @param string $id
-     * @return void
-     */
-    public function setId(string $id)
-    {
-        // TODO: Implement setId() method.
-    }
-
-    /**
-     * Получение идентификатора устройства
-     *
-     * @return string
-     */
-    public function getId(): string
-    {
-        // TODO: Implement getId() method.
-    }
-
-    /**
-     * @return bool
-     */
-    public function testCommand($param)
-    {
-        return 'hello'. ' ' . $param;
-    }
-}
+class TestType extends \App\Mqtt\Devices\Device {}

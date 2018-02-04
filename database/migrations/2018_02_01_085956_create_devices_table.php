@@ -14,12 +14,15 @@ class CreateDevicesTable extends Migration
     public function up()
     {
         Schema::create('devices', function (Blueprint $table) {
-            $table->increments('id');
+            $table->uuid('id');
             $table->string('key', 50);
-            $table->string('source');
             $table->string('type', 50);
 
+            $table->string('name')->nullable();
+            $table->text('description')->nullable();
+
             $table->timestamps();
+            $table->primary('id');
         });
     }
 

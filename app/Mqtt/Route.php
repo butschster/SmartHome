@@ -160,15 +160,11 @@ class Route
     {
         $this->container = $this->container ?: new Container;
 
-        try {
-            if ($this->isControllerAction()) {
-                return $this->runController();
-            }
-
-            return $this->runCallable();
-        } catch (MqttResponseException $e) {
-            return $e->getResponse();
+        if ($this->isControllerAction()) {
+            return $this->runController();
         }
+
+        return $this->runCallable();
     }
 
     /**

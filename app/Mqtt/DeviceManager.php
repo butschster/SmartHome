@@ -2,7 +2,7 @@
 
 namespace App\Mqtt;
 
-use App\Contracts\Device;
+use App\Contracts\Mqtt\Device;
 use App\Contracts\Mqtt\DeviceManager as DeviceManagerContract;
 use App\Exceptions\DeviceDriverNotFoundException;
 use Closure;
