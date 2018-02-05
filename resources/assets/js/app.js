@@ -8,29 +8,21 @@ const app = new Vue({
 
     created() {
 
-        artyom.on(['Включи свет в *', 'Включи свет на *'], true).then((i, wildcard) => {
+        artyom.on(['включи свет в *', 'включи свет на *'], true).then((i, wildcard) => {
             this.$api.commands.fromSpech('room:switch_on', wildcard);
         });
 
-        artyom.on(['Выключи свет в *', 'Выключи свет на *'], true).then((i, wildcard) => {
+        artyom.on(['выключи свет в *', 'выключи свет на *'], true).then((i, wildcard) => {
             this.$api.commands.fromSpech('room:switch_off', wildcard);
         });
 
-        artyom.on(['Какая сегодня погода']).then((i) => {
+        artyom.on(['какая сегодня погода']).then((i) => {
             this.$api.commands.fromSpech('weather');
         });
-
-        Echo.channel('device')
-            .listen('.registered', e => {
-                artyom.say("Зарегистрировано новое устройство");
-            });
 
         Echo.channel('spech.command')
             .listen('.say', e => {
                 artyom.say(e.message);
-            })
-            .listen('.not.found', e => {
-                artyom.say('Произошла ошибка при выполнении команды.');
             });
     }
 });

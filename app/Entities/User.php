@@ -10,6 +10,18 @@ class User extends Authenticatable
     use Notifiable, Uuid;
 
     /**
+     * Получить объект бота
+     *
+     * @return User
+     *
+     * @todo Перенести имя бота в настройки
+     */
+    public static function bot(): User
+    {
+        return static::where('name', 'Alexa')->firstOrFail();
+    }
+
+    /**
      * Indicates if the IDs are auto-incrementing.
      *
      * @var bool

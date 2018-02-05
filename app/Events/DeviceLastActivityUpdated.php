@@ -2,29 +2,29 @@
 
 namespace App\Events;
 
-use App\Entities\DeviceProperty;
-use App\Http\Resources\DevicePropertyResource;
+use App\Entities\Device;
+use App\Http\Resources\DeviceResource;
 use Illuminate\Broadcasting\Channel;
+use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class DevicePropertyChanged implements ShouldBroadcast
+class DeviceLastActivityUpdated implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     /**
-     * @var DeviceProperty
+     * @var Device
      */
-    public $property;
+    public $device;
 
     /**
-     * @param DeviceProperty $property
+     * @param Device $device
      */
-    public function __construct(DeviceProperty $property)
+    public function __construct(Device $device)
     {
-        $this->property = $property;
+        $this->device = $device;
     }
 
     /**
@@ -34,7 +34,7 @@ class DevicePropertyChanged implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('device.property.'.$this->property->id);
+        return new Channel('device.' . $this->device->id);
     }
 
     /**
@@ -44,9 +44,9 @@ class DevicePropertyChanged implements ShouldBroadcast
      */
     public function broadcastAs()
     {
-        return 'property.changed';
+        return 'last_activity.updated';
     }
-    
+
     /**
      * Get the data to broadcast.
      *
@@ -55,8 +55,7 @@ class DevicePropertyChanged implements ShouldBroadcast
     public function broadcastWith()
     {
         return [
-            'property' => new DevicePropertyResource($this->property)
+            'device' => new DeviceResource($this->device)
         ];
     }
-    
 }

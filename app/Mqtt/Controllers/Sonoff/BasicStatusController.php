@@ -4,6 +4,7 @@ namespace App\Mqtt\Controllers\Sonoff;
 
 use App\Contracts\Mqtt\Response;
 use App\Entities\Device;
+use App\Events\DevicePing;
 use Illuminate\Contracts\Events\Dispatcher;
 
 class BasicStatusController
@@ -31,12 +32,10 @@ class BasicStatusController
     public function result(Response $response, string $type, string $device)
     {
         $device = Device::register($device, $type);
+        $device->setProperties($response->toArray());
 
-        $payload = $response->toArray();
-        $device->setProperties(array_only($payload, ['POWER', 'POWER1', 'POWER2', 'POWER3', 'POWER4']));
+        event(new DevicePing($device));
 
         $device->log(sprintf('%s: %s', $response->getRoute(), $response->getPayload()));
-
-        //$this->dispatcher->dispatch(new State($device));
     }
 }

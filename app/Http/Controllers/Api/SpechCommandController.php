@@ -31,6 +31,7 @@ class SpechCommandController extends Controller
 
     /**
      * @param Request $request
+     * @return \Illuminate\Http\JsonResponse
      * @throws \Exception
      */
     public function invoke(Request $request)
@@ -44,5 +45,7 @@ class SpechCommandController extends Controller
             $request->input('command'),
             $this->stemmer->stem($request->input('text'))
         );
+
+        return response_ok();
     }
 }

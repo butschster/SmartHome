@@ -4,6 +4,7 @@ namespace App\Mqtt\Controllers\Sonoff;
 
 use App\Contracts\Mqtt\Response;
 use App\Entities\Device;
+use App\Events\DevicePing;
 
 class BasicTelemetryController
 {
@@ -18,8 +19,9 @@ class BasicTelemetryController
     {
         $device = Device::register($device, $type);
 
-        $payload = $response->toArray();
-        $device->setProperties(array_only($payload, ['POWER', 'POWER1', 'POWER2', 'POWER3', 'POWER4']));
+        $device->setProperties($response->toArray());
+
+        event(new DevicePing($device));
 
         $device->log(sprintf('%s: %s', $response->getRoute(), $response->getPayload()));
     }

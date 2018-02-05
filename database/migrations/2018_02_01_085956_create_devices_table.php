@@ -22,6 +22,7 @@ class CreateDevicesTable extends Migration
             $table->text('description')->nullable();
 
             $table->timestamps();
+            $table->dateTime('last_activity')->nullable();
             $table->primary('id');
         });
     }

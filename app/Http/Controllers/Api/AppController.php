@@ -12,7 +12,7 @@ class AppController extends Controller
      * @param Translator $translator
      * @return Response
      */
-    public function settings(Translator $translator)
+    public function settings(Translator $translator): Response
     {
         $content = 'window.settings = '.json_encode([
             'asset_url' => asset(''),

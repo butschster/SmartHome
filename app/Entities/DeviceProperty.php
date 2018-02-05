@@ -19,6 +19,8 @@ class DeviceProperty extends Model
     protected $fillable = ['key', 'value'];
 
     /**
+     * Получение списка доступных команд
+     *
      * @return array
      */
     public function getCommands(): array
@@ -43,6 +45,8 @@ class DeviceProperty extends Model
     }
 
     /**
+     * Ссылка на устройство
+     *
      * @return BelongsTo
      */
     public function device(): BelongsTo
@@ -63,6 +67,8 @@ class DeviceProperty extends Model
     }
 
     /**
+     * Список помещений
+     *
      * @return BelongsToMany
      */
     public function rooms(): BelongsToMany

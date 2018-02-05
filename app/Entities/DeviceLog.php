@@ -14,6 +14,8 @@ class DeviceLog extends Model
     protected $fillable = ['message'];
 
     /**
+     * Ссылка на объект устройства
+     *
      * @return BelongsTo
      */
     public function device(): BelongsTo

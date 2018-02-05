@@ -20,6 +20,7 @@
         "laravel-mix": "^2.0",
         "lodash": "^4.17.4",
         "vue": "^2.5.7",
-        "artyom.js": "^1.0.6"
+        "artyom.js": "^1.0.6",
+        "moment": "^2.20.1"
     }
 }

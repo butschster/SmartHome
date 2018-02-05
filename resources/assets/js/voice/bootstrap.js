@@ -9,7 +9,7 @@ window.artyom = new Artyom();
 artyom.initialize({
     lang: "ru-RU",
     continuous: true, // Listen forever
-    soundex: true,// Use the soundex algorithm to increase accuracy
+    //soundex: true,// Use the soundex algorithm to increase accuracy
     debug: true, // Show messages in the console
     listen: true, // Start to listen commands !
 }).then(() => {

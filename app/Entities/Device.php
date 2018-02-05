@@ -3,6 +3,8 @@
 namespace App\Entities;
 
 use App\Contracts\Mqtt\Device as DeviceDriverContract;
+use App\Events\DeviceLastActivityUpdated;
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Contracts\Mqtt\DeviceManager as DeviceManagerContract;
 
@@ -21,13 +23,20 @@ class Device extends Model
         return static::firstOrCreate([
             'key' => $key,
             'type' => $type
+        ], [
+            'last_activity' => now()
         ]);
     }
 
     /**
      * @var array
      */
-    protected $fillable = ['key', 'type', 'name', 'description'];
+    protected $fillable = ['key', 'type', 'name', 'description', 'last_activity'];
+
+    /**
+     * @var array
+     */
+    protected $dates = ['last_activity'];
 
     /**
      * Добавление лога
@@ -100,5 +109,26 @@ class Device extends Model
         $device->setId($this->key);
 
         return $device;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getFormattedLastActivityAttribute()
+    {
+        return $this->last_activity instanceof Carbon
+            ? $this->last_activity->toDateTimeString()
+            : null;
+    }
+
+    /**
+     * Обновление времени последней активности устройства
+     */
+    public function updateLastActivity(): void
+    {
+        $this->last_activity = now();
+        $this->save();
+
+        event(new DeviceLastActivityUpdated($this));
     }
 }

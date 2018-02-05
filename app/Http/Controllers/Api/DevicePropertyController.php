@@ -14,7 +14,7 @@ class DevicePropertyController extends Controller
      * @param Device $device
      * @return DevicePropertyCollection
      */
-    public function index(Device $device)
+    public function index(Device $device): DevicePropertyCollection
     {
         return new DevicePropertyCollection(
             $device->properties()->with('rooms')->get()
@@ -25,7 +25,7 @@ class DevicePropertyController extends Controller
      * @param DeviceProperty $property
      * @return DevicePropertyResource
      */
-    public function show(DeviceProperty $property)
+    public function show(DeviceProperty $property): DevicePropertyResource
     {
         return new DevicePropertyResource($property->load('rooms'));
     }

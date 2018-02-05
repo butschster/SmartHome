@@ -28,6 +28,15 @@ export function update(id, data) {
 
 /**
  *
+ * @param {UUID} id
+ * @returns {AxiosPromise<any>}
+ */
+export function destroy(id) {
+    return axios.delete(`/api/device/${id}`);
+}
+
+/**
+ *
  * @param {UUID} device
  * @returns {AxiosPromise<any>}
  */

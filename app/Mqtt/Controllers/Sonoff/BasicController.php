@@ -4,6 +4,7 @@ namespace App\Mqtt\Controllers\Sonoff;
 
 use App\Contracts\Mqtt\Response;
 use App\Entities\Device;
+use App\Events\DevicePing;
 
 class BasicController
 {
@@ -14,6 +15,7 @@ class BasicController
      */
     public function log(Response $response, string $type, string $device)
     {
-        Device::register($device, $type);
+        $device = Device::register($device, $type);
+        event(new DevicePing($device));
     }
 }

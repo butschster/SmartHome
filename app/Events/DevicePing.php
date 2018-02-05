@@ -2,7 +2,7 @@
 
 namespace App\Events;
 
-use App\Contracts\Sayable;
+use App\Entities\Device;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Queue\SerializesModels;
 use Illuminate\Broadcasting\PrivateChannel;
@@ -11,21 +11,22 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class Say implements ShouldBroadcast
+class DevicePing
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
     /**
-     * @var string
+     * @var Device
      */
-    public $message;
+    public $device;
 
     /**
-     * @param string $message
+     * DevicePing constructor.
+     * @param Device $device
      */
-    public function __construct(string $message)
+    public function __construct(Device $device)
     {
-        $this->message = $message;
+        $this->device = $device;
     }
 
     /**
@@ -35,16 +36,6 @@ class Say implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('spech.command');
-    }
-
-    /**
-     * The event's broadcast name.
-     *
-     * @return string
-     */
-    public function broadcastAs()
-    {
-        return 'say';
+        return new PrivateChannel('channel-name');
     }
 }

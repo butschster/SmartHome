@@ -20,8 +20,14 @@ class EventServiceProvider extends ServiceProvider
 
         ],
         \App\Events\DeviceRegistered::class => [
-
+            \App\Listeners\NotifyAboutNewDevice::class
         ],
+        \App\Events\DevicePing::class => [
+            \App\Listeners\UpdateLastDeviceActivity::class
+        ],
+        \App\Events\SpechCommandHandleError::class => [
+            \App\Listeners\NotifyAboutSpechCommandNotFound::class
+        ]
     ];
 
     /**

@@ -13,7 +13,7 @@ class RoomController extends Controller
     /**
      * @return RoomCollection
      */
-    public function index()
+    public function index(): RoomCollection
     {
         return new RoomCollection(
             Room::with('deviceProperties')->get()
@@ -25,7 +25,7 @@ class RoomController extends Controller
      * @return RoomResource
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function store(Request $request)
+    public function store(Request $request): RoomResource
     {
         $this->authorize('store', new Room);
 
@@ -44,7 +44,7 @@ class RoomController extends Controller
      * @param Room $room
      * @return RoomResource
      */
-    public function show(Room $room)
+    public function show(Room $room): RoomResource
     {
         return new RoomResource($room->load('deviceProperties'));
     }
@@ -55,7 +55,7 @@ class RoomController extends Controller
      * @return RoomResource
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function update(Request $request, Room $room)
+    public function update(Request $request, Room $room): RoomResource
     {
         $this->authorize('update', $room);
 
@@ -76,12 +76,12 @@ class RoomController extends Controller
      * @throws \Exception
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function destroy(Room $room)
+    public function destroy(Room $room): array
     {
         $this->authorize('destroy', $room);
 
         $room->delete();
 
-        return ['status' => 'ok'];
+        return response_ok();
     }
 }

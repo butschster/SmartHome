@@ -3,6 +3,8 @@
 namespace App\Commands;
 
 use App\Contracts\Sayable;
+use App\Exceptions\SayableException;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class Weather implements Sayable
 {
@@ -10,8 +12,12 @@ class Weather implements Sayable
 
     public function handle()
     {
-        /** @var \App\Entities\Weather $weather */
-        $weather = \App\Entities\Weather::latest()->firstOrFail();
+        try {
+            /** @var \App\Entities\Weather $weather */
+            $weather = \App\Entities\Weather::latest()->firstOrFail();
+        } catch (ModelNotFoundException $e) {
+            throw new SayableException('На данный момент у меня нет данных о погоде. Спросите позже.');
+        }
 
         $this->say = sprintf(
             'Температура %d градусов. Влажность %d процентов. %s. %s.',

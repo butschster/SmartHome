@@ -16,7 +16,7 @@
             }
         },
         mounted() {
-            Echo.channel(`device.${this.property.id}`)
+            Echo.channel(`device.property.${this.property.id}`)
                 .listen('.property.changed', e => {
                     this.$emit('changed', e.property);
                 });

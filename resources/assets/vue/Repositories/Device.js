@@ -27,7 +27,17 @@ export default {
 
             return response.data.data;
         } catch (e) {
-            throw new Error(`Не удалось обновить информаци устройство [${id}].`);
+            throw new Error(`Не удалось обновить информацию устройства [${id}].`);
+        }
+    },
+
+    async destroy(id) {
+        try {
+            let response = await Vue.$api.device.destroy(id);
+
+            return response.data.data;
+        } catch (e) {
+            throw new Error(`Не удалось удалить устройство [${id}].`);
         }
     },
 

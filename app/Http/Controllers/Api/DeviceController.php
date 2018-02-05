@@ -13,7 +13,7 @@ class DeviceController extends Controller
     /**
      * @return DeviceCollection
      */
-    public function index()
+    public function index(): DeviceCollection
     {
         return new DeviceCollection(
             Device::with('properties')->get()
@@ -24,7 +24,7 @@ class DeviceController extends Controller
      * @param Device $device
      * @return DeviceResource
      */
-    public function show(Device $device)
+    public function show(Device $device): DeviceResource
     {
         return new DeviceResource($device->load('properties', 'properties.rooms'));
     }
@@ -35,7 +35,7 @@ class DeviceController extends Controller
      * @return DeviceResource
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function update(Request $request, Device $device)
+    public function update(Request $request, Device $device): DeviceResource
     {
         //$this->authorize('update', $device);
 
@@ -47,5 +47,20 @@ class DeviceController extends Controller
         $device->update($validatedData);
 
         return new DeviceResource($device);
+    }
+
+    /**
+     * @param Device $device
+     * @return array
+     * @throws \Exception
+     * @throws \Illuminate\Auth\Access\AuthorizationException
+     */
+    public function destroy(Device $device): array
+    {
+        $this->authorize('delete', $device);
+
+        $device->delete();
+
+        return response_ok();
     }
 }

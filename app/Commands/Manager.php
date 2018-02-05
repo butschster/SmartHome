@@ -51,7 +51,6 @@ class Manager
      */
     public function handle(string $key, ...$parameters): void
     {
-
         if (isset($this->commands[$key])) {
             $this->logger->debug(sprintf('Run command [%s]', $key), $parameters);
 
@@ -61,13 +60,13 @@ class Manager
                 $command->handle(...$parameters);
 
                 if ($command instanceof Sayable) {
-                    $this->events->dispatch(new Say($command->say()));
+                    say($command);
                 }
             } catch (\Exception $e) {
                 $this->logger->debug(sprintf('Command [%s] not handled. Message: %s', $key, $e->getMessage()));
 
                 if ($e instanceof Sayable) {
-                    $this->events->dispatch(new Say($e->say()));
+                    say($e);
                 }
             }
         }

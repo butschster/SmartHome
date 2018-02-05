@@ -26,6 +26,7 @@ class DeviceResource extends Resource
             'name' => $this->name ?: sprintf('%s [%s]', $this->type, $this->key),
             'description' => $this->description,
             'properties' => new DevicePropertyCollection($this->whenLoaded('properties')),
+            'last_activity' => $this->formatted_last_activity,
             'links' => [
                 'self' => route('device.show', $this->id),
                 'list' => route('devices')

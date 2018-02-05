@@ -23,6 +23,7 @@ Route::delete('/room/{room}', 'RoomController@destroy')->name('room.destroy');
 Route::get('/devices', 'DeviceController@index')->name('devices');
 Route::get('/device/{device}', 'DeviceController@show')->name('device.show');
 Route::post('/device/{device}', 'DeviceController@update')->name('device.update');
+Route::delete('/device/{device}', 'DeviceController@destroy')->name('device.destroy');
 
 /**
  * DeviceProperty
