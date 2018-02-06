@@ -1,5 +1,7 @@
 let mix = require('laravel-mix');
 
+//mix.browserSync('https://localhost');
+
 mix.autoload({
     'socket.io-client': ['io', 'window.io'],
     'moment': ['moment', 'window.moment'],

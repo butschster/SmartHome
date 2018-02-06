@@ -4,6 +4,13 @@ window.Bus = new Vue();
 
 window._ = require('lodash');
 
+window.Highcharts = require('highcharts');
+Highcharts.setOptions({
+    time: {
+        timezone: window.settings.timezone
+    }
+});
+
 /**
  * MomentJS
  */

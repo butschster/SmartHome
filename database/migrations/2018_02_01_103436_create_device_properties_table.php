@@ -18,7 +18,7 @@ class CreateDevicePropertiesTable extends Migration
 
             $table->uuid('device_id');
             $table->string('key');
-            $table->string('value');
+            $table->string('value')->nullable();
 
             $table->string('name')->nullable();
             $table->text('description')->nullable();

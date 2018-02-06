@@ -20,6 +20,11 @@ interface DeviceProperty
     /**
      * @return array
      */
+    public function meta(): array;
+
+    /**
+     * @return array
+     */
     public function getCommands(): array;
 
     /**

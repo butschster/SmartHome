@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div v-loading="loading">
         <h3>Устройства</h3>
 
         <device v-for="device in devices"
@@ -20,7 +20,8 @@
         },
         data() {
             return {
-                devices: []
+                devices: [],
+                loading: false
             }
         },
         mounted() {
@@ -33,7 +34,15 @@
         },
         methods: {
             async loadDevices() {
-                this.devices = await DeviceRepository.list();
+                this.loading = true;
+
+                try {
+                    this.devices = await DeviceRepository.list();
+                } catch (e) {
+                    this.$message.error(e.message);
+                }
+
+                this.loading = false;
             },
 
             updateDevice(d) {

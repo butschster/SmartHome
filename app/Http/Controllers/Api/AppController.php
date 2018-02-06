@@ -14,10 +14,12 @@ class AppController extends Controller
      */
     public function settings(Translator $translator): Response
     {
-        $content = 'window.settings = '.json_encode([
+        $content = 'window.settings = ' . json_encode([
             'asset_url' => asset(''),
             'locale' => $translator->locale(),
-            'websocket' => config('broadcasting.websocket')
+            'timezone' => config('app.timezone'),
+            'websocket' => config('broadcasting.websocket'),
+            'debug' => config('app.debug')
         ]);
 
         return new Response($content, 200, [

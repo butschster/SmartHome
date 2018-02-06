@@ -17,7 +17,7 @@ class EventServiceProvider extends ServiceProvider
      */
     protected $listen = [
         \App\Events\DevicePropertyChanged::class => [
-
+            \App\Listeners\LogDevicePropertyValues::class
         ],
         \App\Events\DeviceRegistered::class => [
             \App\Listeners\NotifyAboutNewDevice::class

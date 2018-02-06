@@ -4,6 +4,7 @@ namespace App\Entities;
 
 use App\Contracts\Mqtt\Device as DeviceDriverContract;
 use App\Events\DeviceLastActivityUpdated;
+use App\Exceptions\UnknownDeviceException;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use App\Contracts\Mqtt\DeviceManager as DeviceManagerContract;
@@ -17,13 +18,21 @@ class Device extends Model
      * @param string $type Тип устройства
      *
      * @return Device
+     * @throws UnknownDeviceException
      */
     public static function register(string $key, string $type): Device
     {
+        $deviceConfig = config('devices.' . $type);
+        if (!$deviceConfig) {
+            throw new UnknownDeviceException($type);
+        }
+
         return static::firstOrCreate([
             'key' => $key,
             'type' => $type
         ], [
+            'name' => array_get($deviceConfig, 'name'),
+            'description' => array_get($deviceConfig, 'description'),
             'last_activity' => now()
         ]);
     }

@@ -64,6 +64,14 @@ abstract class Property implements DevicePropertyContract
     }
 
     /**
+     * @return array
+     */
+    public function meta(): array
+    {
+        return [];
+    }
+
+    /**
      * @param DeviceProperty $deviceProperty
      * @return string
      */

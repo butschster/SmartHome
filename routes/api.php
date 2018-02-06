@@ -29,7 +29,9 @@ Route::delete('/device/{device}', 'DeviceController@destroy')->name('device.dest
  * DeviceProperty
  */
 Route::get('/device/{device}/properties', 'DevicePropertyController@index')->name('device.properties');
+Route::get('/device/property/{property}/logs', 'DevicePropertyLogsController@index')->name('device.property.logs');
 Route::get('/device/property/{property}', 'DevicePropertyController@show')->name('device.property.show');
+Route::post('/device/property/{property}', 'DevicePropertyController@update')->name('device.property.update');
 Route::post('/invoke/{property}/{command}', 'DevicePropertyCommandController@invoke')->name('command.invoke');
 
 

@@ -3,8 +3,10 @@
 namespace App\Entities;
 
 use App\Contracts\Mqtt\Device as DeviceContract;
+use App\Contracts\Mqtt\DeviceProperty as DevicePropertyContract;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class DeviceProperty extends Model
 {
@@ -16,7 +18,7 @@ class DeviceProperty extends Model
     /**
      * @var array
      */
-    protected $fillable = ['key', 'value'];
+    protected $fillable = ['key', 'value', 'name', 'description'];
 
     /**
      * Получение списка доступных команд
@@ -26,6 +28,15 @@ class DeviceProperty extends Model
     public function getCommands(): array
     {
         return $this->deviceDriver()->allowedCommands($this->key);
+    }
+
+    /**
+     * @return array
+     * @throws \App\Exceptions\DevicePropertyNotFoundException
+     */
+    public function getMetaAttribute(): array
+    {
+        return $this->driver()->meta();
     }
 
     /**
@@ -55,6 +66,24 @@ class DeviceProperty extends Model
     }
 
     /**
+     * @return string
+     * @throws \App\Exceptions\DevicePropertyNotFoundException
+     */
+    public function driverClass(): string
+    {
+        return $this->deviceDriver()->propertyClass($this->key);
+    }
+
+    /**
+     * @return DevicePropertyContract
+     * @throws \App\Exceptions\DevicePropertyNotFoundException
+     */
+    public function driver(): DevicePropertyContract
+    {
+        return $this->deviceDriver()->propertyDriver($this->key);
+    }
+
+    /**
      * @return DeviceContract
      */
     protected function deviceDriver(): DeviceContract
@@ -76,4 +105,23 @@ class DeviceProperty extends Model
         return $this->belongsToMany(Room::class);
     }
 
+    /**
+     * Логи устройства
+     *
+     * @return HasMany
+     */
+    public function logs(): HasMany
+    {
+        return $this->hasMany(DevicePropertyLog::class);
+    }
+
+    /**
+     * Логирование текущего значения
+     */
+    public function logValue()
+    {
+        $this->logs()->create([
+            'value' => $this->value
+        ]);
+    }
 }

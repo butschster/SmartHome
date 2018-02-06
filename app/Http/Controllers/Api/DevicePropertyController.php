@@ -7,6 +7,7 @@ use App\Entities\DeviceProperty;
 use App\Http\Resources\DevicePropertyCollection;
 use App\Http\Resources\DevicePropertyResource;
 use App\Http\Controllers\Controller;
+use Illuminate\Http\Request;
 
 class DevicePropertyController extends Controller
 {
@@ -28,5 +29,24 @@ class DevicePropertyController extends Controller
     public function show(DeviceProperty $property): DevicePropertyResource
     {
         return new DevicePropertyResource($property->load('rooms'));
+    }
+
+    /**
+     * @param Request $request
+     * @param DeviceProperty $property
+     * @return DevicePropertyResource
+     */
+    public function update(Request $request, DeviceProperty $property): DevicePropertyResource
+    {
+        //$this->authorize('update', $property);
+
+        $validatedData = $request->validate([
+            'name' => 'nullable|string',
+            'description' => 'nullable|string',
+        ]);
+
+        $property->update($validatedData);
+
+        return new DevicePropertyResource($property);
     }
 }

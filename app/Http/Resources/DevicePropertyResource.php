@@ -13,17 +13,23 @@ class DevicePropertyResource extends Resource
     /**
      * Transform the resource into an array.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return array
+     * @throws \App\Exceptions\DevicePropertyNotFoundException
+     * @throws \ReflectionException
      */
     public function toArray($request)
     {
+        $driver = $this->driver();
+
         return [
             'id' => $this->id,
+            'type' => (new \ReflectionClass($driver))->getShortName(),
             'key' => $this->key,
             'value' => $this->value,
             'name' => $this->name ?: $this->key,
             'description' => $this->description,
+            'meta' => $driver->meta(),
             'commands' => array_values($this->getCommands()),
             'rooms' => new RoomCollection($this->whenLoaded('rooms')),
             'links' => [

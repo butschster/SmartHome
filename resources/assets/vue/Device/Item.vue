@@ -1,37 +1,42 @@
 <template>
-    <div class="panel" :class="panelClasses">
+    <div class="panel" :class="panelClasses" v-loading="loading">
         <div class="panel-heading">
             <div class="panel-title">
                 {{ device.name }}
-
-                <span class="label label-danger" v-if="isOutOfDate">Нет связи</span>
-                <span class="label label-info" v-else>Последняя активность {{ device.last_activity }}</span>
-
                 <div class="btn-group pull-right" role="group">
                     <button class="btn btn-danger btn-sm" v-if="isOutOfDate" @click="destroy">
                         <i class="far fa-trash-alt"></i>
                     </button>
 
-                    <button class="btn btn-default btn-sm" @click="edit = !edit">
+                    <el-button type="primary" size="mini" round @click="edit = !edit">
                         <i class="far fa-edit"></i>
-                    </button>
+                    </el-button>
                 </div>
             </div>
         </div>
 
-        <div class="panel-body btn-info" v-if="hasDescription">
-            {{ device.description }}
-        </div>
+        <div class="panel-body" v-if="hasDescription">{{ device.description }}</div>
 
-        <device-form :device="device" v-if="edit" v-on:updated="updated"></device-form>
+        <device-form :data="device"
+                     v-if="edit"
+                     v-on:update="update"
+                     v-on:close="edit = false">
+        </device-form>
 
+        <property :property="property"
+                  v-for="property in device.properties"
+                  :key="property.id"
+                  v-on:changed="updateProperty"
+                  class="panel-body"
+        >
+        </property>
         <div class="panel-footer">
-            <property :property="property"
-                      v-for="property in device.properties"
-                      :key="property.id"
-                      v-on:changed="updateProperty"
-            >
-            </property>
+            <template v-if="isOutOfDate">
+                <span class="label label-danger">Нет связи</span>
+            </template>
+            <template v-else>
+                Последняя активность <span class="label label-info">{{ device.last_activity }}</span>
+            </template>
         </div>
     </div>
 </template>
@@ -53,13 +58,14 @@
         },
         data() {
             return {
-                edit: false
+                edit: false,
+                loading: false
             }
         },
         mounted() {
             Echo.channel(`device.${this.device.id}`)
                 .listen('.last_activity.updated', e => {
-                    this.updated(e.device);
+                    this.$emit('updated', e.device);
                 });
         },
         methods: {
@@ -68,16 +74,40 @@
                     if (property.id == p.id) {
                         return p;
                     }
+
                     return property;
                 })
             },
-            updated(device) {
-                this.$emit('updated', device);
+            async update(data) {
+                this.loading = true;
+
+                try {
+                    await DeviceRepository.update(this.device.id, data).then(device => {
+                        this.$emit('updated', device);
+                        this.edit = false;
+                    });
+
+                    this.$message.success('Данные успешно обновлены.');
+                } catch (e) {
+                    this.$message.error(e.message);
+                }
+
+                this.loading = false;
             },
             async destroy() {
-                DeviceRepository.destroy(this.device.id).then(r => {
-                    this.$emit('destroyed', this.device);
-                });
+                this.loading = true;
+
+                try {
+                    DeviceRepository.destroy(this.device.id).then(r => {
+                        this.$emit('destroyed', this.device);
+                    });
+
+                    this.$message.success('Устройство удалено.');
+                } catch (e) {
+                    this.$message.error(e.message);
+                }
+
+                this.loading = false;
             }
         },
         computed: {
@@ -90,6 +120,9 @@
                 }
 
                 return true;
+            },
+            hasProperties() {
+                return !_.isEmpty(this.device.properties);
             },
             panelClasses() {
                 return {

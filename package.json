@@ -21,6 +21,11 @@
         "lodash": "^4.17.4",
         "vue": "^2.5.7",
         "artyom.js": "^1.0.6",
-        "moment": "^2.20.1"
+        "moment": "^2.20.1",
+        "element-ui": "^2.1.0",
+        "highcharts": "^6.0.6"
+    },
+    "dependencies": {
+        "mobile-detect": "^1.4.1"
     }
 }

@@ -1,6 +1,7 @@
 import Vue from 'vue';
 
 require('./bootstrap');
+require('./ui');
 require('../vue/components');
 
 const app = new Vue({
@@ -23,6 +24,8 @@ const app = new Vue({
         Echo.channel('spech.command')
             .listen('.say', e => {
                 artyom.say(e.message);
+
+                this.$notify.info({title: 'Alexa', message: e.message});
             });
     }
 });

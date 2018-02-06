@@ -1,5 +1,6 @@
 import * as commands from './api/commands';
 import * as device from './api/device';
+import * as device_property from './api/device_property';
 import * as room from './api/room';
 
 export default (function () {
@@ -7,6 +8,7 @@ export default (function () {
     const methods = {
         commands,
         device,
+        device_property,
         room
     };
 

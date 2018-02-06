@@ -5,6 +5,7 @@ namespace App\Console\Commands\Mqtt;
 use App\Contracts\Mqtt\Client as ClientContract;
 use App\Exceptions\MqttRouteNotFoundException;
 use App\Contracts\Mqtt\Router as RouterContract;
+use App\Exceptions\UnknownDeviceException;
 use App\Mqtt\Response;
 use Illuminate\Console\Command;
 
@@ -35,15 +36,17 @@ class Listen extends Command
     {
         $client->setClientId('SmartHomeListener');
 
-        $client->listen(function ($topic, $message) use($router) {
-            $this->info(sprintf('Message: %s => %s', $topic, $message));
+        $client->listen(function ($topic, $message) use ($router) {
+            $this->info(sprintf('[%s] Message: %s => %s', now()->toDateTimeString(), $topic, $message));
 
             try {
                 $router->dispatch(new Response($topic, $message));
             } catch (MqttRouteNotFoundException $e) {
-                $this->error(sprintf('Route for topic: %s not found', $topic));
-            } catch (\Exception $e)  {
-                $this->error(sprintf('Error: %s', $e->getMessage()));
+                $this->error(sprintf('[%s] Info: route for topic [%s] not found', now()->toDateTimeString(), $topic));
+            } catch (UnknownDeviceException $e) {
+                $this->error(sprintf('[%s] Error: unknown device [%s]', now()->toDateTimeString(), $e->getMessage()));
+            } catch (\Exception $e) {
+                $this->error(sprintf('[%s] Error: %s', now()->toDateTimeString(), $e->getMessage()));
             }
         });
     }

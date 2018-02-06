@@ -14,7 +14,7 @@ class DevicePropertyCommandController extends Controller
      * @param string $command
      * @return array
      */
-    public function invoke(Request $request, DeviceProperty $property, string $command): array
+    public function invoke(Request $request, DeviceProperty $property, string $command)
     {
         $request->validate([
             'parameters' => 'nullable|array'
