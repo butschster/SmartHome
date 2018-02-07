@@ -1,4 +1,4 @@
 import Vue from 'vue';
 
-Vue.component('devices', require('./Device/List'));
-Vue.component('rooms', require('./Room/List'));
+Vue.component('devices', require('./Components/Device/List'));
+Vue.component('rooms', require('./Components/Room/List'));

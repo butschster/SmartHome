@@ -1,0 +1,199 @@
+body,
+html {
+  font-weight: 400;
+  font-size: 0.9rem;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.txt-brand-color {
+  color: theme-color(primary);
+}
+
+.progress-bar {
+  font-weight: 600;
+}
+
+.card {
+  &.card-rounded {
+    @include border-radius(5px);
+  }
+
+  &.card-statistics {
+    .highlight-icon {
+      font-size: 3.125rem;
+    }
+
+    .highlight-icon-small {
+      font-size: 2.5rem;
+    }
+
+    p {
+      margin-bottom: 0;
+    }
+  }
+
+  .fa-2x {
+    font-size: 1.4em;
+  }
+}
+
+.card-outline-danger {
+  border: 1px solid theme-color(danger);
+}
+
+.content-wrapper {
+  padding: 2rem 1.5rem;
+}
+
+.badge {
+  padding: 0.50em 0.55em;
+  font-weight: 500;
+  &.badge-warning, &.badge-success {
+    color: $white;
+  }
+}
+
+.jumbotron {
+  background-color: #F2F7F8;
+}
+
+form.forms-sample {
+  @extend .row;
+
+  .form-group {
+    @extend .col-xl-6;
+    @extend .col-lg-6;
+    @extend .col-md-6;
+    @extend .col-sm-6;
+    @extend .col-12;
+  }
+}
+
+.bg-blue {
+  background: theme-color(primary);
+}
+
+.card {
+  &.card-statistics {
+    .highlight-icon {
+      font-size: 3.125rem;
+    }
+
+    p {
+      margin-bottom: 0;
+    }
+  }
+
+  &.card-faded {
+    background: #b5b0b2;
+    border-color: #b5b0b2;
+  }
+
+  &.card-circle-progress {
+    color: $white;
+    text-align: center;
+  }
+}
+
+// Dashboard Components Starts
+
+.count {
+  font-size: 30px;
+  @include rotate(0);
+
+  &.count-up {
+    color: theme-color(success);
+  }
+}
+
+.product-chart-wrapper {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  max-width: 100%;
+  height: 92%;
+
+  .products-chart {
+    width: auto;
+    display: inline-block;
+    margin-right: 40px;
+  }
+}
+
+.error-page {
+  h1 {
+    font-size: 150px;
+    font-weight: bold;
+    text-align: center;
+    color: theme-color(primary);
+  }
+
+  h2 {
+    font-size: 24px;
+    text-align: center;
+    color: #000;
+  }
+
+  p {
+    font-size: 18px;
+    text-align: center;
+    color: #4a4949;
+  }
+
+  button {
+  }
+}
+
+.auth-pages {
+  h3 {
+    font-size: 23px;
+    font-weight: bold;
+    line-height: 1.3;
+    color: #000;
+  }
+
+  .form-control {
+    height: 48px;
+    @include border-radius(3px);
+    background-color: #f2f7fa;
+    border: none;
+  }
+
+  .forgot-pass {
+    font-size: 13px;
+    line-height: 2.31;
+    text-align: right;
+    color: #1c2c3f;
+  }
+
+  button {
+    font-size: 15px;
+    text-align: center;
+    color: #ffffff;
+    border: none;
+
+    &.enter-btn {
+      height: 39px;
+      background-image: -webkit-gradient(linear, left top, right top, from(#318be3), to(#04befe));
+      background-image: linear-gradient(to right, #318be3, #04befe);
+    }
+  }
+
+  .Or-login-with {
+    font-size: 15px;
+    line-height: 2;
+    text-align: center;
+    color: #737475;
+  }
+  a {
+    &.btn {
+      height: 39px;
+    }
+    &.btn-create-account {
+      background: $white;
+      border: solid 1px #ebebeb;
+      color: #1c2c3f;
+    }
+  }
+}

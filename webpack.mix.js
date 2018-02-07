@@ -14,3 +14,12 @@ mix.js('resources/assets/js/app.js', 'public/js')
         'vue', 'lodash', 'axios', 'jquery', 'laravel-echo', 'socket.io-client', 'artyom.js', 'moment'
     ], 'public/js/vendors.js')
     .sass('resources/assets/sass/app.scss', 'public/css');
+
+mix.webpackConfig({
+    resolve: {
+        modules: [
+            'node_modules',
+            path.resolve(__dirname, 'resources/assets/vue')
+        ]
+    }
+});

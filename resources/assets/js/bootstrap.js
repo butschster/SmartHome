@@ -1,5 +1,6 @@
 import Vue from 'vue';
 
+window.Popper = require('popper.js/dist/umd/popper');
 window.Bus = new Vue();
 
 window._ = require('lodash');
@@ -19,7 +20,7 @@ moment.locale(window.settings.locale);
 try {
     window.$ = window.jQuery = require('jquery');
 
-    require('bootstrap-sass');
+    require('bootstrap');
 } catch (e) {}
 
 require('./http/bootstrap');
