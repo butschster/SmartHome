@@ -16,6 +16,7 @@ class CreateWeathersTable extends Migration
         Schema::create('weathers', function (Blueprint $table) {
             $table->uuid('id');
 
+            $table->string('icon')->default('01d');
             $table->float('temp')->default(0);
             $table->float('humidity')->default(0)->description('Влажность');
             $table->float('pressure')->default(0)->description('Давление');

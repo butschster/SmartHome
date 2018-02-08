@@ -1,6 +1,7 @@
 <template>
     <main-layout title="Dashboard">
         <page-content>
+            <weather></weather>
             <devices></devices>
         </page-content>
     </main-layout>
@@ -8,11 +9,12 @@
 
 <script>
     import Devices from 'Components/Device/List';
+    import Weather from 'Components/Weather/Widget';
 
     export default {
         name: "page-dashboard",
         components: {
-            Devices
+            Devices, Weather
         }
     }
 </script>

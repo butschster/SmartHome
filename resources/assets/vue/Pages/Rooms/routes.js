@@ -1,8 +1,7 @@
 import List from './List';
 import Show from './Show';
 import Create from './Create';
-import Breadcrumbs from 'breadcrumbs/Manager';
-
+import Breadcrumbs from 'Breadcrumbs';
 import {
     DASHBOARD,
     ROOMS_LIST,

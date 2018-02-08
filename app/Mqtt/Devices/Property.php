@@ -72,6 +72,15 @@ abstract class Property implements DevicePropertyContract
     }
 
     /**
+     * @param mixed $value
+     * @return mixed
+     */
+    public function format($value)
+    {
+        return $value;
+    }
+
+    /**
      * @param DeviceProperty $deviceProperty
      * @return string
      */

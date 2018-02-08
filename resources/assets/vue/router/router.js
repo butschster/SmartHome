@@ -1,6 +1,6 @@
 import Dashboard from 'Pages/Dashboard/Dashboard';
 import PageNotFound from 'Pages/404';
-import Breadcrumbs from 'breadcrumbs/Manager';
+import Breadcrumbs from 'Breadcrumbs';
 import RoomsRoutes from 'Pages/Rooms/routes';
 import DevicesRoutes from 'Pages/Devices/routes';
 

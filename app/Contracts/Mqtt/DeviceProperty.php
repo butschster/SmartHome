@@ -18,6 +18,14 @@ interface DeviceProperty
     public function transform($value);
 
     /**
+     * Преобразование значения к нужному виду
+     *
+     * @param mixed $value
+     * @return mixed
+     */
+    public function format($value);
+
+    /**
      * @return array
      */
     public function meta(): array;

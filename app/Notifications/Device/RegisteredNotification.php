@@ -36,6 +36,13 @@ class RegisteredNotification extends Notification
         return [VoiceChannel::class, 'database'];
     }
 
+    public function toDatabase($notifiable)
+    {
+        return [
+
+        ];
+    }
+
     /**
      * @param $notifiable
      *

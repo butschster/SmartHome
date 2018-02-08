@@ -2,12 +2,11 @@ import Vue from 'vue';
 import App from 'App';
 import {router} from 'router';
 import {getInstance} from './remark/Site';
-import Breadcrumbs from 'breadcrumbs/Manager';
+import Breadcrumbs from 'Breadcrumbs';
 
 require('./bootstrap');
 require('./ui');
 require('components');
-
 require('./remark/Plugins/menu');
 require('./remark/Plugins/asscrollable');
 require('./remark/Plugins/slidepanel');

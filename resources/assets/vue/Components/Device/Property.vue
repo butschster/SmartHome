@@ -17,13 +17,15 @@
     import HumidityProperty from './Property/Humidity';
     import TemperatureProperty from './Property/Temperature';
     import DoorProperty from './Property/Door';
+    import ActionProperty from './Property/Action';
 
     export default {
         components: {
             PowerProperty,
             HumidityProperty,
             DoorProperty,
-            TemperatureProperty
+            TemperatureProperty,
+            ActionProperty
         },
         mixins: [PropertyMixin],
         mounted() {

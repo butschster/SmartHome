@@ -28,6 +28,7 @@ class DevicePropertyResource extends Resource
             'type' => (new \ReflectionClass($driver))->getShortName(),
             'key' => $this->key,
             'value' => $this->value,
+            'formatted_value' => $driver->format($this->value),
             'name' => $this->name ?: $this->key,
             'description' => $this->description,
             'meta' => $driver->meta(),

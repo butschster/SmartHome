@@ -12,7 +12,7 @@
 </template>
 
 <script>
-    import Breadcrumbs from 'breadcrumbs/Manager';
+    import Breadcrumbs from 'Breadcrumbs';
 
     export default {
         props: {

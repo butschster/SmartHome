@@ -5,11 +5,8 @@ namespace App\Mqtt\Devices\Properties;
 use App\Contracts\Mqtt\DevicePropertyLoggable;
 use App\Mqtt\Devices\Property;
 
-class Door extends Property implements DevicePropertyLoggable
+class Action extends Property implements DevicePropertyLoggable
 {
-    const STATUS_OPEN = 1;
-    const STATUS_CLOSED = 0;
-
     /**
      * Преобразование значения к нужному виду
      *
@@ -18,11 +15,7 @@ class Door extends Property implements DevicePropertyLoggable
      */
     public function transform($value)
     {
-        if (strtolower($value) == 'open') {
-            return static::STATUS_OPEN;
-        }
-
-        return static::STATUS_CLOSED;
+        return $value;
     }
 
     /**
@@ -31,6 +24,6 @@ class Door extends Property implements DevicePropertyLoggable
      */
     public function format($value)
     {
-        return trans('device.door.'.$value);
+        return trans('device.action.'.$value);
     }
 }

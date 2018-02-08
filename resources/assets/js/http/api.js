@@ -2,6 +2,7 @@ import * as commands from './api/commands';
 import * as device from './api/device';
 import * as device_property from './api/device_property';
 import * as room from './api/room';
+import * as weather from './api/weather';
 
 export default (function () {
 
@@ -9,7 +10,8 @@ export default (function () {
         commands,
         device,
         device_property,
-        room
+        room,
+        weather
     };
 
     class ApiMethods {

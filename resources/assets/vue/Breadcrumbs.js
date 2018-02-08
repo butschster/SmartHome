@@ -1,4 +1,4 @@
-import Site from "../../js/remark/Site";
+import Site from "../js/remark/Site";
 
 class Generator {
 

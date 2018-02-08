@@ -22,6 +22,11 @@ return [
     Device::TYPE_XIAOMI_MAGNET => [
         'name' => 'Xiaomi Mi Smart Home Door Sensor',
         'class' => App\Mqtt\Devices\Xiaomi\Magnet::class,
+    ],
+
+    Device::TYPE_XIAOMI_BUTTON => [
+        'name' => 'Xiaomi Mi Smart Home Button',
+        'class' => App\Mqtt\Devices\Xiaomi\Button::class,
     ]
 
 ];

@@ -4,8 +4,10 @@ namespace App\Providers;
 
 use App\Entities\Device;
 use App\Entities\DeviceProperty;
+use App\Entities\Weather;
 use App\Observers\DevicePropertyChangedObserver;
 use App\Observers\NewDeviceRegisteredObserver;
+use App\Observers\WeatherChangedObserver;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
 class EventServiceProvider extends ServiceProvider
@@ -41,5 +43,6 @@ class EventServiceProvider extends ServiceProvider
 
         DeviceProperty::observe(DevicePropertyChangedObserver::class);
         Device::observe(NewDeviceRegisteredObserver::class);
+        Weather::observe(WeatherChangedObserver::class);
     }
 }

@@ -1,14 +1,13 @@
 import List from './List';
 import Show from './Show';
 import PropertyShow from './Property/Show';
-
+import Breadcrumbs from "Breadcrumbs";
 import {
+    DASHBOARD,
     DEVICES_LIST,
     DEVICE_SHOW,
     DEVICE_PROPERTY_SHOW,
 } from 'router/actions';
-import {DASHBOARD, ROOM_CREATE, ROOM_SHOW, ROOMS_LIST} from "../../router/actions";
-import Breadcrumbs from "../../breadcrumbs/Manager";
 
 Breadcrumbs.register(DEVICE_SHOW, (crumbs, device) => {
     crumbs.parent(DEVICES_LIST);

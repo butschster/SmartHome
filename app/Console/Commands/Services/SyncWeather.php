@@ -36,6 +36,7 @@ class SyncWeather extends Command
             $response = $weather->getWeather($city, $config['units'], config('app.locale'));
 
             Weather::create([
+                'icon' => $response->weather->icon,
                 'temp' => $response->temperature->now->getValue(),
                 'humidity' => $response->humidity->getValue(),
                 'pressure' => $response->pressure->getValue(),

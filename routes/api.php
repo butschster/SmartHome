@@ -8,6 +8,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('/invoke/spech', 'SpechCommandController@invoke')->name('command.spech.invoke');
 
+Route::get('/weather/current', 'WeatherController@show')->name('weather.current');
+
 /**
  * Room
  */
