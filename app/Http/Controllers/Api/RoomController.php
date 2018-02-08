@@ -16,8 +16,17 @@ class RoomController extends Controller
     public function index(): RoomCollection
     {
         return new RoomCollection(
-            Room::with('deviceProperties')->get()
+            Room::get()
         );
+    }
+
+    /**
+     * @param Room $room
+     * @return RoomResource
+     */
+    public function show(Room $room): RoomResource
+    {
+        return new RoomResource($room->load('deviceProperties'));
     }
 
     /**
@@ -32,21 +41,12 @@ class RoomController extends Controller
         $validatedData = $request->validate([
             'name' => 'required|string',
             'description' => 'nullable|string',
-            'position' => 'nullable|number'
+            'position' => 'nullable|numeric'
         ]);
 
-        $room = Room::create($validatedData);
-
-        return new RoomResource($room);
-    }
-
-    /**
-     * @param Room $room
-     * @return RoomResource
-     */
-    public function show(Room $room): RoomResource
-    {
-        return new RoomResource($room->load('deviceProperties'));
+        return $this->show(
+            Room::create($validatedData)
+        );
     }
 
     /**
@@ -61,13 +61,13 @@ class RoomController extends Controller
 
         $validatedData = $request->validate([
             'name' => 'string',
-            'description' => 'string',
-            'position' => 'number'
+            'description' => 'nullable|string',
+            'position' => 'nullable|numeric'
         ]);
 
         $room->update($validatedData);
 
-        return new RoomResource($room);
+        return $this->show($room);
     }
 
     /**
@@ -76,7 +76,7 @@ class RoomController extends Controller
      * @throws \Exception
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function destroy(Room $room): array
+    public function destroy(Room $room)
     {
         $this->authorize('destroy', $room);
 

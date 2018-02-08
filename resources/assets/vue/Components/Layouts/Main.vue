@@ -1,30 +1,17 @@
 <template>
-    <div>
-        <header>
-            <navbar>
-                <slot name="navbar"></slot>
-            </navbar>
-            <slot name="header"></slot>
-        </header>
+    <div data-plugin="nprogress">
+        <navbar></navbar>
+        <sidebar></sidebar>
 
-        <div class="container-fluid">
-            <div class="row">
+        <div class="page" :class="pageClasses">
+            <page-header v-if="title" :title="title" :crumb="crumb"></page-header>
 
-                <nav class="bg-white sidebar">
-                    <sidebar-menu></sidebar-menu>
-                </nav>
-
-                <div class="content-wrapper">
-                    <page-header v-if="header">{{ header }}</page-header>
-
-                    <slot></slot>
-                </div>
-
-                <footer class="footer">
-                    <slot name="footer"></slot>
-                </footer>
-            </div>
+            <slot></slot>
         </div>
+
+        <footer class="site-footer">
+            <slot name="footer"></slot>
+        </footer>
     </div>
 </template>
 
@@ -32,19 +19,32 @@
 
     import PageHeader from './Partials/Header';
     import Navbar from './Partials/Navigation';
-    import SidebarMenu from 'SidebarMenu';
+    import Sidebar from './Partials/Sidebar';
 
     export default {
-        name: 'main-layout',
+        name: 'layout-main',
 
         components: {
-            Navbar, SidebarMenu, PageHeader
+            Navbar, Sidebar, PageHeader
         },
 
         props: {
-            header: {
+            title: {
                 required: false,
                 type: String
+            },
+            classes: {
+                type: Object,
+                default() {
+                    return {}
+                }
+            },
+            crumb: Object
+        },
+
+        computed: {
+            pageClasses() {
+                return _.get(this.classes, 'page', {})
             }
         }
     }

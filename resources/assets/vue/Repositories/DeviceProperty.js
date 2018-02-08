@@ -4,6 +4,7 @@ export default {
 
     structure: {
         id: null,
+        device_id: null,
         type: null,
         key: null,
         value: null,
@@ -13,6 +14,16 @@ export default {
             units: null
         },
         commands: []
+    },
+
+    async all() {
+        try {
+            let response = await Vue.$api.device_property.all();
+
+            return response.data.data;
+        } catch (e) {
+            throw new Error(`Не удалось загрузить список свойств.`);
+        }
     },
 
     async list(deviceId) {

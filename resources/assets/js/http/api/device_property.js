@@ -1,6 +1,13 @@
 import axios from 'axios';
 
 /**
+ * @returns {AxiosPromise<any>}
+ */
+export function all() {
+    return axios.get(`/api/device/properties`);
+}
+
+/**
  *
  * @param {UUID} device
  * @returns {AxiosPromise<any>}

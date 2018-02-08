@@ -33,7 +33,7 @@ class RegisteredNotification extends Notification
      */
     public function via($notifiable)
     {
-        return [VoiceChannel::class];
+        return [VoiceChannel::class, 'database'];
     }
 
     /**

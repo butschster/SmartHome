@@ -1,16 +1,18 @@
 <template>
-    <layout header="Dashboard">
-        <devices></devices>
-    </layout>
+    <main-layout title="Dashboard">
+        <page-content>
+            <devices></devices>
+        </page-content>
+    </main-layout>
 </template>
 
 <script>
-    import Layout from 'Components/Layouts/Main';
     import Devices from 'Components/Device/List';
 
     export default {
+        name: "page-dashboard",
         components: {
-            Layout, Devices
+            Devices
         }
     }
 </script>

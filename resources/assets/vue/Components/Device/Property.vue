@@ -1,48 +1,31 @@
 <template>
-    <div class="card" v-on:dblclick="edit = true" v-loading="loading">
+    <div class="card">
         <div class="card-body">
             <component v-bind:is="propertyComponent(property)" :property="property">
-
                 <h4>
                     {{ property.name }}
                 </h4>
                 <small v-if="hasDescription" class="text-muted">{{ property.description }}</small>
             </component>
-
-            <device-property-form
-                    v-if="edit"
-                    :data="property"
-                    v-on:update="update"
-                    v-on:close="edit = false">
-            </device-property-form>
         </div>
     </div>
 </template>
 
 <script>
-    import Mixin from './Property/mixin';
+    import PropertyMixin from './Mixins/Property';
     import PowerProperty from './Property/Power';
     import HumidityProperty from './Property/Humidity';
     import TemperatureProperty from './Property/Temperature';
     import DoorProperty from './Property/Door';
-    import DevicePropertyForm from './Form';
-    import DevicePropertyRepository from '../../Repositories/DeviceProperty';
 
     export default {
         components: {
-            DevicePropertyForm,
             PowerProperty,
             HumidityProperty,
             DoorProperty,
             TemperatureProperty
         },
-        mixins: [Mixin],
-        data() {
-            return {
-                edit: false,
-                loading: false
-            }
-        },
+        mixins: [PropertyMixin],
         mounted() {
             Echo.channel(`device.property.${this.property.id}`)
                 .listen('.property.changed', e => {
@@ -52,25 +35,7 @@
         methods: {
             propertyComponent(property) {
                 return `${property.type}Property`;
-            },
-            async update(data) {
-                this.loading = true;
-
-                try {
-                    await DevicePropertyRepository.update(this.property.id, data);
-
-                    this.edit = false;
-                    this.$message.success('Данные успешно обновлены.');
-                } catch (e) {
-                    this.$message.error(e.message);
-                }
-
-                this.loading = false;
             }
         }
     }
 </script>
-
-<style scoped>
-
-</style>

@@ -18,10 +18,10 @@
 </template>
 
 <script>
-    import Mixin from './mixin';
+    import PropertyMixin from '../Mixins/Property';
 
     export default {
-        mixins: [Mixin],
+        mixins: [PropertyMixin],
         computed: {
             isOpen() {
                 return this.property.value == 1;

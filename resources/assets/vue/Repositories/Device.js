@@ -1,6 +1,16 @@
 import Vue from 'vue';
 
 export default {
+    structure: {
+        id: null,
+        name: null,
+        description: null,
+        type: null,
+        key: null,
+        properties: [],
+        last_activity: null
+    },
+
     async list() {
         try {
             let response = await Vue.$api.device.list();

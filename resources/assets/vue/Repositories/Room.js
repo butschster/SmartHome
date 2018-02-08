@@ -1,6 +1,19 @@
 import Vue from 'vue';
 
 export default {
+
+    structure: {
+        id: null,
+        name: null,
+        description: null,
+        position: 1,
+        properties: [],
+        links: {
+            self: null,
+            list: null
+        }
+    },
+
     async list() {
         try {
             let response = await Vue.$api.room.list();

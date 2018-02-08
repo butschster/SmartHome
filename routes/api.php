@@ -11,6 +11,9 @@ Route::post('/invoke/spech', 'SpechCommandController@invoke')->name('command.spe
 /**
  * Room
  */
+Route::post('/room/{room}/property', 'RoomDevicePropertyController@store')->name('room.property.attach');
+Route::delete('/room/{room}/property', 'RoomDevicePropertyController@destroy')->name('room.property.attach');
+
 Route::get('/rooms', 'RoomController@index')->name('rooms');
 Route::get('/room/{room}', 'RoomController@show')->name('room.show');
 Route::post('/room/{room}', 'RoomController@update')->name('room.update');
@@ -28,6 +31,7 @@ Route::delete('/device/{device}', 'DeviceController@destroy')->name('device.dest
 /**
  * DeviceProperty
  */
+Route::get('/device/properties', 'DevicePropertyController@all')->name('device.properties.all');
 Route::get('/device/{device}/properties', 'DevicePropertyController@index')->name('device.properties');
 Route::get('/device/property/{property}/logs', 'DevicePropertyLogsController@index')->name('device.property.logs');
 Route::get('/device/property/{property}', 'DevicePropertyController@show')->name('device.property.show');

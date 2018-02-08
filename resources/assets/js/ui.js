@@ -5,7 +5,7 @@ import locale from 'element-ui/lib/locale';
 import '../sass/element-variables.scss';
 import {
     DatePicker,
-    Button,
+    //Button,
     Checkbox,
     Upload,
     Switch,
@@ -20,7 +20,6 @@ Vue.component(Switch.name, Switch);
 Vue.component(Upload.name, Upload);
 Vue.component(DatePicker.name, DatePicker)
 Vue.component(Checkbox.name, Checkbox);
-Vue.component(Button.name, Button);
 Vue.use(Loading.directive);
 
 Vue.prototype.$loading = Loading.service;

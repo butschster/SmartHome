@@ -20,6 +20,15 @@ moment.locale(window.settings.locale);
 try {
     window.$ = window.jQuery = require('jquery');
 
+    require('breakpoints-js');
+    require('animsition');
+    require('jquery-asScrollable');
+    require('jquery-asScrollbar');
+    require('jquery-mousewheel');
+    require('../../../node_modules/jquery-asHoverScroll/dist/jquery-asHoverScroll.es');
+    window.Tether = require('tether');
+    window.screenfull = require('screenfull');
+
     require('bootstrap');
 } catch (e) {}
 

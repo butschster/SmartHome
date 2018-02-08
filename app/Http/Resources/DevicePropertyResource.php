@@ -24,6 +24,7 @@ class DevicePropertyResource extends Resource
 
         return [
             'id' => $this->id,
+            'device_id' => $this->device_id,
             'type' => (new \ReflectionClass($driver))->getShortName(),
             'key' => $this->key,
             'value' => $this->value,

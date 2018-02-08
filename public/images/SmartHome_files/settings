@@ -1,0 +1,1 @@
+window.settings = {"asset_url":"http:\/\/localhost\/","locale":"ru","timezone":"Europe\/Moscow","websocket":{"host":"https:\/\/butschpc.local:6370"},"debug":true,"user":{"id":"be348375-a997-48d2-bec2-a1b47c740c83","name":"Administrator","email":"admin@site.com","avatar":"\/svg\/user.svg"}}

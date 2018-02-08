@@ -12,13 +12,27 @@ use Illuminate\Http\Request;
 class DevicePropertyController extends Controller
 {
     /**
+     * Получение списка всех свойств всех девайсов
+     *
+     * @return DevicePropertyCollection
+     */
+    public function all(): DevicePropertyCollection
+    {
+        return new DevicePropertyCollection(
+            DeviceProperty::get()
+        );
+    }
+
+    /**
+     * Получение списка всех свойств для девайса
+     *
      * @param Device $device
      * @return DevicePropertyCollection
      */
     public function index(Device $device): DevicePropertyCollection
     {
         return new DevicePropertyCollection(
-            $device->properties()->with('rooms')->get()
+            $device->properties()->get()
         );
     }
 
@@ -28,7 +42,7 @@ class DevicePropertyController extends Controller
      */
     public function show(DeviceProperty $property): DevicePropertyResource
     {
-        return new DevicePropertyResource($property->load('rooms'));
+        return new DevicePropertyResource($property);
     }
 
     /**
@@ -47,6 +61,6 @@ class DevicePropertyController extends Controller
 
         $property->update($validatedData);
 
-        return new DevicePropertyResource($property);
+        return $this->show($property);
     }
 }

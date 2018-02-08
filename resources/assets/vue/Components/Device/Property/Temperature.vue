@@ -1,6 +1,6 @@
 <template>
     <div>
-        <h5>
+        <h5 class="text-primary">
             <i class="fas fa-lg fa-fw" :class="thermometerClass"></i>
             {{ property.name }} <span class="label label-info">{{ property.value }} {{ property.meta.units }}</span>
         </h5>
@@ -16,8 +16,8 @@
 </template>
 
 <script>
-    import PropertyMixin from './mixin';
-    import LogsMixin from './logs';
+    import PropertyMixin from '../Mixins/Property';
+    import LogsMixin from '../Mixins/Logs';
     import LineChart from '../Partials/LineChart';
 
     export default {

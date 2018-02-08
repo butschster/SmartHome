@@ -10,11 +10,19 @@
          * The name of the application.
          */
         name: 'vue-boilerplate',
-
         watch: {
-            // call again the method if the route changes
             '$route'() {
                 this.fetchData();
+            }
+        },
+
+        mounted() {
+            this.fetchData();
+        },
+
+        methods: {
+            fetchData() {
+                setTimeout(() => this.$site().run(), 200);
             }
         },
 
@@ -37,10 +45,6 @@
 
                     this.$notify.info({title: 'Alexa', message: e.message});
                 });
-        },
-
-        methods: {
-
         }
     }
 </script>

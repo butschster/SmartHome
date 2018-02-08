@@ -3,13 +3,13 @@
         <device v-for="device in devices"
                 :device="device"
                 :key="device.id"
-                v-on:updated="updateDevice"
-        ></device>
+        >
+        </device>
     </div>
 </template>
 
 <script>
-    import DeviceRepository from '../../Repositories/Device';
+    import DeviceRepository from 'Repositories/Device';
     import Device from './Item';
 
     export default {
@@ -41,15 +41,6 @@
                 }
 
                 this.loading = false;
-            },
-
-            updateDevice(d) {
-                this.devices = _.map(this.devices, device => {
-                    if (d.id == device.id) {
-                        d.properties = device.properties;
-                        return d;
-                    } else return device;
-                });
             }
         }
     }

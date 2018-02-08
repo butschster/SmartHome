@@ -19,4 +19,14 @@ class DevicePolicy
     {
         return true;
     }
+
+    /**
+     * @param User $user
+     * @param Device $device
+     * @return bool
+     */
+    public function destroy(User $user, Device $device): bool
+    {
+        return true;
+    }
 }

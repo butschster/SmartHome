@@ -1,0 +1,47 @@
+import List from './List';
+import Show from './Show';
+import Create from './Create';
+import Breadcrumbs from 'breadcrumbs/Manager';
+
+import {
+    DASHBOARD,
+    ROOMS_LIST,
+    ROOM_SHOW,
+    ROOM_CREATE,
+} from 'router/actions';
+
+Breadcrumbs.register(ROOM_CREATE, (crumbs, room) => {
+
+    crumbs.parent(ROOMS_LIST);
+    crumbs.push(room.name, {name: ROOM_CREATE});
+
+}).register(ROOM_SHOW, (crumbs, room) => {
+
+    crumbs.parent(ROOMS_LIST);
+    crumbs.push(room.name, {name: ROOM_SHOW, params: {id: room.id}});
+
+}).register(ROOMS_LIST, (crumbs) => {
+
+    crumbs.parent(DASHBOARD);
+    crumbs.push('Помещения', {name: ROOMS_LIST});
+
+});
+
+export default [
+    {
+        path: '/room/create',
+        name: ROOM_CREATE,
+        component: Create
+    },
+
+    {
+        path: '/room/:id',
+        name: ROOM_SHOW,
+        component: Show
+    },
+    {
+        path: '/rooms',
+        name: ROOMS_LIST,
+        component: List
+    },
+];

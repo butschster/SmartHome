@@ -12,10 +12,18 @@
     "devDependencies": {
         "artyom.js": "^1.0.6",
         "axios": "^0.17",
+        "animsition": "^4.0.2",
         "bootstrap": "^4.0.0",
         "babel-plugin-transform-runtime": "^6.23.0",
         "babel-preset-es2015": "^6.24.1",
         "babel-preset-stage-2": "^6.24.1",
+        "breakpoints-js": "^1.0.5",
+        "jquery-asHoverScroll": "^0.3.3",
+        "jquery-asScrollable": "^0.4.9",
+        "jquery-mousewheel": "^3.1.13",
+        "nprogress": "^0.2.0",
+        "screenfull": "^3.3.1",
+        "tether": "^1.4.0",
         "cross-env": "^5.1",
         "element-ui": "^2.1.0",
         "highcharts": "^6.0.6",
@@ -35,6 +43,7 @@
         "vuex-router-sync": "^5.0.0"
     },
     "dependencies": {
-        "compass-mixins": "^0.12.10"
+        "compass-mixins": "^0.12.10",
+        "selectize": "^0.12.4"
     }
 }

@@ -26,7 +26,9 @@ class DeviceController extends Controller
      */
     public function show(Device $device): DeviceResource
     {
-        return new DeviceResource($device->load('properties', 'properties.rooms'));
+        return new DeviceResource(
+            $device->load('properties', 'properties.rooms')
+        );
     }
 
     /**
@@ -37,7 +39,7 @@ class DeviceController extends Controller
      */
     public function update(Request $request, Device $device): DeviceResource
     {
-        //$this->authorize('update', $device);
+        $this->authorize('update', $device);
 
         $validatedData = $request->validate([
             'name' => 'nullable|string',
@@ -46,7 +48,7 @@ class DeviceController extends Controller
 
         $device->update($validatedData);
 
-        return new DeviceResource($device);
+        return $this->show($device);
     }
 
     /**
@@ -55,9 +57,9 @@ class DeviceController extends Controller
      * @throws \Exception
      * @throws \Illuminate\Auth\Access\AuthorizationException
      */
-    public function destroy(Device $device): array
+    public function destroy(Device $device)
     {
-        $this->authorize('delete', $device);
+        $this->authorize('destroy', $device);
 
         $device->delete();
 
