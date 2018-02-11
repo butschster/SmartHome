@@ -5,14 +5,15 @@ namespace App\Commands;
 use App\Commands\Room\SwitchOffCommand;
 use App\Commands\Room\SwitchOnCommand;
 use App\Contracts\Sayable;
-use App\Events\Say;
-use App\Events\SpechCommandHandleError;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Contracts\Foundation\Application;
 use Psr\Log\LoggerInterface;
 
 class Manager
 {
+    /**
+     * @var array
+     */
     protected $commands = [
         'room:switch_on' => SwitchOnCommand::class,
         'room:switch_off' => SwitchOffCommand::class,
@@ -23,10 +24,12 @@ class Manager
      * @var Application
      */
     private $app;
+
     /**
      * @var LoggerInterface
      */
     private $logger;
+
     /**
      * @var Dispatcher
      */
@@ -42,6 +45,29 @@ class Manager
         $this->app = $app;
         $this->logger = $logger;
         $this->events = $events;
+    }
+
+    /**
+     * Получение списка тригеров
+     *
+     * @return array
+     */
+    public function triggers(): array
+    {
+        $triggers = [];
+        foreach ($this->commands as $key => $command) {
+
+            if (method_exists($command, 'triggers')) {
+                $commandTriggres = call_user_func([$command, 'triggers']);
+                if (!is_array($commandTriggres)) {
+                    $commandTriggres = [$commandTriggres];
+                }
+
+                $triggers[$key] = $commandTriggres;
+            }
+        }
+
+        return $triggers;
     }
 
     /**

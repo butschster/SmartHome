@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api;
 
+use App\Entities\User;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserResource;
 use Illuminate\Http\Request;
@@ -22,7 +23,7 @@ class AppController extends Controller
             'timezone' => config('app.timezone'),
             'websocket' => config('broadcasting.websocket'),
             'debug' => config('app.debug'),
-            'user' => new UserResource($request->user())
+            'user' => new UserResource($request->user() ?: new User())
         ]);
 
         return new Response($content, 200, [

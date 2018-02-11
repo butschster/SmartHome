@@ -39,7 +39,7 @@
                         this.crumb.params
                     );
                 } catch (e) {
-                    console.log(e)
+                    console.error(e)
                 }
 
                 return [];

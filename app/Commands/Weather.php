@@ -8,6 +8,19 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class Weather implements Sayable
 {
+    /**
+     * @return array
+     */
+    public static function triggers(): array
+    {
+        return [
+            'какая сегодня погода'
+        ];
+    }
+
+    /**
+     * @var string
+     */
     protected $say;
 
     public function handle()

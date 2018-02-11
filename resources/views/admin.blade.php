@@ -15,13 +15,12 @@
     <link href="https://use.fontawesome.com/releases/v5.0.6/css/all.css" rel="stylesheet">
     <script src="{{ asset('api/settings') }}"></script>
 </head>
-<body>
-    @yield('content')
+<body class="animsition">
+    <main id="admin"></main>
+
     <!-- Scripts -->
     <script src="{{ asset('js/manifest.js') }}"></script>
     <script src="{{ asset('js/vendors.js') }}"></script>
     <script src="{{ asset('js/app.js') }}"></script>
-
-    @yield('scripts')
 </body>
 </html>

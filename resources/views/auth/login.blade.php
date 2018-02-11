@@ -5,7 +5,6 @@
     <div class="page-content">
         <div class="page-brand-info">
 
-
         </div>
 
         <div class="page-login-main">

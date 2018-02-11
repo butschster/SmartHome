@@ -30,6 +30,14 @@ class SpechCommandController extends Controller
     }
 
     /**
+     * @return array
+     */
+    public function triggers()
+    {
+        return $this->manager->triggers();
+    }
+
+    /**
      * @param Request $request
      * @return \Illuminate\Http\JsonResponse
      * @throws \Exception

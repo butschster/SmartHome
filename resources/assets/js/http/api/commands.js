@@ -18,3 +18,11 @@ export function fromSpech(command, text) {
 export function invoke(propertyId, command, parameters) {
     return axios.post(`/api/invoke/${propertyId}/${command}`, {parameters});
 }
+
+/**
+ *
+ * @returns {AxiosPromise<any>}
+ */
+export function triggers() {
+    return axios.get(`/api/spech/triggers`);
+}
