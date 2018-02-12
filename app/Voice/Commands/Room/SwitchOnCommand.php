@@ -1,24 +1,13 @@
 <?php
 
-namespace App\Commands\Room;
+namespace App\Voice\Commands\Room;
 
 use App\Entities\Room;
 use App\Exceptions\SayableException;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 
-class SwitchOffCommand
+class SwitchOnCommand
 {
-    /**
-     * @return array
-     */
-    public static function triggers(): array
-    {
-        return [
-            'выключи свет в *',
-            'выключи свет на *'
-        ];
-    }
-
     /**
      * @param string $roomName
      * @throws SayableException
@@ -31,6 +20,6 @@ class SwitchOffCommand
             throw new SayableException('Помещение не найдено');
         }
 
-        $room->runCommand('switchOff');
+        $room->runCommand('switchOn');
     }
 }

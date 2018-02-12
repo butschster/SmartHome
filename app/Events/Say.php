@@ -35,7 +35,7 @@ class Say implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('spech.command');
+        return new Channel('voice');
     }
 
     /**

@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Commands\Manager;
+use App\Contracts\Voice\Manager as ManagerContract;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Wamania\Snowball\Russian as Stemmer;
 
-class SpechCommandController extends Controller
+class VoiceCommandController extends Controller
 {
     /**
-     * @var Manager
+     * @var ManagerContract
      */
     private $manager;
 
@@ -20,10 +20,10 @@ class SpechCommandController extends Controller
     private $stemmer;
 
     /**
-     * @param Manager $manager
+     * @param ManagerContract $manager
      * @param Stemmer $stemmer
      */
-    public function __construct(Manager $manager, Stemmer $stemmer)
+    public function __construct(ManagerContract $manager, Stemmer $stemmer)
     {
         $this->manager = $manager;
         $this->stemmer = $stemmer;
@@ -32,9 +32,9 @@ class SpechCommandController extends Controller
     /**
      * @return array
      */
-    public function triggers()
+    public function commands()
     {
-        return $this->manager->triggers();
+        return $this->manager->voiceCommands();
     }
 
     /**
@@ -42,7 +42,7 @@ class SpechCommandController extends Controller
      * @return \Illuminate\Http\JsonResponse
      * @throws \Exception
      */
-    public function invoke(Request $request)
+    public function handle(Request $request)
     {
         $request->validate([
             'command' => 'required|string',

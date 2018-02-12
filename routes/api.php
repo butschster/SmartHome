@@ -6,8 +6,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('/invoke/spech', 'SpechCommandController@invoke')->name('command.spech.invoke');
-Route::get('/spech/triggers', 'SpechCommandController@triggers')->name('command.spech.triggers');
+Route::post('/voice/command', 'VoiceCommandController@handle')->name('voice.command.handle');
+Route::get('/voice/commands', 'VoiceCommandController@commands')->name('voice.commands');
 
 Route::get('/weather/current', 'WeatherController@show')->name('weather.current');
 
@@ -39,7 +39,7 @@ Route::get('/device/{device}/properties', 'DevicePropertyController@index')->nam
 Route::get('/device/property/{property}/logs', 'DevicePropertyLogsController@index')->name('device.property.logs');
 Route::get('/device/property/{property}', 'DevicePropertyController@show')->name('device.property.show');
 Route::post('/device/property/{property}', 'DevicePropertyController@update')->name('device.property.update');
-Route::post('/invoke/{property}/{command}', 'DevicePropertyCommandController@invoke')->name('command.invoke');
+Route::post('/device/handle/{property}/{command}', 'DevicePropertyCommandController@invoke')->name('command.invoke');
 
 
 Route::get('settings', ['uses' => 'AppController@settings']);

@@ -2,7 +2,10 @@
 
 namespace App\Providers;
 
+use App\Voice\Commands\Manager;
 use Illuminate\Support\ServiceProvider;
+
+use App\Contracts\Voice\Manager as ManagerContract;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -13,7 +16,17 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        $this->app->singleton(ManagerContract::class, function ($app) {
+            $manager = new Manager(
+                $app,
+                $app[\Illuminate\Contracts\Events\Dispatcher::class],
+                $app[\Psr\Log\LoggerInterface::class]
+            );
+
+            $manager->setCommands(config('commands', []));
+
+            return $manager;
+        });
     }
 
     /**

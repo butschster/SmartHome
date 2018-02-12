@@ -1,12 +1,12 @@
 <script>
-    import CommandsRepository from 'Repositories/Commands';
+    import VoiceCommandsRepository from 'Repositories/VoiceCommands';
 
     export default {
         name: "voice-commands",
         mounted() {
             this.initVoiceCommands();
 
-            Echo.channel('spech.command')
+            Echo.channel('voice')
                 .listen('.say', e => {
                     artyom.say(e.message);
 
@@ -16,28 +16,32 @@
         methods: {
             async initVoiceCommands() {
                 try {
-                    let commands = await CommandsRepository.triggers();
-                    _.each(commands, (command, key) => {
-                        let isSmart = false;
+                    let commands = await VoiceCommandsRepository.list();
 
-                        _.each(command, (cmd) => {
-                            if (cmd.includes('*')) {
-                                isSmart = true;
-                            }
-                        });
+                    _.each(commands, (params, key) => {
+                        let isSmart = params.smart,
+                            triggers = params.triggers;
 
                         if (isSmart) {
-                            artyom.on(command, true).then((i, wildcard) => {
-                                this.$api.commands.fromSpech(key, wildcard);
+                            artyom.on(triggers, true).then((i, text) => {
+                                this.handle(key, text);
                             });
                         } else {
-                            artyom.on(command).then((i) => {
-                                this.$api.commands.fromSpech(key);
+                            artyom.on(triggers).then((i) => {
+                                this.handle(key);
                             });
                         }
                     });
                 } catch (e) {
-                    this.$message.error(e.message);
+                    console.error(e);
+                }
+            },
+
+            async handle(command, data) {
+                try {
+                    await VoiceCommandsRepository.handle(command, data);
+                } catch (e) {
+                    console.error(e);
                 }
             }
         }

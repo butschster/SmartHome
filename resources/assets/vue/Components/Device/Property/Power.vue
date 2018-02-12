@@ -21,7 +21,7 @@
         mixins: [PropertyMixin],
         methods: {
             async toggle() {
-                await this.$api.commands.invoke(this.property.id, 'toggle');
+                await this.$api.commands.handleDeviceCommand(this.property.id, 'toggle');
 
                 this.property.value == 1
                     ? this.property.value = 0

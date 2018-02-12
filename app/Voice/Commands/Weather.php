@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Commands;
+namespace App\Voice\Commands;
 
 use App\Contracts\Sayable;
 use App\Exceptions\SayableException;
@@ -8,16 +8,6 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class Weather implements Sayable
 {
-    /**
-     * @return array
-     */
-    public static function triggers(): array
-    {
-        return [
-            'какая сегодня погода'
-        ];
-    }
-
     /**
      * @var string
      */

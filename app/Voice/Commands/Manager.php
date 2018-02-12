@@ -1,24 +1,26 @@
 <?php
 
-namespace App\Commands;
+namespace App\Voice\Commands;
 
-use App\Commands\Room\SwitchOffCommand;
-use App\Commands\Room\SwitchOnCommand;
+use App\Contracts\Voice\Manager as ManagerContract;
 use App\Contracts\Sayable;
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Contracts\Foundation\Application;
 use Psr\Log\LoggerInterface;
 
-class Manager
+class Manager implements ManagerContract
 {
     /**
      * @var array
      */
-    protected $commands = [
-        'room:switch_on' => SwitchOnCommand::class,
-        'room:switch_off' => SwitchOffCommand::class,
-        'weather' => Weather::class
-    ];
+    protected $commands = [];
+
+    /**
+     * Голосовые команды
+     *
+     * @var array
+     */
+    protected $voiceCommands = [];
 
     /**
      * @var Application
@@ -48,26 +50,34 @@ class Manager
     }
 
     /**
-     * Получение списка тригеров
+     * @param array $commands
+     * @return void
+     */
+    public function setCommands(array $commands): void
+    {
+        foreach ($commands as $class => $params) {
+            $command = $params['command'];
+
+            $this->commands[$command] = $class;
+
+            $triggers = array_get($params, 'voice.triggers');
+            if (is_array($triggers)) {
+                $this->voiceCommands[$command] = [
+                    'smart' => array_get($params, 'voice.smart', false),
+                    'triggers' => $triggers
+                ];
+            }
+        }
+    }
+
+    /**
+     * Получение списка голосовых комманд
      *
      * @return array
      */
-    public function triggers(): array
+    public function voiceCommands(): array
     {
-        $triggers = [];
-        foreach ($this->commands as $key => $command) {
-
-            if (method_exists($command, 'triggers')) {
-                $commandTriggres = call_user_func([$command, 'triggers']);
-                if (!is_array($commandTriggres)) {
-                    $commandTriggres = [$commandTriggres];
-                }
-
-                $triggers[$key] = $commandTriggres;
-            }
-        }
-
-        return $triggers;
+        return $this->voiceCommands;
     }
 
     /**
