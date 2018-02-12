@@ -11,6 +11,9 @@ Route::get('/voice/commands', 'VoiceCommandController@commands')->name('voice.co
 
 Route::get('/weather/current', 'WeatherController@show')->name('weather.current');
 
+
+Route::get('/mqtt/logs', 'MqttController@logs')->name('mqtt.logs');
+
 /**
  * Room
  */

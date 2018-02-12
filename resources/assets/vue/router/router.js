@@ -3,10 +3,11 @@ import PageNotFound from 'Pages/404';
 import Breadcrumbs from 'Breadcrumbs';
 import RoomsRoutes from 'Pages/Rooms/routes';
 import DevicesRoutes from 'Pages/Devices/routes';
+import MqttLogsRoutes from 'Pages/MqttLogs/routes';
 
 import {
     DASHBOARD,
-    PAGE_NOT_FOUND, ROOM_SHOW
+    PAGE_NOT_FOUND
 } from "./actions";
 
 class Router {
@@ -36,7 +37,8 @@ class Router {
 
 let router = new Router([
     RoomsRoutes,
-    DevicesRoutes
+    DevicesRoutes,
+    MqttLogsRoutes
 ]);
 
 router.register([

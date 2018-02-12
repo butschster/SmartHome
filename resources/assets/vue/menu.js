@@ -1,12 +1,13 @@
 import {
     DASHBOARD,
     ROOMS_LIST,
-    DEVICES_LIST
+    DEVICES_LIST,
+    MQTT_LOGS
 } from 'router/actions';
 
 export default [
     {
-        title: 'General',
+        title: '',
         items: [
             {
                 title: 'Dashboard',
@@ -22,6 +23,11 @@ export default [
                 title: 'Помещения',
                 icon: 'fas fa-cubes',
                 route: {name: ROOMS_LIST}
+            },
+            {
+                title: 'Логи MQTT',
+                icon: 'fas fa-archive',
+                route: {name: MQTT_LOGS}
             }
         ]
     }

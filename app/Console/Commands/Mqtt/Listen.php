@@ -3,6 +3,7 @@
 namespace App\Console\Commands\Mqtt;
 
 use App\Contracts\Mqtt\Client as ClientContract;
+use App\Events\Mqtt\Message;
 use App\Exceptions\MqttRouteNotFoundException;
 use App\Contracts\Mqtt\Router as RouterContract;
 use App\Exceptions\UnknownDeviceException;
@@ -38,6 +39,8 @@ class Listen extends Command
 
         $client->listen(function ($topic, $message) use ($router) {
             $this->info(sprintf('[%s] Message: %s => %s', now()->toDateTimeString(), $topic, $message));
+
+            event(new Message($topic, $message));
 
             try {
                 $router->dispatch(new Response($topic, $message));

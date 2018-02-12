@@ -3,6 +3,7 @@ import * as device from './api/device';
 import * as device_property from './api/device_property';
 import * as room from './api/room';
 import * as weather from './api/weather';
+import * as mqtt from './api/mqtt';
 
 export default (function () {
 
@@ -11,7 +12,8 @@ export default (function () {
         device,
         device_property,
         room,
-        weather
+        weather,
+        mqtt
     };
 
     class ApiMethods {

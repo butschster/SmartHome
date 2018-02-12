@@ -8,4 +8,6 @@ export const DEVICES_LIST = 'devices';
 export const DEVICE_SHOW = 'device.show';
 export const DEVICE_PROPERTY_SHOW = 'device.property.show';
 
+export const MQTT_LOGS = 'mqtt.logs';
+
 export const PAGE_NOT_FOUND = 'page-not-found';

@@ -29,7 +29,10 @@ class EventServiceProvider extends ServiceProvider
         ],
         \App\Events\SpechCommandHandleError::class => [
             \App\Listeners\NotifyAboutSpechCommandNotFound::class
-        ]
+        ],
+        \App\Events\Mqtt\Message::class => [
+            \App\Listeners\Mqtt\LogMessages::class,
+        ],
     ];
 
     /**
