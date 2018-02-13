@@ -35,7 +35,7 @@
 
 <script>
     import {MQTT_LOGS} from "router/actions";
-    import Mqttrepository from 'Repositories/Mqtt';
+    import MqttRepository from 'Repositories/Mqtt';
     import Pagination from 'Components/Layouts/Partials/Pagination';
 
     export default {
@@ -70,7 +70,7 @@
                 this.loading = true;
 
                 try {
-                    [this.logs, this.pagination, this.links] = await Mqttrepository.logs({page});
+                    [this.logs, this.pagination, this.links] = await MqttRepository.logs({page});
                 } catch (e) {
                     this.$message.error(e.message);
                 }

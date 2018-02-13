@@ -120,8 +120,18 @@ class DeviceProperty extends Model
      */
     public function logValue()
     {
-        $this->logs()->create([
-            'value' => $this->value
-        ]);
+        if ($this->isDirty('value')) {
+            $this->logs()->create([
+                'value' => $this->getOriginal('value')
+            ]);
+        }
+    }
+
+    /**
+     * @return string|null
+     */
+    public function prevValue()
+    {
+        return $this->logs()->latest()->value('value');
     }
 }

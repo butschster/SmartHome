@@ -9,6 +9,15 @@ export function all() {
 
 /**
  *
+ * @param {UUID} id
+ * @returns {AxiosPromise<any>}
+ */
+export function rooms(id) {
+    return axios.get(`/api/device/property/${id}/rooms`);
+}
+
+/**
+ *
  * @param {UUID} device
  * @returns {AxiosPromise<any>}
  */

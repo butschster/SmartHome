@@ -1,5 +1,5 @@
 <template>
-    <main-layout title="Помещения" class="app-work" :classes="{page: 'bg-white'}" :crumb="crumb">
+    <main-layout title="Помещения" icon="fas fa-cubes" class="app-work" :classes="{page: 'bg-white'}" :crumb="crumb">
         <page-content class="page-content-table">
             <div class="panel">
                 <search-form v-model="searchQuery" placeholder="Поиск"></search-form>

@@ -8,6 +8,34 @@ export function list() {
 }
 
 /**
+ * @param {UUID} id
+ * @returns {AxiosPromise<any>}
+ */
+export function properties(id) {
+    return axios.get(`/api/room/${id}/properties`);
+}
+
+/**
+ *
+ * @param {UUID} roomId
+ * @param {UUID}  propertyId
+ * @returns {AxiosPromise<any>}
+ */
+export function attachProperty(roomId, propertyId) {
+    return axios.post(`/api/room/${roomId}/property`, {id: propertyId});
+}
+
+/**
+ *
+ * @param {UUID} roomId
+ * @param {UUID}  propertyId
+ * @returns {AxiosPromise<any>}
+ */
+export function detachProperty(roomId, propertyId) {
+    return axios.delete(`/api/room/${roomId}/property`, {params: {id: propertyId}});
+}
+
+/**
  *
  * @param {UUID} id
  * @returns {AxiosPromise<any>}

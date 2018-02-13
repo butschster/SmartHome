@@ -13,8 +13,7 @@
                 this.loading = true;
 
                 try {
-                    let response = await Repository.list();
-                    this.options = response.data.data;
+                    this.options = await Repository.list();
                 } catch (e) {
                     this.$message.error(e.message);
                 }

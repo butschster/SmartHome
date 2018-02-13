@@ -1,10 +1,10 @@
 <template>
     <div class="card border" v-if="hasProperties">
         <div class="card-header">
-            <h5>Датчики</h5>
+            Датчики
         </div>
 
-        <div class="list-group">
+        <div class="list-group mb-0">
             <property v-for="property in properties" :property="property" :key="property.id"></property>
         </div>
     </div>

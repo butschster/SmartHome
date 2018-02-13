@@ -6,6 +6,7 @@ export const ROOM_CREATE = 'room.create';
 
 export const DEVICES_LIST = 'devices';
 export const DEVICE_SHOW = 'device.show';
+export const DEVICE_LOGS = 'device.logs';
 export const DEVICE_PROPERTY_SHOW = 'device.property.show';
 
 export const MQTT_LOGS = 'mqtt.logs';

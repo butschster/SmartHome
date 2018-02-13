@@ -24,7 +24,7 @@ class DevicePropertyChangedObserver
     /**
      * @param DeviceProperty $property
      */
-    public function updated(DeviceProperty $property)
+    public function updating(DeviceProperty $property)
     {
         $this->events->dispatch(new DevicePropertyChanged($property));
     }

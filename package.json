@@ -42,6 +42,7 @@
         "vuex": "^3.0.1",
         "vuex-router-sync": "^5.0.0",
         "compass-mixins": "^0.12.10",
-        "selectize": "^0.12.4"
+        "selectize": "^0.12.4",
+        "@fortawesome/fontawesome": "^1.1.3"
     }
 }

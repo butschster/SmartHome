@@ -1,5 +1,5 @@
 <template>
-    <main-layout title="Dashboard">
+    <main-layout>
         <page-content>
             <weather></weather>
             <devices></devices>

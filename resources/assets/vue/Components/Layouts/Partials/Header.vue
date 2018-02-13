@@ -1,12 +1,12 @@
 <template>
     <div class="page-header">
         <h1 class="page-title">
-            <icon :name="icon" v-if="icon"></icon> {{ title }}
+            <icon :name="icon" v-if="hasIcon"></icon> {{ title }}
         </h1>
 
-        <slot></slot>
-
         <breadcrumbs :crumb="crumb" v-if="hasCrumbs"></breadcrumbs>
+
+        <slot></slot>
     </div>
 </template>
 
@@ -26,6 +26,9 @@
         computed: {
             hasCrumbs() {
                 return !_.isEmpty(this.crumb);
+            },
+            hasIcon() {
+                return !_.isEmpty(this.icon);
             }
         }
     }

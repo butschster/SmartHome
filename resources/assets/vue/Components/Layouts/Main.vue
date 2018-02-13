@@ -4,7 +4,7 @@
         <sidebar></sidebar>
 
         <div class="page" :class="pageClasses">
-            <page-header v-if="title" :title="title" :crumb="crumb"></page-header>
+            <page-header v-if="title" :title="title" :icon="icon" :crumb="crumb"></page-header>
 
             <slot></slot>
         </div>
@@ -30,6 +30,10 @@
 
         props: {
             title: {
+                required: false,
+                type: String
+            },
+            icon: {
                 required: false,
                 type: String
             },

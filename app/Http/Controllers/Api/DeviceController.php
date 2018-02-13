@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Entities\Device;
 use App\Http\Resources\DeviceCollection;
+use App\Http\Resources\DeviceLogsCollection;
 use App\Http\Resources\DeviceResource;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -17,6 +18,17 @@ class DeviceController extends Controller
     {
         return new DeviceCollection(
             Device::with('properties')->get()
+        );
+    }
+
+    /**
+     * @param Device $device
+     * @return DeviceLogsCollection
+     */
+    public function logs(Device $device): DeviceLogsCollection
+    {
+        return new DeviceLogsCollection(
+            $device->logs()->latest()->paginate()
         );
     }
 

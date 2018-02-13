@@ -9,12 +9,12 @@
             getLabel() {
                 return 'name';
             },
+
             async loadOptions() {
                 this.loading = true;
 
                 try {
-                    let response = await Repository.all();
-                    this.options = response.data.data;
+                    this.options = await Repository.all();
                 } catch (e) {
                     this.$message.error(e.message);
                 }

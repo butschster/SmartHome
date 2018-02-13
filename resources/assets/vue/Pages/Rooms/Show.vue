@@ -1,5 +1,5 @@
 <template>
-    <main-layout :title="room.name" v-loading="loading" :crumb="crumb">
+    <main-layout :title="`Помещение ${room.name}`" v-loading="loading" :crumb="crumb">
         <page-content>
             <room-form :room="room" v-on:save="update"></room-form>
 

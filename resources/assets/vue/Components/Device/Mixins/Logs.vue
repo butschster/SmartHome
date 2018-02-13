@@ -2,6 +2,13 @@
     import DevicePropertyRepository from '../../../Repositories/DeviceProperty';
 
     export default {
+        props: {
+            property: {
+                required: true,
+                type: Object,
+                default: DevicePropertyRepository.structure
+            }
+        },
         data() {
             return {
                 logs: []
@@ -19,6 +26,10 @@
             async getLogs() {
                 try {
                     this.logs = await DevicePropertyRepository.logs(this.property.id);
+                    this.logs.push({
+                        time: moment().valueOf(),
+                        value: this.property.value
+                    });
                 } catch (e) {
 
                 }

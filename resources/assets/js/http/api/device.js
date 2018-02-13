@@ -8,6 +8,14 @@ export function list() {
 }
 
 /**
+ * @param {UUID} id
+ * @returns {AxiosPromise<any>}
+ */
+export function logs(id, params) {
+    return axios.get(`/api/device/${id}/logs`, {params});
+}
+
+/**
  *
  * @param {UUID} id
  * @returns {AxiosPromise<any>}

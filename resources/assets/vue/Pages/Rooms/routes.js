@@ -30,17 +30,31 @@ export default [
     {
         path: '/room/create',
         name: ROOM_CREATE,
-        component: Create
+        component: Create,
+        meta: {
+            title: 'Новое помещение',
+            icon: 'fas fa-cubes'
+        }
     },
 
     {
         path: '/room/:id',
         name: ROOM_SHOW,
-        component: Show
+        component: Show,
+        meta: {
+            title(room) {
+                return room.name
+            },
+            icon: 'fas fa-cubes'
+        }
     },
     {
         path: '/rooms',
         name: ROOMS_LIST,
-        component: List
+        component: List,
+        meta: {
+            title: 'Помещения',
+            icon: 'fas fa-cubes'
+        }
     },
 ];

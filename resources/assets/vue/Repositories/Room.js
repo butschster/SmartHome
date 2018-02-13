@@ -24,6 +24,32 @@ export default {
         }
     },
 
+    async properties(roomId) {
+        try {
+            let response = await Vue.$api.room.properties(roomId);
+
+            return response.data.data;
+        } catch (e) {
+            throw new Error('Не удалось загрузить список датчиков помещения.');
+        }
+    },
+
+    async attachProperty(roomId, propertyId) {
+        try {
+            await Vue.$api.room.attachProperty(roomId, propertyId);
+        } catch (e) {
+            throw new Error('Не удалось привязать датчик к помещению.');
+        }
+    },
+
+    async detachProperty(roomId, propertyId) {
+        try {
+            await Vue.$api.room.detachProperty(roomId, propertyId);
+        } catch (e) {
+            throw new Error('Не удалось отвязать датчик от помещения.');
+        }
+    },
+
     async show(id) {
         try {
             let response = await Vue.$api.room.show(id);

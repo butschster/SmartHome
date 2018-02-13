@@ -21,6 +21,16 @@ export default {
         }
     },
 
+    async logs(deviceId, params) {
+        try {
+            let response = await Vue.$api.device.logs(deviceId, params);
+
+            return [response.data.data, response.data.meta];
+        } catch (e) {
+            throw new Error(`Не удалось загрузить логи устройств [${deviceId}].`);
+        }
+    },
+
     async show(id) {
         try {
             let response = await Vue.$api.device.show(id);

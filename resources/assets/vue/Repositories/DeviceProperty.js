@@ -26,13 +26,23 @@ export default {
         }
     },
 
+    async rooms(propertyId) {
+        try {
+            let response = await Vue.$api.device_property.rooms(propertyId);
+
+            return response.data.data;
+        } catch (e) {
+            throw new Error(`Не удалось загрузить список помещений для датчика [${id}].`);
+        }
+    },
+
     async list(deviceId) {
         try {
             let response = await Vue.$api.device_property.list(deviceId);
 
             return response.data.data;
         } catch (e) {
-            throw new Error(`Не удалось загрузить список свойств для устройства [${id}].`);
+            throw new Error(`Не удалось загрузить список датчиков для устройства [${id}].`);
         }
     },
 
@@ -42,7 +52,7 @@ export default {
 
             return response.data.data;
         } catch (e) {
-            throw new Error(`Не удалось загрузить лог для устройства [${id}].`);
+            throw new Error(`Не удалось загрузить лог для датчика [${id}].`);
         }
     },
 

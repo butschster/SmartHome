@@ -26,6 +26,7 @@ class Kernel extends ConsoleKernel
     {
         $schedule->command('weather:sync')->everyThirtyMinutes();
         $schedule->command('mqtt:prune-logs')->daily();
+        $schedule->command('device:prune-logs')->daily();
     }
 
     /**
