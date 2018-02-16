@@ -14,7 +14,7 @@ class CreateWeathersTable extends Migration
     public function up()
     {
         Schema::create('weathers', function (Blueprint $table) {
-            $table->uuid('id');
+            $table->uuid('id')->primary();
 
             $table->string('icon')->default('01d');
             $table->float('temp')->default(0);
@@ -25,7 +25,6 @@ class CreateWeathersTable extends Migration
             $table->integer('weather_id');
             $table->text('weather_description');
 
-            $table->primary('id');
             $table->timestamps();
         });
     }

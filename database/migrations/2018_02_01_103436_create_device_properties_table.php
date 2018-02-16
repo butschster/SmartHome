@@ -14,7 +14,7 @@ class CreateDevicePropertiesTable extends Migration
     public function up()
     {
         Schema::create('device_properties', function (Blueprint $table) {
-            $table->uuid('id');
+            $table->uuid('id')->primary();
 
             $table->uuid('device_id');
             $table->string('key');
@@ -30,7 +30,6 @@ class CreateDevicePropertiesTable extends Migration
                 ->onDelete('cascade');
 
             $table->timestamps();
-            $table->primary('id');
         });
     }
 

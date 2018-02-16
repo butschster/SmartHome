@@ -14,7 +14,7 @@ class CreateDevicesTable extends Migration
     public function up()
     {
         Schema::create('devices', function (Blueprint $table) {
-            $table->uuid('id');
+            $table->uuid('id')->primary();
             $table->string('key', 50);
             $table->string('type', 50);
 
@@ -23,7 +23,6 @@ class CreateDevicesTable extends Migration
 
             $table->timestamps();
             $table->dateTime('last_activity')->nullable();
-            $table->primary('id');
         });
     }
 

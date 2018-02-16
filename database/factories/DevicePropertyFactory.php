@@ -9,6 +9,8 @@ $factory->define(DeviceProperty::class, function (Faker $faker) {
         'device_id' => function () {
             return factory(Device::class)->create()->id;
         },
+        'name' => $faker->sentence,
+        'description' => $faker->paragraph,
         'key' => $faker->text,
         'value' => $faker->randomNumber()
     ];

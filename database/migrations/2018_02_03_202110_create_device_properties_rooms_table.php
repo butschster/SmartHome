@@ -17,7 +17,7 @@ class CreateDevicePropertiesRoomsTable extends Migration
             $table->uuid('device_property_id');
             $table->uuid('room_id');
 
-            $table->unique(['device_property_id', 'room_id']);
+            $table->primary(['device_property_id', 'room_id']);
 
             $table->foreign('device_property_id')
                 ->references('id')

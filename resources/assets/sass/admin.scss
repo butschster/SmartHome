@@ -1,10 +1,14 @@
 // Fonts
 @import url("https://fonts.googleapis.com/css?family=Raleway:300,400,600");
 @import "remark/core/site";
-@import "vendors/owfont";
+
+@import "fonts/weather/bootstrap";
+@import "fonts/openiconic/bootstrap";
+
 @import "fonts/fontawesome/fontawesome";
 @import "fonts/fontawesome/fa-regular";
 @import "fonts/fontawesome/fa-solid";
+
 @import "remark/vendor/asscrollable/asScrollable";
 @import "remark/vendor/slidepanel/slidePanel";
 @import "remark/vendor/nprogress/nprogress";

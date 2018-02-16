@@ -14,7 +14,7 @@ class CreateMqttLogsTable extends Migration
     public function up()
     {
         Schema::create('mqtt_logs', function (Blueprint $table) {
-            $table->uuid('id');
+            $table->uuid('id')->primary();
             $table->string('topic');
             $table->text('message');
             $table->timestamps();

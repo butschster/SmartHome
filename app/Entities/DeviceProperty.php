@@ -56,6 +56,14 @@ class DeviceProperty extends Model
     }
 
     /**
+     * @return HasMany
+     */
+    public function scenarios(): HasMany
+    {
+        return $this->hasMany(Scenario::class);
+    }
+
+    /**
      * Ссылка на устройство
      *
      * @return BelongsTo

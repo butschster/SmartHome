@@ -44,5 +44,8 @@
         "compass-mixins": "^0.12.10",
         "selectize": "^0.12.4",
         "@fortawesome/fontawesome": "^1.1.3"
+    },
+    "dependencies": {
+        "vue-query-builder": "^0.4.0"
     }
 }

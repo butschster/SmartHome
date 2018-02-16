@@ -36,6 +36,7 @@
     top: 0;
 
     height: auto;
+    min-width: 400px;
     min-height: 100%;
     padding: 150px 60px 180px;
     color: $text-color;
@@ -107,6 +108,7 @@
     .page-login-main {
       padding-top: 60px;
       width: 100%;
+      min-width: auto;
     }
 
     form {

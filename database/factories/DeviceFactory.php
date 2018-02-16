@@ -9,6 +9,9 @@ $factory->define(Device::class, function (Faker $faker) {
 
     return [
         'key' => $faker->uuid,
-        'type' => $faker->randomElement($types)
+        'type' => $faker->randomElement($types),
+        'name' => $faker->sentence,
+        'description' => $faker->paragraph,
+        'last_activity' => $faker->dateTime
     ];
 });

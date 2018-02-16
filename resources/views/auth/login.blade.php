@@ -8,41 +8,41 @@
         </div>
 
         <div class="page-login-main">
-
             <form class="form-horizontal" method="POST" action="{{ route('login') }}">
                 {{ csrf_field() }}
 
                 <div class="form-group">
                     <label class="sr-only" for="inputEmail">Email</label>
-                    <input id="email" type="email" placeholder="Email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}"
-                            name="email" value="{{ old('email') }}" required autofocus>
+                    <input id="inputEmail" type="email" placeholder="Email" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}"
+                            name="email" value="{{ old('email') }}" autofocus>
 
                     @if ($errors->has('email'))
-                        <div class="invalid-feedback">
-                            <strong>{{ $errors->first('email') }}</strong>
-                        </div>
+                    <div class="invalid-feedback">
+                        <strong>{{ $errors->first('email') }}</strong>
+                    </div>
                     @endif
                 </div>
                 <div class="form-group">
-                    <label class="sr-only" for="inputPassword">Password</label>
-                    <input id="password" type="password" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}"
-                            name="password" placeholder="Password" value="{{ old('password') }}" required>
+                    <label class="sr-only" for="inputPassword">Пароль</label>
+                    <input id="inputPassword" type="password" class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}"
+                            name="password" placeholder="Пароль" value="{{ old('password') }}">
 
                     @if ($errors->has('password'))
-                        <div class="invalid-feedback">
-                            <strong>{{ $errors->first('password') }}</strong>
-                        </div>
+                    <div class="invalid-feedback">
+                        <strong>{{ $errors->first('password') }}</strong>
+                    </div>
                     @endif
                 </div>
                 <div class="form-group clearfix">
-                    <div class="checkbox-custom checkbox-inline checkbox-primary float-left">
-                        <input type="checkbox" id="rememberMe" class="form-check-input"
+                    <div class="custom-control custom-checkbox checkbox-primary float-left">
+                        <input type="checkbox" id="rememberMe" class="custom-control-input"
                                name="rememberMe" {{ old('remember') ? 'checked' : '' }}>
-                        <label for="rememberMe">Remember me</label>
+                        <label for="rememberMe" class="custom-control-label">Запомнить меня</label>
                     </div>
-                    <a class="float-right" href="{{ route('password.request') }} ">Forgot password?</a>
+
+                    <small class="float-right"><a href="{{ route('password.request') }} ">Забыли пароль?</a></small>
                 </div>
-                <button type="submit" class="btn btn-primary btn-block">Sign in</button>
+                <button type="submit" class="btn btn-primary btn-block">Войти</button>
             </form>
         </div>
     </div>
