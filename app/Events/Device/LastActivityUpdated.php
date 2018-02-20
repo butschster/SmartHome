@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Events;
+namespace App\Events\Device;
 
 use App\Entities\Device;
 use App\Http\Resources\DeviceResource;
@@ -10,7 +10,7 @@ use Illuminate\Queue\SerializesModels;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 
-class DeviceLastActivityUpdated implements ShouldBroadcast
+class LastActivityUpdated implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 

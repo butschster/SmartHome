@@ -2,12 +2,12 @@
 
 namespace Tests\Unit\Device;
 
-use App\Contracts\Mqtt\Client as MqttClient;
 use App\Entities\Device;
 use App\Entities\DeviceProperty;
+use App\Entities\DevicePropertyLog;
 use Tests\TestCase;
+use Illuminate\Support\Facades\Event;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use Mockery as m;
 
 class DevicePropertyTest extends TestCase
 {
@@ -15,69 +15,84 @@ class DevicePropertyTest extends TestCase
 
     function test_it_has_device()
     {
-        $property = factory(DeviceProperty::class)->create();
+        $property = $this->createDeviceProperty();
 
         $this->assertInstanceOf(Device::class, $property->device);
     }
-    function test_runs_toggle_command()
+
+    function test_a_device_has_properties()
     {
-        $this->app->instance(MqttClient::class, $client = m::mock(MqttClient::class));
+        $device = $this->createDevice();
 
-        /** @var Device $device */
-        $device = factory(Device::class)->create([
-            'type' => \App\Contracts\Mqtt\Device::TYPE_SONOFF_BASIC
-        ]);
+        $this->assertEquals(0, $device->properties()->count());
 
-        /** @var DeviceProperty $property */
-        $property = factory(DeviceProperty::class)->create([
-            'device_id' => $device->id,
-            'key' => 'POWER'
-        ]);
+        $this->createDeviceProperty([
+            'device_id' => $device->id
+        ], 3);
 
-        $client->shouldReceive('publish')->with("cmnd/{$device->key}/$property->key", 1);
-        $property->runCommand('toggle');
-
-        $property->value = 1;
-
-        $client->shouldReceive('publish')->with("cmnd/{$device->key}/$property->key", 0);
-        $property->runCommand('toggle');
+        $this->assertEquals(3, $device->properties()->count());
     }
 
-    function test_runs_switchOn_command()
+    function test_a_device_can_creates_allowed_properties_by_key_value()
     {
-        $this->app->instance(MqttClient::class, $client = m::mock(MqttClient::class));
+        $device = $this->createTestDevice();
 
-        /** @var Device $device */
-        $device = factory(Device::class)->create([
-            'type' => \App\Contracts\Mqtt\Device::TYPE_SONOFF_BASIC
+        Event::fake([
+            \App\Events\DeviceProperty\Changed::class
         ]);
 
-        /** @var DeviceProperty $property */
-        $property = factory(DeviceProperty::class)->create([
-            'device_id' => $device->id,
-            'key' => 'POWER'
+        $device->setProperties([
+            'test' => 'test_value',
+            'ignored' => 'test_value1'
         ]);
 
-        $client->shouldReceive('publish')->with("cmnd/{$device->key}/$property->key", 1);
-        $property->runCommand('switchOn');
+        Event::assertNotDispatched(\App\Events\DeviceProperty\Changed::class);
+
+        $this->assertEquals(1, $device->properties()->count());
+
+        $table = (new DeviceProperty)->getTable();
+        $this->assertDatabaseHas($table, ['device_id' => $device->id, 'key' => 'test', 'value' => 'test_value']);
+        $this->assertDatabaseMissing($table, ['device_id' => $device->id, 'key' => 'ignored', 'value' => 'test_value1']);
     }
 
-    function test_runs_switchOff_command()
+    function test_a_device_should_updates_properties_if_they_exists()
     {
-        $this->app->instance(MqttClient::class, $client = m::mock(MqttClient::class));
+        $device = $this->createTestDevice();
 
-        /** @var Device $device */
-        $device = factory(Device::class)->create([
-            'type' => \App\Contracts\Mqtt\Device::TYPE_SONOFF_BASIC
+        Event::fake([
+            \App\Events\DeviceProperty\Changed::class
         ]);
 
-        /** @var DeviceProperty $property */
-        $property = factory(DeviceProperty::class)->create([
-            'device_id' => $device->id,
-            'key' => 'POWER'
-        ]);
+        $device->setProperties(['test' => 'test_value']);
+        $device->setProperties(['test' => 'test_value2']);
 
-        $client->shouldReceive('publish')->with("cmnd/{$device->key}/$property->key", 0);
-        $property->runCommand('switchOff');
+        Event::assertDispatched(\App\Events\DeviceProperty\Changed::class, 1);
+
+        $this->assertEquals(1, $device->properties()->count());
+
+        $table = (new DeviceProperty)->getTable();
+        $this->assertDatabaseHas($table, ['device_id' => $device->id, 'key' => 'test', 'value' => 'test_value2']);
+    }
+
+    function test_loggable_property_should_log_changed_value()
+    {
+        $device = $this->createTestDevice();
+
+        $device->setProperties(['loggable' => 'test_value']);
+        $device->setProperties(['loggable' => 'test_value2']);
+
+        $logTable = (new DevicePropertyLog)->getTable();
+        $this->assertDatabaseHas($logTable, ['device_property_id' => $device->properties->first()->id, 'value' => 'test_value']);
+    }
+
+    function test_a_non_loggable_property_shouldnot_log_changed_value()
+    {
+        $device = $this->createTestDevice();
+
+        $device->setProperties(['test' => 'test_value']);
+        $device->setProperties(['test' => 'test_value2']);
+
+        $logTable = (new DevicePropertyLog)->getTable();
+        $this->assertDatabaseMissing($logTable, ['device_property_id' => $device->properties->first()->id, 'value' => 'test_value']);
     }
 }

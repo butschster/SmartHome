@@ -3,7 +3,6 @@
 namespace App\Entities;
 
 use App\Contracts\Mqtt\Device as DeviceDriverContract;
-use App\Events\DeviceLastActivityUpdated;
 use App\Exceptions\UnknownDeviceException;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -79,19 +78,20 @@ class Device extends Model
         $driver = $this->driver();
 
         foreach ($driver->allowedProperties() as $property => $class) {
-
             /** @var \App\Contracts\Mqtt\DeviceProperty $propertyObject */
             $propertyObject = app($class);
             $value = $propertyObject->transform(
                 array_get($data, $property)
             );
 
-            $this->properties()->updateOrCreate([
-                'key' => $property,
-            ], [
-                'value' => $value
-            ]);
+            if(is_null($value)) {
+                continue;
+            }
 
+            $this->properties()->updateOrCreate(
+                ['key' => $property],
+                ['value' => $value]
+            );
         }
     }
 
@@ -138,6 +138,6 @@ class Device extends Model
         $this->last_activity = now();
         $this->save();
 
-        event(new DeviceLastActivityUpdated($this));
+        event(new \App\Events\Device\LastActivityUpdated($this));
     }
 }

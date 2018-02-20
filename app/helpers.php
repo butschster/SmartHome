@@ -13,6 +13,14 @@ function response_ok(): JsonResponse
 }
 
 /**
+ * @return JsonResponse
+ */
+function response_error(int $status = 404): JsonResponse
+{
+    return new JsonResponse(['status' => 'fail'], $status);
+}
+
+/**
  * @param $message
  */
 function say($message)

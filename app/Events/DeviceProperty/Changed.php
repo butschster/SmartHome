@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Events;
+namespace App\Events\DeviceProperty;
 
 use App\Entities\DeviceProperty;
 use App\Http\Resources\DevicePropertyResource;
@@ -10,7 +10,7 @@ use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 
-class DevicePropertyChanged implements ShouldBroadcast
+class Changed implements ShouldBroadcast
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 

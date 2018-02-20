@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Entities\DeviceProperty;
+use App\Exceptions\DevicePropertyCommandNotFound;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 
@@ -20,7 +21,11 @@ class DevicePropertyCommandController extends Controller
             'parameters' => 'nullable|array'
         ]);
 
-        $property->runCommand($command, $request->input('parameters', []));
+        try {
+            $property->runCommand($command, $request->input('parameters', []));
+        } catch (DevicePropertyCommandNotFound $e) {
+            return response_error();
+        }
 
         return response_ok();
     }

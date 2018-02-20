@@ -18,14 +18,14 @@ class EventServiceProvider extends ServiceProvider
      * @var array
      */
     protected $listen = [
-        \App\Events\DevicePropertyChanged::class => [
+        \App\Events\DeviceProperty\Changed::class => [
             \App\Listeners\LogDevicePropertyValues::class
         ],
         \App\Events\DeviceRegistered::class => [
             \App\Listeners\NotifyAboutNewDevice::class
         ],
-        \App\Events\DevicePing::class => [
-            \App\Listeners\UpdateLastDeviceActivity::class
+        \App\Events\Device\Ping::class => [
+            \App\Listeners\Device\UpdateLastActivity::class
         ],
         \App\Events\SpechCommandHandleError::class => [
             \App\Listeners\NotifyAboutSpechCommandNotFound::class
@@ -33,6 +33,9 @@ class EventServiceProvider extends ServiceProvider
         \App\Events\Mqtt\Message::class => [
             \App\Listeners\Mqtt\LogMessages::class,
         ],
+        \App\Events\Device\LastActivityUpdated::class => [
+
+        ]
     ];
 
     /**

@@ -4,8 +4,6 @@ namespace App\Mqtt\Controllers\Sonoff;
 
 use App\Contracts\Mqtt\Response;
 use App\Entities\Device;
-use App\Events\DevicePing;
-
 class BasicTelemetryController
 {
     /**
@@ -14,6 +12,7 @@ class BasicTelemetryController
      * @param Response $response
      * @param string $type
      * @param string $device
+     * @throws \App\Exceptions\UnknownDeviceException
      */
     public function state(Response $response, string $type, string $device)
     {
@@ -21,7 +20,7 @@ class BasicTelemetryController
 
         $device->setProperties($response->toArray());
 
-        event(new DevicePing($device));
+        event(new \App\Events\Device\Ping($device));
 
         $device->log(sprintf('%s: %s', $response->getRoute(), $response->getPayload()));
     }

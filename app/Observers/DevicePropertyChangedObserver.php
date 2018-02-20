@@ -3,7 +3,7 @@
 namespace App\Observers;
 
 use App\Entities\DeviceProperty;
-use App\Events\DevicePropertyChanged;
+use App\Events\DeviceProperty\Changed as DevicePropertyChanged;
 use Illuminate\Contracts\Events\Dispatcher;
 
 class DevicePropertyChangedObserver

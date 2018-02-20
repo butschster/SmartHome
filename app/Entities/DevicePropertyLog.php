@@ -20,6 +20,6 @@ class DevicePropertyLog extends Model
      */
     public function property(): BelongsTo
     {
-        return $this->belongsTo(DeviceProperty::class);
+        return $this->belongsTo(DeviceProperty::class, 'device_property_id');
     }
 }

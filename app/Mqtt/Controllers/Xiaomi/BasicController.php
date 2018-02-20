@@ -3,7 +3,6 @@
 namespace App\Mqtt\Controllers\Xiaomi;
 
 use App\Entities\Device;
-use App\Events\DevicePing;
 use App\Mqtt\Response;
 
 class BasicController
@@ -19,7 +18,7 @@ class BasicController
         $device = Device::register($device, 'xiaomi_' . $type);
         $device->setProperties($response->toArray());
         
-        event(new DevicePing($device));
+        event(new \App\Events\Device\Ping($device));
 
         $device->log(sprintf('%s: %s', $response->getRoute(), $response->getPayload()));
     }

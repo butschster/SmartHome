@@ -4,6 +4,7 @@ namespace App\Entities;
 
 use App\Contracts\Mqtt\Device as DeviceContract;
 use App\Contracts\Mqtt\DeviceProperty as DevicePropertyContract;
+use App\Exceptions\DevicePropertyCommandNotFound;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -45,14 +46,17 @@ class DeviceProperty extends Model
      * @param string $method
      * @param array $parameters
      * @return void
+     * @throws DevicePropertyCommandNotFound
      */
     public function runCommand(string $method, ...$parameters): void
     {
         $commands = $this->getCommands();
 
-        if (isset($commands[$method])) {
-            $this->deviceDriver()->runCommand($this, $method, ...$parameters);
+        if (!isset($commands[$method])) {
+            throw new DevicePropertyCommandNotFound($method);
         }
+
+        $this->deviceDriver()->runCommand($this, $method, ...$parameters);
     }
 
     /**
@@ -136,10 +140,20 @@ class DeviceProperty extends Model
     }
 
     /**
+     * Получение предыдущего значения (Если оно логируется)
+     *
      * @return string|null
      */
     public function prevValue()
     {
         return $this->logs()->latest()->value('value');
+    }
+
+    /**
+     * @return null|string
+     */
+    public function getPrevValueAttribute()
+    {
+        return $this->prevValue();
     }
 }
