@@ -4,13 +4,13 @@ namespace Tests;
 
 use Illuminate\Foundation\Testing\TestCase as BaseTestCase;
 use Tests\Helpers\DeviceTrait;
+use Tests\Helpers\RommTrait;
 
 abstract class TestCase extends BaseTestCase
 {
     use CreatesApplication,
-        DeviceTrait;
-
-
+        DeviceTrait,
+        RommTrait;
 
     /**
      * Boot the testing helper traits.

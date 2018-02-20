@@ -3,6 +3,7 @@
 namespace Tests\Unit\Device;
 
 use App\Entities\DeviceProperty;
+use Illuminate\Support\Facades\Event;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -23,9 +24,7 @@ class DevicePropertyCommandsTest extends TestCase
             'with_commands' => 'value'
         ]);
 
-        /** @var DeviceProperty $property */
-        $property = $device->properties->first();
-        return $property;
+        return $device->properties->first();
     }
 
     function test_a_property_can_have_list_of_commands()
@@ -35,15 +34,23 @@ class DevicePropertyCommandsTest extends TestCase
         $this->assertEquals([
             'command1' => 'command1',
             'command2' => 'command2'
-        ], $property->getCommands());
+        ], $property->commands());
     }
 
     function test_a_property_can_invoke_available_command()
     {
         $property = $this->makeProperty();
 
+        Event::fake();
+
         $property->runCommand('command1', function($response) use($property) {
             $this->assertEquals($property->id, $response->id);
+        });
+
+        Event::assertDispatched(\App\Events\DeviceProperty\CommandRun::class, function ($e) use($property) {
+            $this->assertEquals($e->command, 'command1');
+
+            return $e->property->id == $property->id;
         });
     }
 
@@ -54,7 +61,13 @@ class DevicePropertyCommandsTest extends TestCase
     {
         $property = $this->makeProperty();
 
-        $property->runCommand('command3');
+        Event::fake();
+
+        $property->runCommand('command3', function($response) use($property) {
+            $this->assertEquals($property->id, $response->id);
+        });
+
+        Event::assertNotDispatched(\App\Events\DeviceProperty\CommandRun::class);
     }
 }
 

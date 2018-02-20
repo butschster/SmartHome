@@ -77,7 +77,7 @@ class Device extends Model
     {
         $driver = $this->driver();
 
-        foreach ($driver->allowedProperties() as $property => $class) {
+        foreach ($driver->properties() as $property => $class) {
             /** @var \App\Contracts\Mqtt\DeviceProperty $propertyObject */
             $propertyObject = app($class);
             $value = $propertyObject->transform(
@@ -113,11 +113,8 @@ class Device extends Model
     public function driver(): DeviceDriverContract
     {
         $manager = app(DeviceManagerContract::class);
-        $device = $manager->driver($this->type);
 
-        $device->setId($this->key);
-
-        return $device;
+        return $manager->driver($this->type);
     }
 
     /**

@@ -32,7 +32,7 @@ class DevicePropertyResource extends Resource
             'name' => $this->name ?: $this->key,
             'description' => $this->description,
             'meta' => $driver->meta(),
-            'commands' => array_values($this->getCommands()),
+            'commands' => array_values($this->commands()),
             'rooms' => new RoomCollection($this->whenLoaded('rooms')),
             'links' => [
                 'device' => route('device.show', $this->device_id),

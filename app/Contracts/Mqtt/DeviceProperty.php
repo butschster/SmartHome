@@ -33,7 +33,7 @@ interface DeviceProperty
     /**
      * @return array
      */
-    public function getCommands(): array;
+    public function commands(): array;
 
     /**
      * @param string $message

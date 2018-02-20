@@ -3,6 +3,7 @@
 namespace Tests\Unit\Device;
 
 use App\Entities\Device;
+use Illuminate\Support\Facades\Event;
 use Tests\Helpers\TestDevice;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -11,13 +12,22 @@ class DeviceTest extends TestCase
 {
     use RefreshDatabase;
 
+    function test_it_should_fire_event_when_device_created()
+    {
+        Event::fake([\App\Events\Device\Registered::class]);
+        $device = $this->createTestDevice();
+
+        Event::assertDispatched(\App\Events\Device\Registered::class, function($e) use($device) {
+            return $e->device->id == $device->id;
+        });
+    }
+
     function test_gets_device_driver()
     {
         $device = $this->createTestDevice();
         $deviceDriver = $device->driver();
 
         $this->assertInstanceOf(TestDevice::class, $deviceDriver);
-        $this->assertEquals($device->key, $deviceDriver->getId());
     }
 
     function test_gets_model_by_key()

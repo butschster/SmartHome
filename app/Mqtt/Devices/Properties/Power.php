@@ -24,14 +24,7 @@ class Power extends Property implements Switchable
      */
     public function transform($value): int
     {
-        switch (strtolower($value)) {
-            case 'on':
-                return 1;
-            case 'off':
-                return 0;
-        }
-
-        return $value == 1 ?: 0;
+        return $this->validateAccepted(null, strtolower($value)) ? 1 : 0;
     }
 
     public function switchOn(): void

@@ -4,11 +4,14 @@ namespace App\Mqtt\Devices;
 
 use App\Contracts\Mqtt\Client;
 use App\Entities\DeviceProperty;
+use Illuminate\Validation\Concerns\ValidatesAttributes;
 use Psr\Log\LoggerInterface;
 use App\Contracts\Mqtt\DeviceProperty as DevicePropertyContract;
 
 abstract class Property implements DevicePropertyContract
 {
+    use ValidatesAttributes;
+
     /**
      * @var array
      */
@@ -50,7 +53,7 @@ abstract class Property implements DevicePropertyContract
     /**
      * @return array
      */
-    public function getCommands(): array
+    public function commands(): array
     {
         return array_combine($this->commands, $this->commands);
     }

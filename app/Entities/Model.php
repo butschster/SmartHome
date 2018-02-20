@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model as Eloquent;
 /**
  * @mixin \Illuminate\Database\Query\Builder
  */
-class Model extends Eloquent
+abstract class Model extends Eloquent
 {
     use Uuid;
 

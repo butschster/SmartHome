@@ -3,7 +3,7 @@
 namespace App\Observers;
 
 use App\Entities\Device;
-use App\Events\DeviceRegistered;
+use App\Events\Device\Registered as DeviceRegistered;
 use Illuminate\Contracts\Events\Dispatcher;
 
 class NewDeviceRegisteredObserver
@@ -26,6 +26,8 @@ class NewDeviceRegisteredObserver
      */
     public function created(Device $device)
     {
-        $this->events->dispatch(new DeviceRegistered($device));
+        $this->events->dispatch(
+            new DeviceRegistered($device)
+        );
     }
 }

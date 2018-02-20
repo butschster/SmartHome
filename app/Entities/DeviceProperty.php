@@ -26,9 +26,9 @@ class DeviceProperty extends Model
      *
      * @return array
      */
-    public function getCommands(): array
+    public function commands(): array
     {
-        return $this->deviceDriver()->allowedCommands($this->key);
+        return $this->deviceDriver()->commands($this->key);
     }
 
     /**
@@ -43,20 +43,22 @@ class DeviceProperty extends Model
     /**
      * Запуск команды через драйвер устройства
      *
-     * @param string $method
+     * @param string $command
      * @param array $parameters
      * @return void
      * @throws DevicePropertyCommandNotFound
      */
-    public function runCommand(string $method, ...$parameters): void
+    public function runCommand(string $command, ...$parameters): void
     {
-        $commands = $this->getCommands();
+        $commands = $this->commands();
 
-        if (!isset($commands[$method])) {
-            throw new DevicePropertyCommandNotFound($method);
+        if (!isset($commands[$command])) {
+            throw new DevicePropertyCommandNotFound($command);
         }
 
-        $this->deviceDriver()->runCommand($this, $method, ...$parameters);
+        $this->deviceDriver()->runCommand($this, $command, ...$parameters);
+
+        event(new \App\Events\DeviceProperty\CommandRun($this, $command));
     }
 
     /**

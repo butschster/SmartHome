@@ -10,7 +10,7 @@ class Magnet extends Device
     /**
      * @var array
      */
-    protected $allowedProperties = [
+    protected $properties = [
         'state' => Door::class
     ];
 }

@@ -11,7 +11,7 @@ class Thermometer extends Device
     /**
      * @var array
      */
-    protected $allowedProperties = [
+    protected $properties = [
         'temp' => Temperature::class,
         'humidity' => Humidity::class,
     ];

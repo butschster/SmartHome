@@ -70,7 +70,7 @@ trait DeviceTrait
 
 class TestDevice extends \App\Mqtt\Devices\Device
 {
-    protected $allowedProperties = [
+    protected $properties = [
         'test' => TestProperty::class,
         'loggable' => TestLoggableProperty::class,
     ];
@@ -81,7 +81,7 @@ class TestDevice extends \App\Mqtt\Devices\Device
      */
     public function registerProperty(string $key, string $class)
     {
-        $this->allowedProperties[$key] = $class;
+        $this->properties[$key] = $class;
     }
 }
 

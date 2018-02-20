@@ -10,7 +10,7 @@ class DualRelay extends Device
     /**
      * @var array
      */
-    protected $availableProperties = [
+    protected $properties = [
         'POWER' => Power::class,
         'POWER1' => Power::class,
     ];

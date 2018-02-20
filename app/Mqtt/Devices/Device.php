@@ -13,21 +13,12 @@ abstract class Device implements DeviceContract
     /**
      * @var array
      */
-    protected $allowedProperties = [];
-
-    /**
-     * @var array
-     */
     protected $properties = [];
 
     /**
-     * @var string
-     */
-    protected $id;
-    /**
      * @var Application
      */
-    private $app;
+    protected $app;
 
     /**
      * @param Application $app
@@ -38,60 +29,23 @@ abstract class Device implements DeviceContract
     }
 
     /**
-     * @param string $id
-     * @return void
+     * @return array|string[]
      */
-    public function setId(string $id)
+    public function properties(): array
     {
-        $this->id = $id;
-    }
-
-    /**
-     * Получение идентификатора устройства
-     *
-     * @return string
-     */
-    public function getId(): string
-    {
-        return $this->id;
-    }
-
-    /**
-     * @param array $properties
-     * @return void
-     */
-    public function setProperties(array $properties)
-    {
-        $this->properties = $properties;
-    }
-
-    /**
-     * @param string $property
-     * @return mixed
-     */
-    public function property(string $property)
-    {
-        return array_get($this->properties, $property);
-    }
-
-    /**
-     * @return array
-     */
-    public function allowedProperties(): array
-    {
-        return $this->allowedProperties;
+        return $this->properties;
     }
 
     /**
      * Получение списка команд для свойства устроства
      *
      * @param string $property
-     * @return array
+     * @return array|string[]
      * @throws DevicePropertyNotFoundException
      */
-    public function allowedCommands(string $property): array
+    public function commands(string $property): array
     {
-        return $this->propertyDriver($property)->getCommands();
+        return $this->propertyDriver($property)->commands();
     }
 
     /**
@@ -134,6 +88,6 @@ abstract class Device implements DeviceContract
      */
     public function propertyClass(string $property): string
     {
-        return array_get($this->allowedProperties(), $property);
+        return array_get($this->properties(), $property);
     }
 }

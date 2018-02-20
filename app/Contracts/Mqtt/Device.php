@@ -13,43 +13,22 @@ interface Device
     const TYPE_XIAOMI_BUTTON = 'xiaomi_switch';
 
     /**
-     * Добавление свойств
+     * Получение списка доступных датчиков
      *
-     * @param array $properties
-     * @return void
-     */
-    public function setProperties(array $properties);
-
-    /**
      * @return array
      */
-    public function allowedProperties(): array;
+    public function properties(): array;
 
     /**
-     * Добавление идентификатора устройства
-     *
-     * @param string $id
-     * @return void
-     */
-    public function setId(string $id);
-
-    /**
-     * Получение идентификатора устройства
-     *
-     * @return string
-     */
-    public function getId(): string;
-
-    /**
-     * Получение списка команд для свойства устроства
+     * Получение списка команд для дайтчиков устроства
      *
      * @param string $property
      * @return array
      */
-    public function allowedCommands(string $property): array;
+    public function commands(string $property): array;
 
     /**
-     * Получение названия класса свойства
+     * Получение названия класса датчика
      *
      * @param string $property
      * @return string
@@ -58,7 +37,7 @@ interface Device
     public function propertyClass(string $property): string;
 
     /**
-     * Получение объекта свойства
+     * Получение объекта датчика устройства
      *
      * @param string $property
      * @return DeviceProperty

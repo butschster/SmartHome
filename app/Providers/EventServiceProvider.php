@@ -5,9 +5,6 @@ namespace App\Providers;
 use App\Entities\Device;
 use App\Entities\DeviceProperty;
 use App\Entities\Weather;
-use App\Observers\DevicePropertyChangedObserver;
-use App\Observers\NewDeviceRegisteredObserver;
-use App\Observers\WeatherChangedObserver;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
 class EventServiceProvider extends ServiceProvider
@@ -21,7 +18,7 @@ class EventServiceProvider extends ServiceProvider
         \App\Events\DeviceProperty\Changed::class => [
             \App\Listeners\LogDevicePropertyValues::class
         ],
-        \App\Events\DeviceRegistered::class => [
+        \App\Events\Device\Registered::class => [
             \App\Listeners\NotifyAboutNewDevice::class
         ],
         \App\Events\Device\Ping::class => [
@@ -39,6 +36,23 @@ class EventServiceProvider extends ServiceProvider
     ];
 
     /**
+     * The event observers mappings for the models.
+     *
+     * @var array
+     */
+    protected $observers = [
+        DeviceProperty::class => [
+            \App\Observers\DevicePropertyChangedObserver::class
+        ],
+        Device::class => [
+            \App\Observers\NewDeviceRegisteredObserver::class
+        ],
+        Weather::class => [
+            \App\Observers\WeatherChangedObserver::class
+        ]
+    ];
+
+    /**
      * Register any events for your application.
      *
      * @return void
@@ -47,8 +61,15 @@ class EventServiceProvider extends ServiceProvider
     {
         parent::boot();
 
-        DeviceProperty::observe(DevicePropertyChangedObserver::class);
-        Device::observe(NewDeviceRegisteredObserver::class);
-        Weather::observe(WeatherChangedObserver::class);
+        $this->registerObservers();
+    }
+
+    protected function registerObservers(): void
+    {
+        foreach ($this->observers as $model => $observers) {
+            foreach ($observers as $observer) {
+                $model::observe($observer);
+            }
+        }
     }
 }

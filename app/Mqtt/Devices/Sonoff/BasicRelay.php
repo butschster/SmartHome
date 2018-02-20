@@ -10,7 +10,7 @@ class BasicRelay extends Device
     /**
      * @var array
      */
-    protected $allowedProperties = [
+    protected $properties = [
         'POWER' => Power::class
     ];
 }

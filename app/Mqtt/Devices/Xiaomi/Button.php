@@ -10,7 +10,7 @@ class Button extends Device
     /**
      * @var array
      */
-    protected $allowedProperties = [
+    protected $properties = [
         'action' => Action::class
     ];
 }

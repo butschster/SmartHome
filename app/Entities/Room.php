@@ -29,14 +29,18 @@ class Room extends Model
     /**
      * Запуск команды на всех устройствах в помещении
      *
-     * @param string $method
+     * @param string $command
      * @param array $parameters
      * @return void
      */
-    public function runCommand(string $method, ...$parameters): void
+    public function runCommand(string $command, ...$parameters): void
     {
         foreach ($this->deviceProperties as $property) {
-            $property->runCommand($method, ...$parameters);
+            try {
+                $property->runCommand($command, ...$parameters);
+            } catch (\App\Exceptions\DevicePropertyCommandNotFound $exception) {
+
+            }
         }
     }
 }
