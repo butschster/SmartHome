@@ -20,7 +20,7 @@ class CreateScenarioActionsTable extends Migration
             $table->string('name');
             $table->text('description')->nullable();
 
-            $table->json('action');
+            $table->text('action');
 
             $table->foreign('device_property_id')
                 ->references('id')->on('device_properties')

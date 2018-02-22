@@ -20,7 +20,7 @@ class CreateScenarioTriggersTable extends Migration
             $table->string('name');
             $table->text('description')->nullable();
 
-            $table->json('condition');
+            $table->text('condition');
 
             $table->foreign('device_property_id')
                 ->references('id')->on('device_properties')
