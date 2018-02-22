@@ -1,10 +1,9 @@
 <?php
 
-namespace Tests\Unit\Mqtt\Device;
+namespace Tests\Unit\Mqtt\Devices;
 
 use App\Mqtt\Devices\Device;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Mockery as m;
 

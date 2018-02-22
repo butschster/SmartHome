@@ -1,11 +1,9 @@
 <?php
 
-namespace App\Mqtt;
+namespace App\Mqtt\Router;
 
 use App\Contracts\Mqtt\Response;
-use App\Exceptions\MqttResponseException;
-use BinSoul\Net\Mqtt\Message;
-use Illuminate\Console\Command;
+use App\Contracts\Mqtt\Router;
 use Illuminate\Routing\RouteAction;
 use Illuminate\Routing\RouteDependencyResolverTrait;
 use Illuminate\Support\Arr;
@@ -155,6 +153,7 @@ class Route
      * Run the route action and return the response.
      *
      * @return mixed
+     * @throws \ReflectionException
      */
     public function run()
     {
@@ -240,6 +239,7 @@ class Route
      * Run the route action and return the response.
      *
      * @return mixed
+     * @throws \ReflectionException
      */
     protected function runCallable()
     {
@@ -388,7 +388,7 @@ class Route
      *
      * @return string
      */
-    public function getActionName()
+    public function getActionName(): string
     {
         return $this->action['controller'] ?? 'Closure';
     }
@@ -409,7 +409,7 @@ class Route
      *
      * @return bool
      */
-    public function hasParameters()
+    public function hasParameters(): bool
     {
         return isset($this->parameters);
     }
@@ -420,7 +420,7 @@ class Route
      * @param  string $name
      * @return bool
      */
-    public function hasParameter($name)
+    public function hasParameter($name): bool
     {
         if ($this->hasParameters()) {
             return array_key_exists($name, $this->parameters());
@@ -448,7 +448,7 @@ class Route
      * @param  mixed   $value
      * @return void
      */
-    public function setParameter($name, $value)
+    public function setParameter($name, $value): void
     {
         $this->parameters();
 
@@ -461,7 +461,7 @@ class Route
      * @param  string  $name
      * @return void
      */
-    public function forgetParameter($name)
+    public function forgetParameter($name): void
     {
         $this->parameters();
 
@@ -475,7 +475,7 @@ class Route
      *
      * @throws LogicException
      */
-    public function parameters()
+    public function parameters(): array
     {
         if (isset($this->parameters)) {
             return $this->parameters;
@@ -489,7 +489,7 @@ class Route
      *
      * @return array
      */
-    public function parametersWithoutNulls()
+    public function parametersWithoutNulls(): array
     {
         return array_filter($this->parameters(), function ($p) {
             return ! is_null($p);
@@ -501,7 +501,7 @@ class Route
      *
      * @return array
      */
-    public function parameterNames()
+    public function parameterNames(): array
     {
         if (isset($this->parameterNames)) {
             return $this->parameterNames;
@@ -515,7 +515,7 @@ class Route
      *
      * @return array
      */
-    protected function compileParameterNames()
+    protected function compileParameterNames(): array
     {
         preg_match_all('/\{(.*?)\}/', $this->message, $matches);
 

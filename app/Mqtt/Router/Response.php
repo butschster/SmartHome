@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Mqtt;
+namespace App\Mqtt\Router;
 
 use App\Contracts\Mqtt\Response as ResponseContract;
 

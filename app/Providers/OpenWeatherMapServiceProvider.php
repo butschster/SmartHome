@@ -16,7 +16,7 @@ class OpenWeatherMapServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->app->singleton(OpenWeatherMapContract::class, function ($app) {
-            $config = $app['config']->get('services.openweathermap');
+            $config = $this->app->make('config')->get('services.openweathermap');
 
             return new Client($config['key']);
         });

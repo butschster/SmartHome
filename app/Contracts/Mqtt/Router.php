@@ -2,8 +2,8 @@
 
 namespace App\Contracts\Mqtt;
 
-use App\Mqtt\Route;
-use App\Mqtt\RouteCollection;
+use App\Mqtt\Router\Route;
+use App\Mqtt\Router\RouteCollection;
 
 interface Router
 {

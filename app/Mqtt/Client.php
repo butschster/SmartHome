@@ -3,33 +3,29 @@
 namespace App\Mqtt;
 
 use App\Contracts\Mqtt\Client as ClientContract;
+use App\Helpers\HasOptions;
 use Bluerhinos\phpMQTT;
 use Closure;
+use Symfony\Component\OptionsResolver\OptionsResolver;
 
 class Client implements ClientContract
 {
+    use HasOptions;
+
     /**
      * @var phpMQTT
      */
-    private $client;
+    protected $client;
 
     /**
-     * @param string $host
-     * @param int $port
-     * @param string|null $clientId
-     * @param string|null $username
-     * @param string|null $password
+     * @param phpMQTT $client
+     * @param array $options
      */
-    public function __construct(
-        string $host = 'localhost',
-        int $port = 1883,
-        string $clientId = null,
-        string $username = null,
-        string $password = null
-    )
+    public function __construct(phpMQTT $client, array $options = [])
     {
-        // Instantiate the client
-        $this->client = new phpMQTT($host, $port, $clientId);
+        $this->client = $client;
+
+        $this->setOptions($options);
     }
 
     /**
@@ -42,7 +38,12 @@ class Client implements ClientContract
 
     public function connect()
     {
-        $this->client->connect(true);
+        $this->client->connect(
+            true,
+            null,
+            $this->options['username'],
+            $this->options['password']
+        );
     }
 
     /**
@@ -54,7 +55,7 @@ class Client implements ClientContract
 
         $this->client->subscribe(['#' => ['function' => $callback, 'qos' => 0]], 0);
 
-        while ($this->client->proc()) {}
+        $this->loop();
 
         $this->client->close();
     }
@@ -71,5 +72,23 @@ class Client implements ClientContract
         $this->client->publish($topic, $message, 1, 1);
 
         $this->client->close();
+    }
+
+    protected function loop(): void
+    {
+        while ($this->client->proc()) {
+            //
+        }
+    }
+
+    /**
+     * @param OptionsResolver $resolver
+     */
+    protected function configureOptions(OptionsResolver $resolver)
+    {
+        $resolver->setDefaults([
+            'username' => null,
+            'password' => null
+        ]);
     }
 }

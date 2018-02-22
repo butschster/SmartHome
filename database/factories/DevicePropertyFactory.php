@@ -11,7 +11,7 @@ $factory->define(DeviceProperty::class, function (Faker $faker) {
         },
         'name' => $faker->sentence,
         'description' => $faker->paragraph,
-        'key' => $faker->text,
+        'key' => $faker->word,
         'value' => $faker->randomNumber()
     ];
 });

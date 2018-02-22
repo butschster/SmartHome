@@ -7,7 +7,7 @@ use App\Events\Mqtt\Message;
 use App\Exceptions\MqttRouteNotFoundException;
 use App\Contracts\Mqtt\Router as RouterContract;
 use App\Exceptions\UnknownDeviceException;
-use App\Mqtt\Response;
+use App\Mqtt\Router\Response;
 use Illuminate\Console\Command;
 
 class Listen extends Command

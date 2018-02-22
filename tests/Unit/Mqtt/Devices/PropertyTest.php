@@ -1,6 +1,6 @@
 <?php
 
-namespace Tests\Unit\Mqtt\Device;
+namespace Tests\Unit\Mqtt\Devices;
 
 use App\Mqtt\Devices\Property;
 use Tests\TestCase;

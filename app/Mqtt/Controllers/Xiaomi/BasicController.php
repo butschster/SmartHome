@@ -3,7 +3,7 @@
 namespace App\Mqtt\Controllers\Xiaomi;
 
 use App\Entities\Device;
-use App\Mqtt\Response;
+use App\Mqtt\Router\Response;
 
 class BasicController
 {

@@ -4,7 +4,7 @@ namespace Tests\Feature\Mqtt;
 
 use App\Entities\Device;
 use App\Entities\DeviceProperty;
-use App\Mqtt\Response;
+use App\Mqtt\Router\Response;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;

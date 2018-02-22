@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Mqtt;
 
-use App\Mqtt\Response;
+use App\Mqtt\Router\Response;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;

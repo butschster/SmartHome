@@ -20,14 +20,17 @@ class MqttServiceProvider extends ServiceProvider
     public function boot()
     {
         $this->app->singleton(ClientContract::class, function ($app) {
-            $config = $app['config']->get('mqtt');
+            $config = $this->app->make('config')->get('mqtt');
 
-            return new Client(
+            $mqttClient = new \Bluerhinos\phpMQTT(
                 $config['host'],
                 $config['port'],
-                $config['client_id'],
-                $config['username'],
-                $config['password']
+                $config['client_id']
+            );
+
+            return new Client(
+                $mqttClient,
+                array_except($config, ['host', 'port', 'client_id'])
             );
         });
 

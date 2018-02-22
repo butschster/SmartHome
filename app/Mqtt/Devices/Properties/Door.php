@@ -18,7 +18,7 @@ class Door extends Property implements DevicePropertyLoggable
      */
     public function transform($value)
     {
-        if (strtolower($value) == 'open') {
+        if (in_array(strtolower($value), ['open', 1])) {
             return static::STATUS_OPEN;
         }
 

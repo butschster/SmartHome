@@ -2,17 +2,21 @@
 
 namespace App\Contracts;
 
+use App\Entities\DeviceProperty;
+
 interface Switchable
 {
     /**
      * Включение
      *
+     * @param DeviceProperty $property
      * @return void
      */
-    public function switchOn(): void;
+    public function switchOn(DeviceProperty $property): void;
 
     /**
+     * @param DeviceProperty $property
      * @return void
      */
-    public function switchOff();
+    public function switchOff(DeviceProperty $property): void;
 }

@@ -14,6 +14,7 @@
         "laravel/tinker": "~1.0",
         "predis/predis": "^1.1",
         "ramsey/uuid": "^3.7",
+        "symfony/options-resolver": "^4.0",
         "wamania/php-stemmer": "^1.2"
     },
     "require-dev": {

@@ -3,11 +3,9 @@
 namespace Tests\Unit\Mqtt\Router;
 
 use App\Contracts\Mqtt\Response;
-use App\Mqtt\Route;
+use App\Mqtt\Router\Route;
 use App\Mqtt\Router;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 use Mockery as m;
 
 class RouterTest extends TestCase
@@ -58,7 +56,7 @@ class RouterTest extends TestCase
     {
         $this->router->namespace('Tests\\Unit\\Mqtt\\Router');
 
-        $this->router->listen('stat/{device}/information', function(Response $message, string $device) {
+        $this->router->listen('stat/{device}/information', function (Response $message, string $device) {
             $this->assertEquals('stat/device/information', $message->getRoute());
             $this->assertEquals('device', $device);
             return 'test';

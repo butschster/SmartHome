@@ -18,9 +18,9 @@ class AppServiceProvider extends ServiceProvider
     {
         $this->app->singleton(ManagerContract::class, function ($app) {
             $manager = new Manager(
-                $app,
-                $app[\Illuminate\Contracts\Events\Dispatcher::class],
-                $app[\Psr\Log\LoggerInterface::class]
+                $this->app,
+                $this->app->make(\Illuminate\Contracts\Events\Dispatcher::class),
+                $this->app->make(\Psr\Log\LoggerInterface::class)
             );
 
             $manager->setCommands(config('commands', []));

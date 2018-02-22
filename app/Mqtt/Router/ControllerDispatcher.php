@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Mqtt;
+namespace App\Mqtt\Router;
 
 use Illuminate\Container\Container;
 use Illuminate\Routing\RouteDependencyResolverTrait;

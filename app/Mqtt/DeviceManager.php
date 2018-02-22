@@ -70,10 +70,6 @@ class DeviceManager extends Manager implements DeviceManagerContract
     {
         if (is_array($this->customCreators[$driver])) {
             return $this->makeClass($this->customCreators[$driver]);
-        } else if (is_string($this->customCreators[$driver])) {
-            return $this->makeClass([
-                'class' => $this->customCreators[$driver]
-            ]);
         }
 
         return parent::callCustomCreator($driver);
@@ -86,6 +82,10 @@ class DeviceManager extends Manager implements DeviceManagerContract
      */
     public function register($driver, $data)
     {
+        if (is_string($data)) {
+            $data = ['class' => $data];
+        }
+
         $this->customCreators[$driver] = $data;
 
         return $this;

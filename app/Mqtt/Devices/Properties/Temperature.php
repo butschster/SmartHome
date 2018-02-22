@@ -15,7 +15,7 @@ class Temperature extends Property implements DevicePropertyLoggable
      */
     public function transform($value)
     {
-        return (float) $value;
+        return (float) round($value, 1);
     }
 
     /**

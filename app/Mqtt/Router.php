@@ -19,7 +19,7 @@ class Router implements RouterContract
     /**
      * The route collection instance.
      *
-     * @var RouteCollection
+     * @var Router\RouteCollection
      */
     protected $routes;
 
@@ -44,16 +44,16 @@ class Router implements RouterContract
      */
     public function __construct(Container $container = null)
     {
-        $this->routes = new RouteCollection;
+        $this->routes = new Router\RouteCollection;
         $this->container = $container ?: new Container;
     }
 
     /**
      * @param  string $route
      * @param  Closure|array|string|null $action
-     * @return Route
+     * @return Router\Route
      */
-    public function listen(string $route, $action = null): Route
+    public function listen(string $route, $action = null): Router\Route
     {
         return $this->addRoute($route, $action);
     }
@@ -73,7 +73,7 @@ class Router implements RouterContract
     /**
      * Dispatch the request to a route and return the response.
      *
-     * @param  Response $response
+     * @param Response $response
      * @return mixed
      * @throws \App\Exceptions\MqttRouteNotFoundException
      */
@@ -86,14 +86,14 @@ class Router implements RouterContract
      * Find the route matching a given request.
      *
      * @param  Response $response
-     * @return Route
+     * @return Router\Route
      * @throws \App\Exceptions\MqttRouteNotFoundException
      */
-    protected function findRoute(Response $response): Route
+    protected function findRoute(Response $response): Router\Route
     {
         $route = $this->routes->match($response);
 
-        $this->container->instance(Route::class, $route);
+        $this->container->instance(Router\Route::class, $route);
 
         return $route;
     }
@@ -102,10 +102,10 @@ class Router implements RouterContract
      * Return the response for the given route.
      *
      * @param  Response $response
-     * @param  Route $route
+     * @param  Router\Route $route
      * @return mixed
      */
-    protected function runRoute(Response $response, Route $route)
+    protected function runRoute(Response $response, Router\Route $route)
     {
         return $route->run();
     }
@@ -113,9 +113,9 @@ class Router implements RouterContract
     /**
      * @param  string $route
      * @param  Closure|array|string|null $action
-     * @return Route
+     * @return Router\Route
      */
-    protected function addRoute(string $route, $action)
+    protected function addRoute(string $route, $action): Router\Route
     {
         return $this->routes->add($this->createRoute($route, $action));
     }
@@ -125,9 +125,9 @@ class Router implements RouterContract
      *
      * @param  string $route
      * @param  mixed $action
-     * @return Route
+     * @return Router\Route
      */
-    protected function createRoute(string $route, $action)
+    protected function createRoute(string $route, $action): Router\Route
     {
         // If the route is routing to a controller we will parse the route action into
         // an acceptable array format before registering it and creating this route
@@ -149,7 +149,7 @@ class Router implements RouterContract
      * @param  array $action
      * @return bool
      */
-    protected function actionReferencesController($action)
+    protected function actionReferencesController($action): bool
     {
         if (!$action instanceof Closure) {
             return is_string($action) || (isset($action['uses']) && is_string($action['uses']));
@@ -164,7 +164,7 @@ class Router implements RouterContract
      * @param  array|string $action
      * @return array
      */
-    protected function convertToControllerAction($action)
+    protected function convertToControllerAction($action): array
     {
         if (is_string($action)) {
             $action = ['uses' => $action];
@@ -191,7 +191,7 @@ class Router implements RouterContract
      * @param  string $class
      * @return string
      */
-    protected function prependNamespace($class)
+    protected function prependNamespace($class): string
     {
         return strpos($class, '\\') !== 0
             ? rtrim($this->namespace, '\\') . '\\' . $class : $class;
@@ -202,11 +202,11 @@ class Router implements RouterContract
      *
      * @param  string $route
      * @param  mixed $action
-     * @return Route
+     * @return Router\Route
      */
-    protected function newRoute(string $route, $action)
+    protected function newRoute(string $route, $action): Router\Route
     {
-        return (new Route($route, $action))
+        return (new Router\Route($route, $action))
             ->setRouter($this)
             ->setContainer($this->container);
     }
@@ -214,10 +214,10 @@ class Router implements RouterContract
     /**
      * Add the necessary where clauses to the route based on its initial registration.
      *
-     * @param  Route $route
-     * @return Route
+     * @param  Router\Route $route
+     * @return Router\Route
      */
-    protected function addWhereClausesToRoute($route)
+    protected function addWhereClausesToRoute(Router\Route $route): Router\Route
     {
         $route->where(array_merge(
             $this->patterns, $route->getAction()['where'] ?? []
@@ -227,9 +227,9 @@ class Router implements RouterContract
     }
 
     /**
-     * @return RouteCollection
+     * @return Router\RouteCollection
      */
-    public function getRoutes(): RouteCollection
+    public function getRoutes(): Router\RouteCollection
     {
         return $this->routes;
     }
