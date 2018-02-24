@@ -26,12 +26,6 @@ class SonoffBasicRelayTest extends TestCase
 
         $device = Device::where('key', 'test_device')->first();
         $this->assertInstanceOf(Device::class, $device);
-
-        $this->assertDatabaseHas((new DevicePropertyLog())->getTable(), [
-            'device_id' => $device->id,
-            'key' => 'POWER',
-            'value' => 1
-        ]);
     }
 
     function test_recieve_device_power_result()

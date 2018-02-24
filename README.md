@@ -1,5 +1,7 @@
 # Smarthome WebServer
 
+[![Build Status](https://travis-ci.org/butschster/SmartHome.svg?branch=master)](https://travis-ci.org/butschster/SmartHome)
+
 ## Компоненты
  - MySQL Server
  - Git client
