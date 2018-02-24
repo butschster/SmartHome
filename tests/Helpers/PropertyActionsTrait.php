@@ -2,12 +2,12 @@
 
 namespace Tests\Helpers;
 
-use App\Contracts\Mqtt\Client;
-use App\Contracts\Mqtt\DevicePropertyLoggable;
-use App\Contracts\Switchable;
+use SmartHome\Domain\Devices\Contracts\DevicePropertyLoggable;
+use SmartHome\Domain\Mqtt\Contracts\Client;
+use SmartHome\Domain\Mqtt\Contracts\Switchable;
 use Psr\Log\LoggerInterface;
 use Mockery as m;
-use App\Contracts\Mqtt\DeviceProperty as DevicePropertyContract;
+use SmartHome\Domain\Mqtt\Contracts\DeviceProperty as DevicePropertyContract;
 
 trait PropertyActionsTrait
 {

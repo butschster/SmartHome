@@ -2,10 +2,10 @@
 
 namespace Tests\Helpers;
 
-use App\Contracts\Mqtt\DevicePropertyLoggable;
-use App\Entities\Device;
-use App\Entities\DeviceLog;
-use App\Entities\DeviceProperty;
+use SmartHome\Domain\Devices\Contracts\DevicePropertyLoggable;
+use SmartHome\Domain\Devices\Entities\Device;
+use SmartHome\Domain\Devices\Entities\DeviceLog;
+use SmartHome\Domain\Devices\Entities\DeviceProperty;
 
 trait DeviceTrait
 {
@@ -68,7 +68,7 @@ trait DeviceTrait
 }
 
 
-class TestDevice extends \App\Mqtt\Devices\Device
+class TestDevice extends \SmartHome\Domain\Mqtt\Devices\Device
 {
     protected $properties = [
         'test' => TestProperty::class,
@@ -85,7 +85,7 @@ class TestDevice extends \App\Mqtt\Devices\Device
     }
 }
 
-class TestProperty extends \App\Mqtt\Devices\Property
+class TestProperty extends \SmartHome\Domain\Mqtt\Devices\Property
 {
     public function transform($value)
     {
@@ -93,7 +93,7 @@ class TestProperty extends \App\Mqtt\Devices\Property
     }
 }
 
-class TestLoggableProperty extends \App\Mqtt\Devices\Property implements DevicePropertyLoggable
+class TestLoggableProperty extends \SmartHome\Domain\Mqtt\Devices\Property implements DevicePropertyLoggable
 {
     public function transform($value)
     {

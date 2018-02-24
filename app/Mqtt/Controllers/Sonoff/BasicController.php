@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Mqtt\Controllers\Sonoff;
+namespace SmartHome\Mqtt\Controllers\Sonoff;
 
-use App\Contracts\Mqtt\Response;
-use App\Entities\Device;
+use SmartHome\Domain\Mqtt\Contracts\Response;
+use SmartHome\Domain\Devices\Entities\Device;
 
 class BasicController
 {
@@ -11,11 +11,11 @@ class BasicController
      * @param Response $response
      * @param string $type
      * @param string $device
-     * @throws \App\Exceptions\UnknownDeviceException
+     * @throws \SmartHome\Domain\Mqtt\Exceptions\UnknownDeviceException
      */
     public function log(Response $response, string $type, string $device)
     {
         $device = Device::register($device, $type);
-        event(new \App\Events\Device\Ping($device));
+        event(new \SmartHome\Domain\Devices\Events\Device\Ping($device));
     }
 }

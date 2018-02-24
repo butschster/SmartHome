@@ -171,13 +171,13 @@ return [
         /*
          * Application Service Providers...
          */
-        App\Providers\AppServiceProvider::class,
-        App\Providers\AuthServiceProvider::class,
-        // App\Providers\BroadcastServiceProvider::class,
-        App\Providers\EventServiceProvider::class,
-        App\Providers\RouteServiceProvider::class,
-        App\Providers\MqttServiceProvider::class,
-        App\Providers\OpenWeatherMapServiceProvider::class,
+        SmartHome\App\Providers\AppServiceProvider::class,
+        SmartHome\App\Providers\AuthServiceProvider::class,
+        // SmartHome\App\Providers\BroadcastServiceProvider::class,
+        SmartHome\App\Providers\EventServiceProvider::class,
+        SmartHome\App\Providers\RouteServiceProvider::class,
+        SmartHome\Domain\Mqtt\Providers\MqttServiceProvider::class,
+        SmartHome\Domain\Weather\Providers\OpenWeatherMapServiceProvider::class,
     ],
 
     /*

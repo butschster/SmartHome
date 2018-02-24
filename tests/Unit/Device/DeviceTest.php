@@ -2,8 +2,9 @@
 
 namespace Tests\Unit\Device;
 
-use App\Entities\Device;
 use Illuminate\Support\Facades\Event;
+use SmartHome\Domain\Devices\Entities\Device;
+use SmartHome\Domain\Devices\Events\Device\Registered;
 use Tests\Helpers\TestDevice;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -14,10 +15,10 @@ class DeviceTest extends TestCase
 
     function test_it_should_fire_event_when_device_created()
     {
-        Event::fake([\App\Events\Device\Registered::class]);
+        Event::fake([Registered::class]);
         $device = $this->createTestDevice();
 
-        Event::assertDispatched(\App\Events\Device\Registered::class, function($e) use($device) {
+        Event::assertDispatched(Registered::class, function($e) use($device) {
             return $e->device->id == $device->id;
         });
     }

@@ -1,7 +1,8 @@
 <?php
 
-use App\Mqtt\Devices\Properties\Door;
-use App\Mqtt\Devices\Properties\Power;
+use SmartHome\Domain\Mqtt\Devices\Properties\{
+    Door, Power
+};
 
 return [
     'action' => [

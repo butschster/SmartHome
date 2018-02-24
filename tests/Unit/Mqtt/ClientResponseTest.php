@@ -2,10 +2,8 @@
 
 namespace Tests\Unit\Mqtt;
 
-use App\Mqtt\Router\Response;
+use SmartHome\Domain\Mqtt\Router\Response;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class ClientResponseTest extends TestCase
 {

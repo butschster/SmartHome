@@ -2,10 +2,10 @@
 
 namespace Tests\Unit\Mqtt;
 
-use App\Contracts\Mqtt\Device;
-use App\Mqtt\Devices\Sonoff\BasicRelay;
+use SmartHome\Domain\Mqtt\Contracts\Device;
+use SmartHome\Domain\Mqtt\Devices\Sonoff\BasicRelay;
 use Tests\TestCase;
-use App\Contracts\Mqtt\DeviceManager as DeviceManagerContract;
+use SmartHome\Domain\Mqtt\Contracts\DeviceManager as DeviceManagerContract;
 
 class DeviceManagerTest extends TestCase
 {
@@ -30,7 +30,7 @@ class DeviceManagerTest extends TestCase
     }
 
     /**
-     * @expectedException App\Exceptions\DeviceDriverNotFoundException
+     * @expectedException SmartHome\Domain\Mqtt\Exceptions\DeviceDriverNotFoundException
      */
     function test_it_should_throw_an_exception_if_driver_not_found()
     {

@@ -2,8 +2,8 @@
 
 namespace Tests\Unit\Mqtt\Devices\Sonoff;
 
-use App\Mqtt\Devices\Properties\Power;
-use App\Mqtt\Devices\Sonoff\DualRelay;
+use SmartHome\Domain\Mqtt\Devices\Properties\Power;
+use SmartHome\Domain\Mqtt\Devices\Sonoff\DualRelay;
 use Tests\TestCase;
 
 class DualRelayTest extends TestCase

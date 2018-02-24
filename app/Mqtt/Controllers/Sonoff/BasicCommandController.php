@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Mqtt\Controllers\Sonoff;
+namespace SmartHome\Mqtt\Controllers\Sonoff;
 
-use App\Contracts\Mqtt\Response;
+use SmartHome\Domain\Mqtt\Contracts\Response;
 
 class BasicCommandController
 {

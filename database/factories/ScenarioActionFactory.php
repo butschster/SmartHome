@@ -1,9 +1,8 @@
 <?php
 
-use App\Entities\DeviceProperty;
-use App\Entities\Scenario;
-use App\Entities\ScenarioAction;
 use Faker\Generator as Faker;
+use SmartHome\Domain\Devices\Entities\DeviceProperty;
+use SmartHome\Domain\Scenario\Entities\ScenarioAction;
 
 $factory->define(ScenarioAction::class, function (Faker $faker) {
     return [

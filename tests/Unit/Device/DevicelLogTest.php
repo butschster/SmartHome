@@ -2,11 +2,10 @@
 
 namespace Tests\Unit\Device;
 
-use App\Entities\Device;
-use App\Entities\DeviceLog;
 use Illuminate\Support\Collection;
+use SmartHome\Domain\Devices\Entities\Device;
+use SmartHome\Domain\Devices\Entities\DeviceLog;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class DevicelLogTest extends TestCase

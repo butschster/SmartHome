@@ -1,7 +1,7 @@
 <?php
 
-use App\Entities\Room;
 use Faker\Generator as Faker;
+use SmartHome\Domain\Rooms\Entities\Room;
 
 $factory->define(Room::class, function (Faker $faker) {
     return [

@@ -33,7 +33,7 @@ class DeviceLastActivityTest extends TestCase
 
         $device->updateLastActivity();
 
-        Event::assertDispatched(\App\Events\Device\LastActivityUpdated::class, function ($e) use ($device) {
+        Event::assertDispatched(\SmartHome\Domain\Devices\Events\Device\LastActivityUpdated::class, function ($e) use ($device) {
             return $e->device->id === $device->id;
         });
 

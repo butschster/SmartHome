@@ -2,11 +2,11 @@
 
 namespace Tests\Unit\Mqtt\Devices\Properties;
 
-use App\Contracts\Mqtt\Client;
+use SmartHome\Domain\Mqtt\Contracts\Client;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Psr\Log\LoggerInterface;
 use Mockery as m;
-use App\Mqtt\Devices\Properties\Power;
+use SmartHome\Domain\Mqtt\Devices\Properties\Power;
 use Tests\TestCase;
 
 class PowerTest extends TestCase

@@ -1,7 +1,7 @@
 <?php
 
-use App\Entities\Room;
 use Illuminate\Database\Seeder;
+use SmartHome\Domain\Rooms\Entities\Room;
 
 class RoomTableSeeder extends Seeder
 {

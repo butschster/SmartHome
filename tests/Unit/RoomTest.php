@@ -2,11 +2,11 @@
 
 namespace Tests\Unit;
 
-use App\Entities\DeviceProperty;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Event;
+use SmartHome\Domain\Devices\Entities\DeviceProperty;
+use SmartHome\Domain\Devices\Events\DeviceProperty\CommandRun;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class RoomTest extends TestCase
@@ -62,12 +62,12 @@ class RoomTest extends TestCase
 
         Event::fake();
         $room->runCommand('command');
-        Event::assertDispatched(\App\Events\DeviceProperty\CommandRun::class, 2);
+        Event::assertDispatched(CommandRun::class, 2);
     }
 }
 
 
-class PropertyWithCommands extends \App\Mqtt\Devices\Property
+class PropertyWithCommands extends \SmartHome\Domain\Mqtt\Devices\Property
 {
     /**
      * @var array

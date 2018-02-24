@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Mqtt\Devices;
 
-use App\Mqtt\Devices\Property;
+use SmartHome\Domain\Mqtt\Devices\Property;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -43,7 +43,7 @@ class PropertyTest extends TestCase
 
     function test_runs_command()
     {
-        $client = m::mock(\App\Contracts\Mqtt\Client::class);
+        $client = m::mock(\SmartHome\Domain\Mqtt\Contracts\Client::class);
         $property = $this->makeProperty($client);
         $property->setDeviceProperty(
             $deviceProperty = $this->createDeviceProperty([
@@ -87,7 +87,7 @@ class PropertyTest extends TestCase
         return m::mock(
             Property::class,
             [
-                $client ?: m::mock(\App\Contracts\Mqtt\Client::class),
+                $client ?: m::mock(\SmartHome\Domain\Mqtt\Contracts\Client::class),
                 $logger ?: m::mock(\Psr\Log\LoggerInterface::class)
             ]
         )->makePartial();

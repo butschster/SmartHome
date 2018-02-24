@@ -2,12 +2,11 @@
 
 namespace Tests\Unit\Device;
 
-use App\Entities\DeviceProperty;
-use App\Entities\DevicePropertyLog;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Support\Facades\Event;
+use SmartHome\Domain\Devices\Entities\DeviceProperty;
+use SmartHome\Domain\Devices\Entities\DevicePropertyLog;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class DevicePropertyLogTest extends TestCase

@@ -1,7 +1,7 @@
 <?php
 
-use App\Entities\DeviceProperty;
-use App\Entities\DevicePropertyLog;
+use SmartHome\Domain\Devices\Entities\DeviceProperty;
+use SmartHome\Domain\Devices\Entities\DevicePropertyLog;
 use Faker\Generator as Faker;
 
 $factory->define(DevicePropertyLog::class, function (Faker $faker) {

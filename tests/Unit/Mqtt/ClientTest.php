@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Mqtt;
 
-use App\Mqtt\Client;
+use SmartHome\Domain\Mqtt\Client;
 use Bluerhinos\phpMQTT;
 use Tests\TestCase;
 use Mockery as m;

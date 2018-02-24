@@ -2,7 +2,7 @@
 
 namespace Tests\Helpers;
 
-use App\Entities\Room;
+use SmartHome\Domain\Rooms\Entities\Room;
 
 trait RommTrait
 {

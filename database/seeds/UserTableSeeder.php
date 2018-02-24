@@ -1,6 +1,6 @@
 <?php
 
-use App\Entities\User;
+use SmartHome\Domain\Users\Entities\User;
 use Illuminate\Database\Seeder;
 
 class UserTableSeeder extends Seeder

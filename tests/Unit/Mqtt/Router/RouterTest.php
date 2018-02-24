@@ -2,9 +2,9 @@
 
 namespace Tests\Unit\Mqtt\Router;
 
-use App\Contracts\Mqtt\Response;
-use App\Mqtt\Router\Route;
-use App\Mqtt\Router;
+use SmartHome\Domain\Mqtt\Contracts\Response;
+use SmartHome\Domain\Mqtt\Router\Route;
+use SmartHome\Domain\Mqtt\Router;
 use Tests\TestCase;
 use Mockery as m;
 
@@ -70,7 +70,7 @@ class RouterTest extends TestCase
     }
 
     /**
-     * @expectedException App\Exceptions\MqttRouteNotFoundException
+     * @expectedException SmartHome\Domain\Mqtt\Exceptions\RouteNotFoundException
      */
     function test_it_should_throw_an_exception_if_route_not_found()
     {

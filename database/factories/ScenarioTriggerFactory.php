@@ -1,9 +1,9 @@
 <?php
 
-use App\Entities\DeviceProperty;
-use App\Entities\Scenario;
-use App\Entities\ScenarioTrigger;
 use Faker\Generator as Faker;
+use SmartHome\Domain\Devices\Entities\DeviceProperty;
+use SmartHome\Domain\Scenario\Entities\Scenario;
+use SmartHome\Domain\Scenario\Entities\ScenarioTrigger;
 
 $factory->define(ScenarioTrigger::class, function (Faker $faker) {
     $condition = $faker->randomElement(['gt', 'lt', 'gte', 'lte', 'eq', 'not_eq', 'between']);

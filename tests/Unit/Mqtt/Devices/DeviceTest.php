@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Mqtt\Devices;
 
-use App\Mqtt\Devices\Device;
+use SmartHome\Domain\Mqtt\Devices\Device;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Mockery as m;

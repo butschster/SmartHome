@@ -1,7 +1,6 @@
 <?php
 
-use App\Entities\Device;
-use App\Mqtt\DeviceManager;
+use SmartHome\Domain\Devices\Entities\Device;
 use Faker\Generator as Faker;
 
 $factory->define(Device::class, function (Faker $faker) {

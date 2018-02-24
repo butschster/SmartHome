@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Mqtt\Devices\Properties;
 
-use App\Mqtt\Devices\Properties\Humidity;
+use SmartHome\Domain\Mqtt\Devices\Properties\Humidity;
 use Tests\TestCase;
 
 class HumidityTest extends TestCase

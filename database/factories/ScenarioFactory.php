@@ -1,7 +1,7 @@
 <?php
 
-use App\Entities\Scenario;
 use Faker\Generator as Faker;
+use SmartHome\Domain\Scenario\Entities\Scenario;
 
 $factory->define(Scenario::class, function (Faker $faker) {
     return [

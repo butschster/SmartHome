@@ -1,6 +1,6 @@
 <?php
 
-$router->namespace('App\\Mqtt\\Controllers\\');
+$router->namespace('SmartHome\\Mqtt\\Controllers\\');
 
 // Sonoff
 $router->listen('tele/{type}/{device}/LWT', 'Sonoff\BasicController@log');
@@ -15,6 +15,5 @@ $router->listen('stat/{type}/{device}/RESULT', 'Sonoff\BasicStatusController@res
 //$router->listen('cmnd/{type}/{device}/POWER', 'Sonoff\BasicController@log');
 
 // Xiaomi
-
 
 $router->listen('xiaomi/{type}/{device}/status', 'Xiaomi\BasicController@log');

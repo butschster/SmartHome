@@ -2,13 +2,13 @@
 
 namespace Tests\Feature\Mqtt;
 
-use App\Entities\Device;
-use App\Entities\DeviceProperty;
-use App\Mqtt\Router\Response;
+use SmartHome\Domain\Devices\Entities\{
+    Device, DeviceProperty, DevicePropertyLog
+};
+use SmartHome\Domain\Mqtt\Router\Response;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
-use App\Contracts\Mqtt\Router as RouterContract;
+use SmartHome\Domain\Mqtt\Contracts\Router as RouterContract;
 
 class SonoffBasicRelayTest extends TestCase
 {
@@ -27,7 +27,7 @@ class SonoffBasicRelayTest extends TestCase
         $device = Device::where('key', 'test_device')->first();
         $this->assertInstanceOf(Device::class, $device);
 
-        $this->assertDatabaseHas((new DeviceProperty)->getTable(), [
+        $this->assertDatabaseHas((new DevicePropertyLog())->getTable(), [
             'device_id' => $device->id,
             'key' => 'POWER',
             'value' => 1
@@ -47,7 +47,7 @@ class SonoffBasicRelayTest extends TestCase
         $device = Device::where('key', 'test_device')->first();
         $this->assertInstanceOf(Device::class, $device);
 
-        $this->assertDatabaseHas((new DeviceProperty)->getTable(), [
+        $this->assertDatabaseHas((new DeviceProperty())->getTable(), [
             'device_id' => $device->id,
             'key' => 'POWER',
             'value' => 1

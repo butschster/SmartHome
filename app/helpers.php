@@ -1,6 +1,6 @@
 <?php
 
-use App\Entities\User;
+use SmartHome\Domain\Users\Entities\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Notifications\Notification;
 
@@ -25,11 +25,11 @@ function response_error(int $status = 404): JsonResponse
  */
 function say($message)
 {
-    if ($message instanceof App\Contracts\Sayable) {
+    if ($message instanceof \SmartHome\Domain\Bot\Contracts\Sayable) {
         $message = $message->say();
     }
 
-    event(new App\Events\Say($message));
+    event(new SmartHome\Domain\Bot\Events\Say($message));
 
     logger('Said message', ['message' => $message]);
 }

@@ -1,9 +1,10 @@
 <?php
 
-namespace App\Mqtt\Controllers\Sonoff;
+namespace SmartHome\Mqtt\Controllers\Sonoff;
 
-use App\Contracts\Mqtt\Response;
-use App\Entities\Device;
+use SmartHome\Domain\Mqtt\Contracts\Response;
+use SmartHome\Domain\Devices\Entities\Device;
+
 class BasicTelemetryController
 {
     /**
@@ -12,7 +13,7 @@ class BasicTelemetryController
      * @param Response $response
      * @param string $type
      * @param string $device
-     * @throws \App\Exceptions\UnknownDeviceException
+     * @throws \SmartHome\Domain\Mqtt\Exceptions\UnknownDeviceException
      */
     public function state(Response $response, string $type, string $device)
     {
@@ -20,7 +21,7 @@ class BasicTelemetryController
 
         $device->setProperties($response->toArray());
 
-        event(new \App\Events\Device\Ping($device));
+        event(new \SmartHome\Domain\Devices\Events\Device\Ping($device));
 
         $device->log(sprintf('%s: %s', $response->getRoute(), $response->getPayload()));
     }

@@ -2,8 +2,8 @@
 
 namespace Tests\Unit\Device;
 
-use App\Entities\DeviceProperty;
 use Illuminate\Support\Facades\Event;
+use SmartHome\Domain\Devices\Entities\DeviceProperty;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 
@@ -47,7 +47,7 @@ class DevicePropertyCommandsTest extends TestCase
             $this->assertEquals($property->id, $response->id);
         });
 
-        Event::assertDispatched(\App\Events\DeviceProperty\CommandRun::class, function ($e) use($property) {
+        Event::assertDispatched(\SmartHome\Domain\Devices\Events\DeviceProperty\CommandRun::class, function ($e) use($property) {
             $this->assertEquals($e->command, 'command1');
 
             return $e->property->id == $property->id;
@@ -55,7 +55,7 @@ class DevicePropertyCommandsTest extends TestCase
     }
 
     /**
-     * @expectedException App\Exceptions\DevicePropertyCommandNotFound
+     * @expectedException SmartHome\Domain\Devices\Exceptions\DevicePropertyCommandNotFound
      */
     function test_a_property_should_throw_an_exception_when_invoking_non_exists_command()
     {
@@ -67,12 +67,12 @@ class DevicePropertyCommandsTest extends TestCase
             $this->assertEquals($property->id, $response->id);
         });
 
-        Event::assertNotDispatched(\App\Events\DeviceProperty\CommandRun::class);
+        Event::assertNotDispatched(\SmartHome\Domain\Devices\Events\DeviceProperty\CommandRun::class);
     }
 }
 
 
-class PropertyWithCommands extends \App\Mqtt\Devices\Property
+class PropertyWithCommands extends \SmartHome\Domain\Mqtt\Devices\Property
 {
     /**
      * @var array

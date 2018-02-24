@@ -2,9 +2,10 @@
 
 namespace Tests\Unit\Device;
 
-use App\Entities\Device;
-use App\Entities\DeviceProperty;
-use App\Entities\DevicePropertyLog;
+use SmartHome\Domain\Devices\Entities\Device;
+use SmartHome\Domain\Devices\Entities\DeviceProperty;
+use SmartHome\Domain\Devices\Entities\DevicePropertyLog;
+use SmartHome\Domain\Devices\Events\DeviceProperty\Changed;
 use Tests\TestCase;
 use Illuminate\Support\Facades\Event;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -38,7 +39,7 @@ class DevicePropertyTest extends TestCase
         $device = $this->createTestDevice();
 
         Event::fake([
-            \App\Events\DeviceProperty\Changed::class
+            Changed::class
         ]);
 
         $device->setProperties([
@@ -46,11 +47,11 @@ class DevicePropertyTest extends TestCase
             'ignored' => 'test_value1'
         ]);
 
-        Event::assertNotDispatched(\App\Events\DeviceProperty\Changed::class);
+        Event::assertNotDispatched(Changed::class);
 
         $this->assertEquals(1, $device->properties()->count());
 
-        $table = (new DeviceProperty)->getTable();
+        $table = (new DeviceProperty())->getTable();
         $this->assertDatabaseHas($table, ['device_id' => $device->id, 'key' => 'test', 'value' => 'test_value']);
         $this->assertDatabaseMissing($table, ['device_id' => $device->id, 'key' => 'ignored', 'value' => 'test_value1']);
     }
@@ -60,13 +61,13 @@ class DevicePropertyTest extends TestCase
         $device = $this->createTestDevice();
 
         Event::fake([
-            \App\Events\DeviceProperty\Changed::class
+            Changed::class
         ]);
 
         $device->setProperties(['test' => 'test_value']);
         $device->setProperties(['test' => 'test_value2']);
 
-        Event::assertDispatched(\App\Events\DeviceProperty\Changed::class, 1);
+        Event::assertDispatched(Changed::class, 1);
 
         $this->assertEquals(1, $device->properties()->count());
 
@@ -81,7 +82,7 @@ class DevicePropertyTest extends TestCase
         $device->setProperties(['loggable' => 'test_value']);
         $device->setProperties(['loggable' => 'test_value2']);
 
-        $logTable = (new DevicePropertyLog)->getTable();
+        $logTable = (new DevicePropertyLog())->getTable();
         $this->assertDatabaseHas($logTable, ['device_property_id' => $device->properties->first()->id, 'value' => 'test_value']);
     }
 
