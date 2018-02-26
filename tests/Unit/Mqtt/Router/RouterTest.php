@@ -2,6 +2,7 @@
 
 namespace Tests\Unit\Mqtt\Router;
 
+use Illuminate\Contracts\Events\Dispatcher;
 use SmartHome\Domain\Mqtt\Contracts\Response;
 use SmartHome\Domain\Mqtt\Router\Route;
 use SmartHome\Domain\Mqtt\Router;
@@ -20,7 +21,7 @@ class RouterTest extends TestCase
         parent::setUp();
 
         $this->router = new Router(
-            $this->app
+            $this->app, $this->app[Dispatcher::class]
         );
     }
 

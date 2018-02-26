@@ -15,7 +15,6 @@ class BasicController
      */
     public function log(Response $response, string $type, string $device)
     {
-        $device = Device::register($device, $type);
-        event(new \SmartHome\Domain\Devices\Events\Device\Ping($device));
+
     }
 }

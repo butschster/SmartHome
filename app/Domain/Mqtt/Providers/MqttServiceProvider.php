@@ -2,6 +2,7 @@
 
 namespace SmartHome\Domain\Mqtt\Providers;
 
+use Illuminate\Contracts\Events\Dispatcher;
 use SmartHome\Domain\Mqtt\Contracts\Client as ClientContract;
 use SmartHome\Domain\Mqtt\Contracts\Router as RouterContract;
 use SmartHome\Domain\Mqtt\Client;
@@ -10,6 +11,14 @@ use Illuminate\Support\ServiceProvider;
 
 class MqttServiceProvider extends ServiceProvider
 {
+    /**
+     * @var array
+     */
+    protected $middleware = [
+        \SmartHome\Domain\Mqtt\Middleware\RegisterDevice::class,
+        \SmartHome\Domain\Mqtt\Middleware\LogMessages::class
+    ];
+
     /**
      * Bootstrap the application services.
      *
@@ -33,12 +42,14 @@ class MqttServiceProvider extends ServiceProvider
         });
 
         $this->app->singleton(RouterContract::class, function ($app) {
-            $router = new Router($app);
+            $router = new Router($app, $app[Dispatcher::class]);
 
             require base_path('routes/mqtt.php');
 
             return $router;
         });
+
+        $this->registerMiddleware();
     }
 
     /**
@@ -49,5 +60,12 @@ class MqttServiceProvider extends ServiceProvider
     public function register()
     {
         //
+    }
+
+    protected function registerMiddleware(): void
+    {
+        foreach ($this->middleware as $class) {
+            Router::registerMiddleware($class);
+        }
     }
 }

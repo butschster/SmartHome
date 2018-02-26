@@ -32,7 +32,7 @@ class DeviceRegisteredNotification extends Notification
      */
     public function via($notifiable)
     {
-        return [VoiceChannel::class, 'database'];
+        return [VoiceChannel::class];
     }
 
     public function toDatabase($notifiable)

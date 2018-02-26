@@ -2,6 +2,7 @@
 
 namespace SmartHome\Domain\Devices\Entities;
 
+use SmartHome\App\Contracts\DeviceManager;
 use SmartHome\App\Entities\Model;
 use SmartHome\App\Contracts\Device as DeviceDriverContract;
 use SmartHome\App\Exceptions\UnknownDeviceException;
@@ -22,17 +23,22 @@ class Device extends Model
      */
     public static function register(string $key, string $type): Device
     {
-        $deviceConfig = config('devices.' . $type);
-        if (!$deviceConfig) {
+        /** @var DeviceManager $manager */
+        $manager = app(DeviceManager::class);
+
+        $drivers = $manager->getDrivers();
+        if (!isset($drivers[$type])) {
             throw new UnknownDeviceException($type);
         }
+
+        $driver = $drivers[$type];
 
         return static::firstOrCreate([
             'key' => $key,
             'type' => $type
         ], [
-            'name' => array_get($deviceConfig, 'name'),
-            'description' => array_get($deviceConfig, 'description'),
+            'name' => array_get($driver, 'name'),
+            'description' => array_get($driver, 'description'),
             'last_activity' => now()
         ]);
     }

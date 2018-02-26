@@ -27,8 +27,14 @@ class EventServiceProvider extends ServiceProvider
         \SmartHome\Domain\Bot\Events\HandleCommandError::class => [
             \SmartHome\Domain\Bot\Listeners\SayCommandNotFound::class
         ],
-        \SmartHome\Domain\Mqtt\Events\Message::class => [
+        \SmartHome\Domain\Mqtt\Events\MessageReceived::class => [
             \SmartHome\Domain\Mqtt\Listeners\LogMessages::class,
+        ],
+        \SmartHome\Domain\Mqtt\Events\RouteMatched::class => [
+
+        ],
+        \SmartHome\Domain\Mqtt\Events\UnknownDevice::class => [
+
         ],
         \SmartHome\Domain\Devices\Events\Device\LastActivityUpdated::class => [
 

@@ -36,7 +36,10 @@ class DeviceManager extends Manager implements DeviceManagerContract
      */
     public function getDrivers()
     {
-        return $this->app['config']->get('devices') ?: [];
+        return array_merge(
+            $this->app['config']->get('devices') ?: [],
+            $this->customCreators
+        );
     }
 
     /**
@@ -49,14 +52,12 @@ class DeviceManager extends Manager implements DeviceManagerContract
      */
     protected function createDriver($driver): Device
     {
-        if (isset($this->customCreators[$driver])) {
-            return $this->callCustomCreator($driver);
-        }
-
         $deviceDrivers = $this->getDrivers();
 
         if (isset($deviceDrivers[$driver])) {
-            return $this->makeClass($deviceDrivers[$driver]);
+            return $this->callDriver(
+                $deviceDrivers[$driver]
+            );
         }
 
         throw new DeviceDriverNotFoundException("Driver [$driver] not supported.");
@@ -66,13 +67,13 @@ class DeviceManager extends Manager implements DeviceManagerContract
      * @param string $driver
      * @return Device
      */
-    protected function callCustomCreator($driver): Device
+    protected function callDriver($driver): Device
     {
-        if (is_array($this->customCreators[$driver])) {
-            return $this->makeClass($this->customCreators[$driver]);
+        if (is_array($driver)) {
+            return $this->makeClass($driver);
         }
 
-        return parent::callCustomCreator($driver);
+        return $driver($this->app);
     }
 
     /**

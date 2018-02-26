@@ -13,16 +13,12 @@ class BasicTelemetryController
      * @param Response $response
      * @param string $type
      * @param string $device
-     * @throws \SmartHome\Domain\Mqtt\Exceptions\UnknownDeviceException
+     * @param Device $registeredDevice
      */
-    public function state(Response $response, string $type, string $device)
+    public function result(Response $response, string $type, string $device, Device $registeredDevice = null)
     {
-        $device = Device::register($device, $type);
-
-        $device->setProperties($response->toArray());
-
-        event(new \SmartHome\Domain\Devices\Events\Device\Ping($device));
-
-        $device->log(sprintf('%s: %s', $response->getRoute(), $response->getPayload()));
+        if ($registeredDevice) {
+            $registeredDevice->setProperties($response->toArray());
+        }
     }
 }

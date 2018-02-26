@@ -16,7 +16,8 @@ class Kernel extends ConsoleKernel
         \SmartHome\Domain\Weather\Console\Commands\SyncWeather::class,
         \SmartHome\Domain\Devices\Console\Commands\PruneDatabaseLogs::class,
         \SmartHome\Domain\Mqtt\Console\Commands\PruneDatabaseLogs::class,
-        \SmartHome\Domain\Mqtt\Console\Commands\Listen::class,
+        \SmartHome\Domain\Mqtt\Console\Commands\Listener::class,
+        \SmartHome\Domain\Xiaomi\Console\Commands\ListenGateway::class,
     ];
 
     /**
