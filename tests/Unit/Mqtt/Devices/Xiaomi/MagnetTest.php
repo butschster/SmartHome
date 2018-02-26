@@ -2,8 +2,8 @@
 
 namespace Tests\Unit\Mqtt\Devices\Xiaomi;
 
-use SmartHome\Domain\Mqtt\Devices\Properties\Door;
-use SmartHome\Domain\Mqtt\Devices\Xiaomi\Magnet;
+use SmartHome\App\Devices\Properties\Door;
+use SmartHome\Domain\Xiaomi\Devices\Magnet;
 use Tests\TestCase;
 
 class MagnetTest extends TestCase

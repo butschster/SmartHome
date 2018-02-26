@@ -1,16 +1,11 @@
 <?php
 
-namespace SmartHome\Domain\Mqtt\Contracts;
+namespace SmartHome\App\Contracts;
 
 use SmartHome\Domain\Devices\Exceptions\DevicePropertyNotFoundException;
 
 interface Device
 {
-    const TYPE_SONOFF_BASIC = 'sonoff_basic';
-    const TYPE_SONOFF_DUAL = 'sonoff_dual';
-    const TYPE_XIAOMI_TH = 'xiaomi_th';
-    const TYPE_XIAOMI_MAGNET = 'xiaomi_magnet';
-    const TYPE_XIAOMI_BUTTON = 'xiaomi_switch';
 
     /**
      * Получение списка доступных датчиков

@@ -2,35 +2,25 @@
 
 namespace Tests\Unit\Mqtt;
 
-use SmartHome\Domain\Mqtt\Contracts\Device;
-use SmartHome\Domain\Mqtt\Devices\Sonoff\BasicRelay;
+use SmartHome\Domain\Sonoff\Devices;
+use SmartHome\Domain\Sonoff\Devices\BasicRelay;
 use Tests\TestCase;
-use SmartHome\Domain\Mqtt\Contracts\DeviceManager as DeviceManagerContract;
+use SmartHome\App\Contracts\DeviceManager as DeviceManagerContract;
 
 class DeviceManagerTest extends TestCase
 {
-    function test_it_has_default_driver()
-    {
-        $manager = $this->makeManager();
-
-        $this->assertEquals(
-            Device::TYPE_SONOFF_BASIC,
-            $manager->getDefaultDriver()
-        );
-    }
-
     function test_it_can_create_driver_object_for_exists_device()
     {
         $manager = $this->makeManager();
 
         $this->assertInstanceOf(
             BasicRelay::class,
-            $manager->driver(Device::TYPE_SONOFF_BASIC)
+            $manager->driver(Devices::TYPE_SONOFF_BASIC)
         );
     }
 
     /**
-     * @expectedException SmartHome\Domain\Mqtt\Exceptions\DeviceDriverNotFoundException
+     * @expectedException SmartHome\App\Exceptions\DeviceDriverNotFoundException
      */
     function test_it_should_throw_an_exception_if_driver_not_found()
     {

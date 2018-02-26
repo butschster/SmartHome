@@ -1,11 +1,11 @@
 <?php
 
-namespace SmartHome\Domain\Mqtt\Devices;
+namespace SmartHome\App\Devices;
 
 use SmartHome\Domain\Mqtt\Contracts\Client;
 use Illuminate\Validation\Concerns\ValidatesAttributes;
 use Psr\Log\LoggerInterface;
-use SmartHome\Domain\Mqtt\Contracts\DeviceProperty as DevicePropertyContract;
+use SmartHome\App\Contracts\DeviceProperty as DevicePropertyContract;
 use SmartHome\Domain\Devices\Entities\DeviceProperty;
 
 abstract class Property implements DevicePropertyContract

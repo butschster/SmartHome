@@ -7,6 +7,7 @@
     "require": {
         "php": ">=7.1.3",
         "bluerhinos/phpmqtt": "dev-master",
+        "cboden/ratchet": "^0.4.1",
         "cmfcmf/openweathermap-php-api": "^2.2",
         "danielstjules/stringy": "^3.1",
         "fideloper/proxy": "~4.0",

@@ -67,7 +67,7 @@ class RoomTest extends TestCase
 }
 
 
-class PropertyWithCommands extends \SmartHome\Domain\Mqtt\Devices\Property
+class PropertyWithCommands extends \SmartHome\App\Devices\Property
 {
     /**
      * @var array

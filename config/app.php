@@ -176,8 +176,11 @@ return [
         // SmartHome\App\Providers\BroadcastServiceProvider::class,
         SmartHome\App\Providers\EventServiceProvider::class,
         SmartHome\App\Providers\RouteServiceProvider::class,
+        SmartHome\App\Providers\DevicesServiceProvider::class,
         SmartHome\Domain\Mqtt\Providers\MqttServiceProvider::class,
         SmartHome\Domain\Weather\Providers\OpenWeatherMapServiceProvider::class,
+        SmartHome\Domain\Sonoff\Providers\SonoffServiceProvider::class,
+        SmartHome\Domain\Xiaomi\Providers\XiaomiServiceProvider::class,
     ],
 
     /*

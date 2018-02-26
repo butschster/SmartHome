@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Mqtt\Devices\Properties;
 
-use SmartHome\Domain\Mqtt\Devices\Properties\Door;
+use SmartHome\App\Devices\Properties\Door;
 use Tests\TestCase;
 
 class DoorTest extends TestCase

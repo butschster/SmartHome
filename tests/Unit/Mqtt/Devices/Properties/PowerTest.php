@@ -6,7 +6,7 @@ use SmartHome\Domain\Mqtt\Contracts\Client;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Psr\Log\LoggerInterface;
 use Mockery as m;
-use SmartHome\Domain\Mqtt\Devices\Properties\Power;
+use SmartHome\Domain\Sonoff\Devices\Properties\Power;
 use Tests\TestCase;
 
 class PowerTest extends TestCase

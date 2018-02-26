@@ -1,13 +1,13 @@
 <?php
 
-namespace SmartHome\Domain\Mqtt;
+namespace SmartHome\App\Devices;
 
-use SmartHome\Domain\Mqtt\Contracts\Device;
-use SmartHome\Domain\Mqtt\Contracts\DeviceManager as DeviceManagerContract;
+use SmartHome\App\Contracts\Device;
+use SmartHome\App\Contracts\DeviceManager as DeviceManagerContract;
 use Closure;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Support\Manager;
-use SmartHome\Domain\Mqtt\Exceptions\DeviceDriverNotFoundException;
+use SmartHome\App\Exceptions\DeviceDriverNotFoundException;
 
 class DeviceManager extends Manager implements DeviceManagerContract
 {
@@ -26,7 +26,7 @@ class DeviceManager extends Manager implements DeviceManagerContract
      */
     public function getDefaultDriver()
     {
-        return Device::TYPE_SONOFF_BASIC;
+        throw new \BadMethodCallException('Default driver not exists');
     }
 
     /**

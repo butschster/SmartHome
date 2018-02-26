@@ -1,9 +1,9 @@
 <?php
 
-namespace SmartHome\Domain\Mqtt\Devices;
+namespace SmartHome\App\Devices;
 
-use SmartHome\Domain\Mqtt\Contracts\Device as DeviceContract;
-use SmartHome\Domain\Mqtt\Contracts\DeviceProperty as DevicePropertyContract;
+use SmartHome\App\Contracts\Device as DeviceContract;
+use SmartHome\App\Contracts\DeviceProperty as DevicePropertyContract;
 use SmartHome\Domain\Devices\Entities\DeviceProperty;
 use SmartHome\Domain\Devices\Exceptions\DevicePropertyNotFoundException;
 use Illuminate\Contracts\Foundation\Application;

@@ -1,11 +1,11 @@
 <?php
 
-namespace SmartHome\Domain\Mqtt\Devices\Properties;
+namespace SmartHome\App\Devices\Properties;
 
 use SmartHome\Domain\Devices\Contracts\DevicePropertyLoggable;
-use SmartHome\Domain\Mqtt\Devices\Property;
+use SmartHome\App\Devices\Property;
 
-class Humidity extends Property implements DevicePropertyLoggable
+class Temperature extends Property implements DevicePropertyLoggable
 {
     /**
      * Преобразование значения к нужному виду
@@ -24,7 +24,7 @@ class Humidity extends Property implements DevicePropertyLoggable
     public function meta(): array
     {
         return [
-            'units' => '%'
+            'units' => '℃'
         ];
     }
 }

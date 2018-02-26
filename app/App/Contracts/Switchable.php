@@ -1,6 +1,6 @@
 <?php
 
-namespace SmartHome\Domain\Mqtt\Contracts;
+namespace SmartHome\App\Contracts;
 
 use SmartHome\Domain\Devices\Entities\DeviceProperty;
 

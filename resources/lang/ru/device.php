@@ -1,8 +1,7 @@
 <?php
 
-use SmartHome\Domain\Mqtt\Devices\Properties\{
-    Door, Power
-};
+use SmartHome\App\Devices\Properties\Door;
+use SmartHome\Domain\Sonoff\Devices\Properties\Power;
 
 return [
     'action' => [

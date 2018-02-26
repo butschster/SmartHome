@@ -1,6 +1,6 @@
 <?php
 
-namespace SmartHome\Domain\Mqtt\Contracts;
+namespace SmartHome\App\Contracts;
 
 interface DeviceProperty
 {

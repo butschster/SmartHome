@@ -68,7 +68,7 @@ trait DeviceTrait
 }
 
 
-class TestDevice extends \SmartHome\Domain\Mqtt\Devices\Device
+class TestDevice extends \SmartHome\App\Devices\Device
 {
     protected $properties = [
         'test' => TestProperty::class,
@@ -85,7 +85,7 @@ class TestDevice extends \SmartHome\Domain\Mqtt\Devices\Device
     }
 }
 
-class TestProperty extends \SmartHome\Domain\Mqtt\Devices\Property
+class TestProperty extends \SmartHome\App\Devices\Property
 {
     public function transform($value)
     {
@@ -93,7 +93,7 @@ class TestProperty extends \SmartHome\Domain\Mqtt\Devices\Property
     }
 }
 
-class TestLoggableProperty extends \SmartHome\Domain\Mqtt\Devices\Property implements DevicePropertyLoggable
+class TestLoggableProperty extends \SmartHome\App\Devices\Property implements DevicePropertyLoggable
 {
     public function transform($value)
     {

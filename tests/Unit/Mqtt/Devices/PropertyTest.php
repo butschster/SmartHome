@@ -2,9 +2,8 @@
 
 namespace Tests\Unit\Mqtt\Devices;
 
-use SmartHome\Domain\Mqtt\Devices\Property;
+use SmartHome\App\Devices\Property;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\WithFaker;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Mockery as m;
 

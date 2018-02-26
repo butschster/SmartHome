@@ -1,6 +1,6 @@
 <?php
 
-namespace SmartHome\Domain\Mqtt\Exceptions;
+namespace SmartHome\App\Exceptions;
 
 use Exception;
 

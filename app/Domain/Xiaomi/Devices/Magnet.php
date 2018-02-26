@@ -1,9 +1,9 @@
 <?php
 
-namespace SmartHome\Domain\Mqtt\Devices\Xiaomi;
+namespace SmartHome\Domain\Xiaomi\Devices;
 
-use SmartHome\Domain\Mqtt\Devices\Device;
-use SmartHome\Domain\Mqtt\Devices\Properties\Door;
+use SmartHome\App\Devices\Device;
+use SmartHome\App\Devices\Properties\Door;
 
 class Magnet extends Device
 {

@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Mqtt\Devices\Properties;
 
-use SmartHome\Domain\Mqtt\Devices\Properties\Action;
+use SmartHome\App\Devices\Properties\Action;
 use Tests\TestCase;
 
 class ActionTest extends TestCase

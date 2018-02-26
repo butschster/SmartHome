@@ -6,7 +6,7 @@ use SmartHome\Domain\Mqtt\Contracts\Client as ClientContract;
 use SmartHome\Domain\Mqtt\Events\Message;
 use SmartHome\Domain\Mqtt\Contracts\Router as RouterContract;
 use SmartHome\Domain\Mqtt\Exceptions\RouteNotFoundException;
-use SmartHome\Domain\Mqtt\Exceptions\UnknownDeviceException;
+use SmartHome\App\Exceptions\UnknownDeviceException;
 use SmartHome\Domain\Mqtt\Router\Response;
 use Illuminate\Console\Command;
 

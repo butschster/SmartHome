@@ -1,10 +1,10 @@
 <?php
 
-namespace SmartHome\Domain\Mqtt\Devices\Properties;
+namespace SmartHome\Domain\Sonoff\Devices\Properties;
 
-use SmartHome\Domain\Mqtt\Contracts\Switchable;
+use SmartHome\App\Contracts\Switchable;
 use SmartHome\Domain\Devices\Entities\DeviceProperty;
-use SmartHome\Domain\Mqtt\Devices\Property;
+use SmartHome\App\Devices\Property;
 
 class Power extends Property implements Switchable
 {

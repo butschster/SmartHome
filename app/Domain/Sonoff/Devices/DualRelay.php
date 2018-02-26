@@ -1,9 +1,9 @@
 <?php
 
-namespace SmartHome\Domain\Mqtt\Devices\Sonoff;
+namespace SmartHome\Domain\Sonoff\Devices;
 
-use SmartHome\Domain\Mqtt\Devices\Device;
-use SmartHome\Domain\Mqtt\Devices\Properties\Power;
+use SmartHome\App\Devices\Device;
+use SmartHome\Domain\Sonoff\Devices\Properties\Power;
 
 class DualRelay extends Device
 {

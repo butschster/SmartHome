@@ -3,6 +3,7 @@
 namespace Tests\Unit\Device;
 
 use Illuminate\Support\Facades\Event;
+use SmartHome\app\Devices\Property;
 use SmartHome\Domain\Devices\Entities\DeviceProperty;
 use Tests\TestCase;
 use Illuminate\Foundation\Testing\RefreshDatabase;
@@ -72,7 +73,7 @@ class DevicePropertyCommandsTest extends TestCase
 }
 
 
-class PropertyWithCommands extends \SmartHome\Domain\Mqtt\Devices\Property
+class PropertyWithCommands extends Property
 {
     /**
      * @var array

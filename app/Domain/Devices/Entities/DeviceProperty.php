@@ -4,8 +4,8 @@ namespace SmartHome\Domain\Devices\Entities;
 
 use SmartHome\App\Entities\Model;
 use SmartHome\Domain\Devices\Exceptions\DevicePropertyNotFoundException;
-use SmartHome\Domain\Mqtt\Contracts\Device as DeviceContract;
-use SmartHome\Domain\Mqtt\Contracts\DeviceProperty as DevicePropertyContract;
+use SmartHome\App\Contracts\Device as DeviceContract;
+use SmartHome\App\Contracts\DeviceProperty as DevicePropertyContract;
 use SmartHome\Domain\Rooms\Entities\Room;
 use SmartHome\Domain\Scenario\Entities\Scenario;
 use SmartHome\Domain\Devices\Exceptions\DevicePropertyCommandNotFound;

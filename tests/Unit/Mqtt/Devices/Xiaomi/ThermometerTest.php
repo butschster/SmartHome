@@ -2,9 +2,10 @@
 
 namespace Tests\Unit\Mqtt\Devices\Xiaomi;
 
-use SmartHome\Domain\Mqtt\Devices\Properties\Humidity;
-use SmartHome\Domain\Mqtt\Devices\Properties\Temperature;
-use SmartHome\Domain\Mqtt\Devices\Xiaomi\Thermometer;
+use SmartHome\App\Devices\Properties\{
+    Humidity, Temperature
+};
+use SmartHome\Domain\Xiaomi\Devices\Thermometer;
 use Tests\TestCase;
 
 class ThermometerTest extends TestCase

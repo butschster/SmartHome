@@ -3,11 +3,11 @@
 namespace SmartHome\Domain\Devices\Entities;
 
 use SmartHome\App\Entities\Model;
-use SmartHome\Domain\Mqtt\Contracts\Device as DeviceDriverContract;
-use SmartHome\Domain\Mqtt\Exceptions\UnknownDeviceException;
+use SmartHome\App\Contracts\Device as DeviceDriverContract;
+use SmartHome\App\Exceptions\UnknownDeviceException;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\HasMany;
-use SmartHome\Domain\Mqtt\Contracts\DeviceManager as DeviceManagerContract;
+use SmartHome\App\Contracts\DeviceManager as DeviceManagerContract;
 
 class Device extends Model
 {
@@ -79,7 +79,7 @@ class Device extends Model
         $driver = $this->driver();
 
         foreach ($driver->properties() as $property => $class) {
-            /** @var \SmartHome\Domain\Mqtt\Contracts\DeviceProperty $propertyObject */
+            /** @var \SmartHome\App\Contracts\DeviceProperty $propertyObject */
             $propertyObject = app($class);
             $value = $propertyObject->transform(
                 array_get($data, $property)

@@ -2,8 +2,8 @@
 
 namespace Tests\Unit\Mqtt\Devices\Xiaomi;
 
-use SmartHome\Domain\Mqtt\Devices\Properties\Action;
-use SmartHome\Domain\Mqtt\Devices\Xiaomi\Button;
+use SmartHome\App\Devices\Properties\Action;
+use SmartHome\Domain\Xiaomi\Devices\Button;
 use Tests\TestCase;
 
 class ButtonTest extends TestCase

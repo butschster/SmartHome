@@ -1,15 +1,12 @@
 <?php
 
-namespace SmartHome\Domain\Mqtt\Devices\Properties;
+namespace SmartHome\App\Devices\Properties;
 
 use SmartHome\Domain\Devices\Contracts\DevicePropertyLoggable;
-use SmartHome\Domain\Mqtt\Devices\Property;
+use SmartHome\App\Devices\Property;
 
-class Door extends Property implements DevicePropertyLoggable
+class Action extends Property implements DevicePropertyLoggable
 {
-    const STATUS_OPEN = 1;
-    const STATUS_CLOSED = 0;
-
     /**
      * Преобразование значения к нужному виду
      *
@@ -18,11 +15,7 @@ class Door extends Property implements DevicePropertyLoggable
      */
     public function transform($value)
     {
-        if (in_array(strtolower($value), ['open', 1])) {
-            return static::STATUS_OPEN;
-        }
-
-        return static::STATUS_CLOSED;
+        return $value;
     }
 
     /**
@@ -31,6 +24,6 @@ class Door extends Property implements DevicePropertyLoggable
      */
     public function format($value)
     {
-        return trans('device.door.'.$value);
+        return trans('device.action.'.$value);
     }
 }

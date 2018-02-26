@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Mqtt\Devices\Properties;
 
-use SmartHome\Domain\Mqtt\Devices\Properties\Temperature;
+use SmartHome\App\Devices\Properties\Temperature;
 use Tests\TestCase;
 
 class TemperatureTest extends TestCase
