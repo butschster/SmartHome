@@ -6,8 +6,8 @@ use Illuminate\Support\ServiceProvider;
 use SmartHome\App\Contracts\DeviceManager;
 use SmartHome\Domain\Xiaomi\Devices;
 
-use SmartHome\Domain\Xiaomi\Devices\{
-    Button, Magnet, Thermometer
+use SmartHome\Domain\Xiaomi\MiHome\Devices\{
+    Button, Gateway, Magnet, Motion, Thermometer
 };
 
 class XiaomiServiceProvider extends ServiceProvider
@@ -30,6 +30,16 @@ class XiaomiServiceProvider extends ServiceProvider
         $manager->register(Devices::TYPE_XIAOMI_BUTTON, [
             'name' => 'Xiaomi Mi Smart Home Button',
             'class' => Button::class,
+        ]);
+
+        $manager->register(Devices::TYPE_XIAOMI_MOTION, [
+            'name' => 'Xiaomi Mi Smart Home Motion Sensor',
+            'class' => Motion::class,
+        ]);
+
+        $manager->register(Devices::TYPE_XIAOMI_GATEWAY, [
+            'name' => 'Xiaomi Mi Smart Home Gateway',
+            'class' => Gateway::class,
         ]);
     }
 

@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Mqtt\Devices\Properties;
 
-use SmartHome\App\Devices\Properties\Temperature;
+use SmartHome\Domain\Xiaomi\MiHome\Devices\Properties\Temperature;
 use Tests\TestCase;
 
 class TemperatureTest extends TestCase
@@ -11,8 +11,8 @@ class TemperatureTest extends TestCase
     {
         $action = $this->makePropertyAction(Temperature::class);
 
-        $this->assertEquals(1.0, $action->transform(1));
-        $this->assertEquals(100.5, $action->transform(100.454));
+        $this->assertEquals(15.0, $action->transform(1500));
+        $this->assertEquals(1.0, $action->transform(100.454));
     }
 
     function test_formats_value()

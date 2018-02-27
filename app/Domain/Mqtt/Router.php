@@ -4,8 +4,7 @@ namespace SmartHome\Domain\Mqtt;
 
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Pipeline\Pipeline;
-use SmartHome\Domain\Mqtt\Contracts\Middleware;
-use SmartHome\Domain\Mqtt\Contracts\Response;
+use SmartHome\Domain\Mqtt\Contracts\Request;
 use SmartHome\Domain\Mqtt\Contracts\Router as RouterContract;
 use Closure;
 use Illuminate\Container\Container;
@@ -28,7 +27,7 @@ class Router implements RouterContract
     }
 
     /**
-     * @return Middleware[]
+     * @return array
      */
     public static function getMiddleware(): array
     {
@@ -93,42 +92,42 @@ class Router implements RouterContract
     /**
      * Dispatch the request to the application.
      *
-     * @param Response $response
+     * @param Request $request
      * @return string
      * @throws RouteNotFoundException
      * @throws \ReflectionException
      */
-    public function dispatch(Response $response)
+    public function dispatch(Request $request)
     {
-        return $this->dispatchToRoute($response);
+        return $this->dispatchToRoute($request);
     }
 
     /**
      * Dispatch the request to a route and return the response.
      *
-     * @param Response $response
+     * @param Request $request
      * @return mixed
      * @throws RouteNotFoundException
      * @throws \ReflectionException
      */
-    public function dispatchToRoute(Response $response)
+    public function dispatchToRoute(Request $request)
     {
         return $this->runRoute(
-            $response,
-            $this->findRoute($response)
+            $request,
+            $this->findRoute($request)
         );
     }
 
     /**
      * Find the route matching a given request.
      *
-     * @param  Response $response
+     * @param  Request $request
      * @return Router\Route
      * @throws RouteNotFoundException
      */
-    protected function findRoute(Response $response): Router\Route
+    protected function findRoute(Request $request): Router\Route
     {
-        $route = $this->routes->match($response);
+        $route = $this->routes->match($request);
 
         $this->container->instance(Router\Route::class, $route);
 
@@ -138,21 +137,40 @@ class Router implements RouterContract
     /**
      * Return the response for the given route.
      *
-     * @param  Response $response
+     * @param  Request $request
      * @param  Router\Route $route
      * @return mixed
-     * @throws \ReflectionException
      */
-    protected function runRoute(Response $response, Router\Route $route)
+    protected function runRoute(Request $request, Router\Route $route)
     {
+        $request->setRouteResolver(function () use ($route) {
+            return $route;
+        });
+
         $this->events->dispatch(new RouteMatched($route));
 
+        $middleware = $this->gatherRouteMiddleware($route);
+
         return (new Pipeline($this->container))
-            ->send($route)
-            ->through(static::getMiddleware())
-            ->then(function($route) {
+            ->send($request)
+            ->through($middleware)
+            ->then(function($request) use($route) {
                 return $route->run();
             });
+    }
+
+    /**
+     * Gather the middleware for the given route with resolved class names.
+     *
+     * @param Router\Route  $route
+     * @return array
+     */
+    public function gatherRouteMiddleware(Router\Route $route): array
+    {
+        return array_merge(
+            $route->gatherMiddleware(),
+            static::getMiddleware()
+        );
     }
 
     /**

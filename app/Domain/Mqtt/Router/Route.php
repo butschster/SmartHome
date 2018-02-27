@@ -2,7 +2,7 @@
 
 namespace SmartHome\Domain\Mqtt\Router;
 
-use SmartHome\Domain\Mqtt\Contracts\Response;
+use SmartHome\Domain\Mqtt\Contracts\Request;
 use SmartHome\Domain\Mqtt\Contracts\Router;
 use Illuminate\Routing\RouteAction;
 use Illuminate\Routing\RouteDependencyResolverTrait;
@@ -81,6 +81,13 @@ class Route
     public $compiled;
 
     /**
+     * The computed gathered middleware.
+     *
+     * @var array|null
+     */
+    public $computedMiddleware;
+
+    /**
      * The router instance used by the route.
      *
      * @var Router
@@ -128,15 +135,15 @@ class Route
     /**
      * Determine if the route matches given request.
      *
-     * @param Response $response
+     * @param Request $request
      * @return bool
      * @return bool
      */
-    public function matches(Response $response)
+    public function matches(Request $request)
     {
         $this->compileRoute();
 
-        return preg_match($this->getCompiled()->getRegex(), '/'.$response->getRoute());
+        return preg_match($this->getCompiled()->getRegex(), '/'.$request->getRoute());
     }
 
     /**
@@ -164,6 +171,45 @@ class Route
         }
 
         return $this->runCallable();
+    }
+
+    /**
+     * Get all middleware, including the ones from the controller.
+     *
+     * @return array
+     */
+    public function gatherMiddleware()
+    {
+        if (! is_null($this->computedMiddleware)) {
+            return $this->computedMiddleware;
+        }
+
+        $this->computedMiddleware = [];
+
+        return $this->computedMiddleware = array_unique($this->middleware(), SORT_REGULAR);
+    }
+
+    /**
+     * Get or set the middlewares attached to the route.
+     *
+     * @param  array|string|null $middleware
+     * @return $this|array
+     */
+    public function middleware($middleware = null)
+    {
+        if (is_null($middleware)) {
+            return (array) ($this->action['middleware'] ?? []);
+        }
+
+        if (is_string($middleware)) {
+            $middleware = func_get_args();
+        }
+
+        $this->action['middleware'] = array_merge(
+            (array) ($this->action['middleware'] ?? []), $middleware
+        );
+
+        return $this;
     }
 
     /**
@@ -212,16 +258,15 @@ class Route
     /**
      * Bind the route to a given request for execution.
      *
-     * @param Response $response
+     * @param Request $request
      * @return $this
      */
-    public function bind(Response $response)
+    public function bind(Request $request)
     {
         $this->compileRoute();
 
         $this->parameters = (new RouteParameterBinder($this))
-            ->parameters($response);
-
+            ->parameters($request);
         return $this;
     }
 

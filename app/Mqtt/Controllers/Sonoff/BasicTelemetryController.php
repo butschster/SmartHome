@@ -2,7 +2,7 @@
 
 namespace SmartHome\Mqtt\Controllers\Sonoff;
 
-use SmartHome\Domain\Mqtt\Contracts\Response;
+use SmartHome\Domain\Mqtt\Contracts\Request;
 use SmartHome\Domain\Devices\Entities\Device;
 
 class BasicTelemetryController
@@ -10,15 +10,15 @@ class BasicTelemetryController
     /**
      * Получение периодически отправляемых данных состояния устройства
      *
-     * @param Response $response
+     * @param Request $request
      * @param string $type
      * @param string $device
      * @param Device $registeredDevice
      */
-    public function result(Response $response, string $type, string $device, Device $registeredDevice = null)
+    public function state(Request $request, string $type, string $device, Device $registeredDevice = null)
     {
         if ($registeredDevice) {
-            $registeredDevice->setProperties($response->toArray());
+            $registeredDevice->setProperties($request->toArray());
         }
     }
 }

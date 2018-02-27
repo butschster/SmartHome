@@ -469,9 +469,9 @@ $line-height-small: $line-height-sm; // for v3 plugin
 $line-height-lg: (4 / 3); // extra decimals for Win 8.1 Chrome
 $line-height-sm: 1.5;
 
-$border-radius: pxToRem(3px); // ~3px
-$border-radius-lg: pxToRem(4px); // ~4px
-$border-radius-sm: pxToRem(2px); // ~2px
+$border-radius: 0; // ~3px
+$border-radius-lg: 0; // ~4px
+$border-radius-sm: 0; // ~2px
 
 $border-radius-base: $border-radius; // for v3 plugin
 $border-radius-large: $border-radius-lg; // for v3 plugin

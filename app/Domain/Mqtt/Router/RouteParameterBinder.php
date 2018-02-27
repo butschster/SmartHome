@@ -2,7 +2,7 @@
 
 namespace SmartHome\Domain\Mqtt\Router;
 
-use SmartHome\Domain\Mqtt\Contracts\Response;
+use SmartHome\Domain\Mqtt\Contracts\Request;
 use Illuminate\Support\Arr;
 
 class RouteParameterBinder
@@ -30,15 +30,15 @@ class RouteParameterBinder
     /**
      * Get the parameters for the route.
      *
-     * @param Response $response
+     * @param Request $request
      * @return array
      */
-    public function parameters(Response $response)
+    public function parameters(Request $request)
     {
         // If the route has a regular expression for the host part of the URI, we will
         // compile that and get the parameter matches for this domain. We will then
         // merge them into this parameters array so that this array is completed.
-        $parameters = [$response] + $this->bindTopicParameters($response);
+        $parameters = [$request] + $this->bindTopicParameters($request);
 
         return $this->replaceDefaults($parameters);
     }
@@ -46,12 +46,12 @@ class RouteParameterBinder
     /**
      * Get the parameter matches for the path portion of the URI.
      *
-     * @param Response $response
+     * @param Request $request
      * @return array
      */
-    protected function bindTopicParameters(Response $response)
+    protected function bindTopicParameters(Request $request)
     {
-        $path = '/'.$response->getRoute();
+        $path = '/'.$request->getRoute();
 
         preg_match($this->route->compiled->getRegex(), $path, $matches);
 

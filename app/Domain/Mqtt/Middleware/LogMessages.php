@@ -4,8 +4,7 @@ namespace SmartHome\Domain\Mqtt\Middleware;
 
 use Closure;
 use Psr\Log\LoggerInterface;
-use SmartHome\Domain\Mqtt\Router\Response;
-use SmartHome\Domain\Mqtt\Router\Route;
+use SmartHome\Domain\Mqtt\Contracts\Request;
 
 class LogMessages
 {
@@ -23,11 +22,11 @@ class LogMessages
     }
 
     /**
-     * @param Route $route
+     * @param Request $request
      * @param Closure $next
      * @return mixed
      */
-    public function handle($route, Closure $next)
+    public function handle($request, Closure $next)
     {
 //        if ($route->hasParameter('registeredDevice')) {
 //            $device = $route->parameter('registeredDevice');
@@ -39,6 +38,6 @@ class LogMessages
 //            ));
 //        }
 
-        return $next($route);
+        return $next($request);
     }
 }

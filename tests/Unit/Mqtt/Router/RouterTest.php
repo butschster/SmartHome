@@ -3,7 +3,7 @@
 namespace Tests\Unit\Mqtt\Router;
 
 use Illuminate\Contracts\Events\Dispatcher;
-use SmartHome\Domain\Mqtt\Contracts\Response;
+use SmartHome\Domain\Mqtt\Contracts\Request;
 use SmartHome\Domain\Mqtt\Router\Route;
 use SmartHome\Domain\Mqtt\Router;
 use Tests\TestCase;
@@ -45,8 +45,10 @@ class RouterTest extends TestCase
         $this->router->namespace('Tests\\Unit\\Mqtt\\Router');
         $this->router->listen('stat/{device}/information', 'TestController@action');
         $this->router->listen('stat/{device}/information1', 'TestController@anoterAction');
-        $message = m::mock(Response::class);
+        $message = m::mock(Request::class);
 
+        $message->shouldReceive('setRouteResolver')->once();
+        $message->shouldReceive('route')->once();
         $message->shouldReceive('getRoute')->andReturn('stat/device/information');
         $response = $this->router->dispatch($message);
 
@@ -57,13 +59,13 @@ class RouterTest extends TestCase
     {
         $this->router->namespace('Tests\\Unit\\Mqtt\\Router');
 
-        $this->router->listen('stat/{device}/information', function (Response $message, string $device) {
+        $this->router->listen('stat/{device}/information', function (Request $message, string $device) {
             $this->assertEquals('stat/device/information', $message->getRoute());
             $this->assertEquals('device', $device);
             return 'test';
         });
 
-        $message = m::mock(Response::class);
+        $message = m::mock(Request::class);
         $message->shouldReceive('getRoute')->andReturn('stat/device/information');
         $response = $this->router->dispatch($message);
 
@@ -77,7 +79,7 @@ class RouterTest extends TestCase
     {
         $this->router->listen('stat/device/information', 'TestController@action');
 
-        $message = m::mock(Response::class);
+        $message = m::mock(Request::class);
 
         $message->shouldReceive('getRoute')->andReturn('stat/device/information1');
         $this->router->dispatch($message);
@@ -97,7 +99,7 @@ class RouterTest extends TestCase
 
 class TestController
 {
-    public function action(Response $message, string $device)
+    public function action(Request $message, string $device)
     {
         return $device;
     }

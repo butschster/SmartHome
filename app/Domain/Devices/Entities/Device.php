@@ -85,15 +85,15 @@ class Device extends Model
         $driver = $this->driver();
 
         foreach ($driver->properties() as $property => $class) {
+            if (!isset($data[$property])) {
+                continue;
+            }
+
             /** @var \SmartHome\App\Contracts\DeviceProperty $propertyObject */
             $propertyObject = app($class);
             $value = $propertyObject->transform(
                 array_get($data, $property)
             );
-
-            if(is_null($value)) {
-                continue;
-            }
 
             $this->properties()->updateOrCreate(
                 ['key' => $property],

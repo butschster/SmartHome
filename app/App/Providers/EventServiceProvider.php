@@ -38,6 +38,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         \SmartHome\Domain\Devices\Events\Device\LastActivityUpdated::class => [
 
+        ],
+        \SmartHome\Domain\Xiaomi\MiHome\Gateway\Events\Looping::class => [
+            //\SmartHome\Domain\Xiaomi\Listeners\LogMessages::class,
         ]
     ];
 

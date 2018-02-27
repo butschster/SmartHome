@@ -2,18 +2,16 @@
 
 namespace SmartHome\Mqtt\Controllers\Sonoff;
 
-use SmartHome\Domain\Mqtt\Contracts\Response;
-use SmartHome\Domain\Devices\Entities\Device;
+use SmartHome\Domain\Mqtt\Contracts\Request;
 
 class BasicController
 {
     /**
-     * @param Response $response
+     * @param Request $request
      * @param string $type
      * @param string $device
-     * @throws \SmartHome\Domain\Mqtt\Exceptions\UnknownDeviceException
      */
-    public function log(Response $response, string $type, string $device)
+    public function log(Request $request, string $type, string $device)
     {
 
     }

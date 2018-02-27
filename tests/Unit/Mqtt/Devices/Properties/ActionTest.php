@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Mqtt\Devices\Properties;
 
-use SmartHome\App\Devices\Properties\Action;
+use SmartHome\Domain\Xiaomi\MiHome\Devices\Properties\Action;
 use Tests\TestCase;
 
 class ActionTest extends TestCase

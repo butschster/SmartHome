@@ -2,8 +2,9 @@
 
 namespace Tests\Unit\Mqtt\Devices\Xiaomi;
 
-use SmartHome\App\Devices\Properties\Action;
-use SmartHome\Domain\Xiaomi\Devices\Button;
+use SmartHome\Domain\Xiaomi\MiHome\Devices\Button;
+use SmartHome\Domain\Xiaomi\MiHome\Devices\Properties\Action;
+use SmartHome\Domain\Xiaomi\MiHome\Devices\Properties\Battery;
 use Tests\TestCase;
 
 class ButtonTest extends TestCase
@@ -13,7 +14,8 @@ class ButtonTest extends TestCase
         $device = new Button($this->app);
 
         $this->assertEquals([
-            'action' => Action::class
+            'status' => Action::class,
+            'voltage' => Battery::class
         ], $device->properties());
     }
 }

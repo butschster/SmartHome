@@ -18,20 +18,20 @@ interface Router
     /**
      * Dispatch the request to the application.
      *
-     * @param Response $response
+     * @param Request $response
      * @return string
      * @throws RouteNotFoundException
      */
-    public function dispatch(Response $response);
+    public function dispatch(Request $response);
 
     /**
      * Dispatch the request to a route and return the response.
      *
-     * @param  Response $response
+     * @param  Request $response
      * @return mixed
      * @throws RouteNotFoundException
      */
-    public function dispatchToRoute(Response $response);
+    public function dispatchToRoute(Request $response);
 
     /**
      * @return RouteCollection

@@ -5,15 +5,13 @@
             <p v-if="hasDescription" class="card-text text-muted">{{ device.description }}</p>
         </div>
 
-        <div class="card-group">
-            <property :property="property"
-                      v-for="property in device.properties"
-                      :key="property.id"
-                      v-on:changed="updateProperty"
-                      class="w-50"
-            >
-            </property>
-        </div>
+        <property :property="property"
+                  v-for="property in device.properties"
+                  :key="property.id"
+                  v-on:changed="updateProperty"
+                  class="mb-0"
+        >
+        </property>
 
         <device-status :device="device" class="card-footer"></device-status>
     </div>

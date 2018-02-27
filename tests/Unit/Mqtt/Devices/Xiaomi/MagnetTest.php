@@ -2,8 +2,10 @@
 
 namespace Tests\Unit\Mqtt\Devices\Xiaomi;
 
-use SmartHome\App\Devices\Properties\Door;
-use SmartHome\Domain\Xiaomi\Devices\Magnet;
+use SmartHome\Domain\Xiaomi\MiHome\Devices\Magnet;
+use SmartHome\Domain\Xiaomi\MiHome\Devices\Properties\{
+    Door, Battery
+};
 use Tests\TestCase;
 
 class MagnetTest extends TestCase
@@ -13,7 +15,8 @@ class MagnetTest extends TestCase
         $device = new Magnet($this->app);
 
         $this->assertEquals([
-            'state' => Door::class
+            'status' => Door::class,
+            'voltage' => Battery::class
         ], $device->properties());
     }
 }

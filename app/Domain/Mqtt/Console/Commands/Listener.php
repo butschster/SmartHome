@@ -3,13 +3,13 @@
 namespace SmartHome\Domain\Mqtt\Console\Commands;
 
 use Illuminate\Contracts\Events\Dispatcher;
-use Illuminate\Pipeline\Pipeline;
 use SmartHome\Domain\Mqtt\Contracts\Client;
+use SmartHome\Domain\Mqtt\Contracts\Request as RequestContract;
 use SmartHome\Domain\Mqtt\Events\MessageReceived;
 use SmartHome\Domain\Mqtt\Contracts\Router;
 use SmartHome\Domain\Mqtt\Exceptions\RouteNotFoundException;
 use SmartHome\App\Exceptions\UnknownDeviceException;
-use SmartHome\Domain\Mqtt\Router\Response;
+use SmartHome\Domain\Mqtt\Router\Request;
 use Illuminate\Console\Command;
 
 class Listener extends Command
@@ -93,9 +93,12 @@ class Listener extends Command
      */
     protected function process(string $topic, $message): void
     {
-        $this->router->dispatch(
-            new Response($topic, $message)
+        $this->laravel->instance(
+            RequestContract::class,
+            $request = new Request($topic, $message)
         );
+
+        $this->router->dispatch($request);
     }
 
     /**

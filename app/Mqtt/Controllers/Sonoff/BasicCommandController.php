@@ -2,15 +2,14 @@
 
 namespace SmartHome\Mqtt\Controllers\Sonoff;
 
-use SmartHome\Domain\Devices\Entities\Device;
-use SmartHome\Domain\Mqtt\Contracts\Response;
+use SmartHome\Domain\Mqtt\Contracts\Request;
 
 class BasicCommandController
 {
     /**
-     * @param Response $response
+     * @param Request $request
      */
-    public function power(Response $response)
+    public function power(Request $request)
     {
 
     }

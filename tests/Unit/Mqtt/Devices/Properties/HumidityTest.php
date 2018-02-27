@@ -2,7 +2,7 @@
 
 namespace Tests\Unit\Mqtt\Devices\Properties;
 
-use SmartHome\App\Devices\Properties\Humidity;
+use SmartHome\Domain\Xiaomi\MiHome\Devices\Properties\Humidity;
 use Tests\TestCase;
 
 class HumidityTest extends TestCase
@@ -11,8 +11,8 @@ class HumidityTest extends TestCase
     {
         $action = $this->makePropertyAction(Humidity::class);
 
-        $this->assertEquals(1.0, $action->transform(1));
-        $this->assertEquals(100.5, $action->transform(100.454));
+        $this->assertEquals(14.0, $action->transform(1400));
+        $this->assertEquals(1.0, $action->transform(100.454));
     }
 
     function test_formats_value()

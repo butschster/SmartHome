@@ -1,6 +1,6 @@
 <?php
 
-namespace SmartHome\App\Devices\Properties;
+namespace SmartHome\Domain\Xiaomi\MiHome\Devices\Properties;
 
 use SmartHome\Domain\Devices\Contracts\DevicePropertyLoggable;
 use SmartHome\App\Devices\Property;
@@ -15,7 +15,7 @@ class Humidity extends Property implements DevicePropertyLoggable
      */
     public function transform($value)
     {
-        return (float) round($value, 1);
+        return (float) round($value / 100, 1);
     }
 
     /**

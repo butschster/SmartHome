@@ -1,12 +1,15 @@
 <?php
 
-namespace SmartHome\App\Devices\Properties;
+namespace SmartHome\Domain\Xiaomi\MiHome\Devices\Properties;
 
 use SmartHome\Domain\Devices\Contracts\DevicePropertyLoggable;
 use SmartHome\App\Devices\Property;
 
-class Action extends Property implements DevicePropertyLoggable
+class Door extends Property implements DevicePropertyLoggable
 {
+    const STATUS_OPEN = 1;
+    const STATUS_CLOSED = 0;
+
     /**
      * Преобразование значения к нужному виду
      *
@@ -15,7 +18,11 @@ class Action extends Property implements DevicePropertyLoggable
      */
     public function transform($value)
     {
-        return $value;
+        if (in_array(strtolower($value), ['open', 1])) {
+            return static::STATUS_OPEN;
+        }
+
+        return static::STATUS_CLOSED;
     }
 
     /**
@@ -24,6 +31,6 @@ class Action extends Property implements DevicePropertyLoggable
      */
     public function format($value)
     {
-        return trans('device.action.'.$value);
+        return trans('device.door.'.$value);
     }
 }

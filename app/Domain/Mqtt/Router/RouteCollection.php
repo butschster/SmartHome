@@ -2,7 +2,7 @@
 
 namespace SmartHome\Domain\Mqtt\Router;
 
-use SmartHome\Domain\Mqtt\Contracts\Response;
+use SmartHome\Domain\Mqtt\Contracts\Request;
 use Countable;
 use ArrayIterator;
 use IteratorAggregate;
@@ -42,17 +42,17 @@ class RouteCollection implements Countable, IteratorAggregate
     }
 
     /**
-     * @param Response $response
+     * @param Request $request
      * @return Route
      *
      * @throws RouteNotFoundException
      */
-    public function match(Response $response): Route
+    public function match(Request $request): Route
     {
-        $route = $this->matchAgainstRoutes($this->routes, $response);
+        $route = $this->matchAgainstRoutes($this->routes, $request);
 
         if (!is_null($route)) {
-            return $route->bind($response);
+            return $route->bind($request);
         }
 
         throw new RouteNotFoundException();
@@ -62,17 +62,17 @@ class RouteCollection implements Countable, IteratorAggregate
      * Determine if a route in the array matches the request.
      *
      * @param  array|Route[] $routes
-     * @param  Response $response
+     * @param  Request $request
      * @return Route|null
      */
-    protected function matchAgainstRoutes(array $routes, Response $response)
+    protected function matchAgainstRoutes(array $routes, Request $request)
     {
         list($fallbacks, $routes) = collect($routes)->partition(function ($route) {
             return $route->isFallback;
         });
 
-        return $routes->merge($fallbacks)->first(function ($value) use ($response) {
-            return $value->matches($response);
+        return $routes->merge($fallbacks)->first(function ($value) use ($request) {
+            return $value->matches($request);
         });
     }
 

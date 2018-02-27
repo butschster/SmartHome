@@ -7,8 +7,8 @@ use Illuminate\Contracts\Events\Dispatcher;
 use SmartHome\App\Exceptions\UnknownDeviceException;
 use SmartHome\Domain\Devices\Entities\Device;
 use SmartHome\Domain\Devices\Events\Device\Ping;
+use SmartHome\Domain\Mqtt\Contracts\Request;
 use SmartHome\Domain\Mqtt\Events\UnknownDevice;
-use SmartHome\Domain\Mqtt\Router\Route;
 
 class RegisterDevice
 {
@@ -26,12 +26,14 @@ class RegisterDevice
     }
 
     /**
-     * @param Route $route
+     * @param Request $request
      * @param Closure $next
      * @return mixed
      */
-    public function handle($route, Closure $next)
+    public function handle($request, Closure $next)
     {
+        $route = $request->route();
+
         if ($route->hasParameter('type') && $route->hasParameter('device')) {
             try {
                 $device = Device::register($route->parameter('device'), $route->parameter('type'));
@@ -46,6 +48,6 @@ class RegisterDevice
             }
         }
 
-        return $next($route);
+        return $next($request);
     }
 }
