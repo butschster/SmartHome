@@ -30,16 +30,17 @@ class DeviceManager
      */
     public function isValidMessage(Message $message)
     {
-        return $message->isTypeOf('report', 'hearbeat', 'read_ack');
+        return $message->isTypeOf('report', 'heartbeat', 'read_ack');
     }
 
     /**
      * @param Message $message
-     * @throws \SmartHome\App\Exceptions\UnknownDeviceException
      */
     public function processMessage(Message $message)
     {
-        $gateway = $this->findOrCreateGateway($message->ip());
+        $gateway = $this->findOrCreateGateway(
+            $message->ip(), $message->token()
+        );
 
         $this->registerDevice(
             $gateway,
@@ -51,13 +52,20 @@ class DeviceManager
 
     /**
      * @param string $ip
+     * @param string|null $token
      * @return Gateway
      */
-    private function findOrCreateGateway(string $ip): Gateway
+    private function findOrCreateGateway(string $ip, $token): Gateway
     {
-        return Gateway::firstOrCreate([
+        $gateway = Gateway::firstOrCreate([
             'ip' => $ip
         ]);
+
+        if ($token) {
+            $gateway->update(['token' => $token]);
+        }
+
+        return $gateway;
     }
 
     /**

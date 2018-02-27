@@ -3,9 +3,19 @@
 namespace SmartHome\Domain\Xiaomi\MiHome\Devices\Properties;
 
 use SmartHome\App\Devices\Property;
+use SmartHome\Domain\Devices\Entities\DeviceProperty;
+use SmartHome\Domain\Xiaomi\Entities\Gateway;
 
 class RGB extends Property
 {
+
+    /**
+     * @var array
+     */
+    protected $commands = [
+        'changeColor',
+    ];
+
 
     /**
      * Преобразование значения к нужному виду
@@ -16,6 +26,21 @@ class RGB extends Property
     public function transform($value)
     {
         return $value;
+    }
+
+    /**
+     * @param DeviceProperty $property
+     */
+    public function changeColor(DeviceProperty $property, $color): void
+    {
+        $gateway = Gateway::whereHas('devices', function($query) use($property) {
+            $query->where('device_id', $property->device_id);
+        })->first();
+
+        dispatch(new \SmartHome\Domain\Xiaomi\MiHome\Jobs\SendCommand(
+            new \SmartHome\Domain\Xiaomi\MiHome\Gateway\Commands\GatewayLight($color['hex'], 1000),
+            $gateway->ip, $property->device->key, 'gateway'
+        ));
     }
 
     /**

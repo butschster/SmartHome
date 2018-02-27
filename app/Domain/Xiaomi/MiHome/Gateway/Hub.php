@@ -4,7 +4,9 @@ namespace SmartHome\Domain\Xiaomi\MiHome\Gateway;
 
 use Illuminate\Contracts\Events\Dispatcher;
 use Illuminate\Database\DetectsLostConnections;
+use Illuminate\Queue\QueueManager;
 use SmartHome\Domain\Xiaomi\Contracts\Mihome\Gateway\Command;
+use SmartHome\Domain\Xiaomi\Contracts\Mihome\Gateway\Hub as HubContract;
 use SmartHome\Domain\Xiaomi\MiHome\Gateway\Commands\{
     DiscoverDevices, DiscoverGateway, ReadDevice
 };
@@ -13,7 +15,7 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Debug\Exception\FatalThrowableError;
 use Illuminate\Contracts\Debug\ExceptionHandler;
 
-class Hub
+class Hub implements HubContract
 {
     use DetectsLostConnections;
 
@@ -63,15 +65,26 @@ class Hub
     public $discoverDevicesTimer;
 
     /**
+     * @var QueueManager
+     */
+    protected $queueManager;
+
+    /**
      * @param Dispatcher $events
      * @param ExceptionHandler $exceptions
      * @param DeviceManager $manager
+     * @param QueueManager $queueManager
      */
-    public function __construct(Dispatcher $events, ExceptionHandler $exceptions, DeviceManager $manager)
+    public function __construct(Dispatcher $events,
+                                ExceptionHandler $exceptions,
+                                DeviceManager $manager,
+                                QueueManager $queueManager
+    )
     {
         $this->manager = $manager;
         $this->events = $events;
         $this->exceptions = $exceptions;
+        $this->queueManager = $queueManager;
     }
 
     public function __destruct()
@@ -106,6 +119,8 @@ class Hub
         $this->sendCommand(new DiscoverGateway());
 
         $this->configureSocket();
+
+        app()->instance(HubContract::class, $this);
     }
 
     /**
@@ -117,6 +132,15 @@ class Hub
             if (!$this->daemonShouldRun()) {
                 $this->pauseWorker();
                 continue;
+            }
+
+            $job = $this->getNextCommandJob(
+                $this->queueManager->connection(config('queue.default')),
+                'xiaomi_commands'
+            );
+
+            if ($job) {
+                $job->fire();
             }
 
             if ($this->discoverDevicesTimer == 0) {
@@ -131,6 +155,22 @@ class Hub
             );
 
             $this->stopIfNecessary();
+        }
+    }
+
+    /**
+     * Get the next job from the queue connection.
+     *
+     * @param  \Illuminate\Contracts\Queue\Queue  $connection
+     * @param  string  $queue
+     * @return \Illuminate\Contracts\Queue\Job|null
+     */
+    protected function getNextCommandJob($connection, $queue)
+    {
+        foreach (explode(',', $queue) as $queue) {
+            if (! is_null($job = $connection->pop($queue))) {
+                return $job;
+            }
         }
     }
 

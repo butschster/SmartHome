@@ -67,6 +67,16 @@ class Message
     }
 
     /**
+     * Токен
+     *
+     * @return string|null
+     */
+    public function token()
+    {
+        return array_get($this->data, 'token');
+    }
+
+    /**
      * Параметры
      * 
      * @return array

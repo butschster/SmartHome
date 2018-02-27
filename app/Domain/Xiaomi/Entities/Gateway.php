@@ -15,7 +15,7 @@ class Gateway extends Model
     /**
      * @var array
      */
-    protected $fillable = ['ip', 'name', 'description', 'password'];
+    protected $fillable = ['ip', 'name', 'description', 'password', 'token'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany

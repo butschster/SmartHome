@@ -2,9 +2,11 @@
 
 namespace SmartHome\Domain\Sonoff\Devices\Properties;
 
+use Psr\Log\LoggerInterface;
 use SmartHome\App\Contracts\Switchable;
 use SmartHome\Domain\Devices\Entities\DeviceProperty;
 use SmartHome\App\Devices\Property;
+use SmartHome\Domain\Mqtt\Contracts\Client;
 
 class Power extends Property implements Switchable
 {
@@ -19,6 +21,21 @@ class Power extends Property implements Switchable
         'switchOff',
         'toggle'
     ];
+
+    /**
+     * @var Client
+     */
+    protected $client;
+
+    /**
+     * @param Client $client
+     * @param LoggerInterface $logger
+     */
+    public function __construct(Client $client, LoggerInterface $logger)
+    {
+        $this->client = $client;
+        parent::__construct($logger);
+    }
 
     /**
      * Преобразование значения к нужному виду
@@ -67,5 +84,15 @@ class Power extends Property implements Switchable
     public function format($value)
     {
         return trans('device.power.'.$value);
+    }
+
+    /**
+     * @param string $message
+     */
+    public function runCommand(string $message): void
+    {
+        $this->client->publish(
+            $this->createTopic($this->deviceProperty), $message
+        );
     }
 }

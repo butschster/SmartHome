@@ -22,15 +22,22 @@ class GatewayLight implements Command
      */
     public function __construct(string $rgb, int $illumination)
     {
-        $this->rgb = $rgb;
+        $this->rgb = starts_with($rgb , '#') ? substr($rgb, 1) : $rgb;
         $this->illumination = $illumination;
     }
 
     public function command(): array
     {
         return [
-            'rgb' => $this->rgb,
-            'illumination' => $this->illumination
+            'rgb' => $this->calculateColor()
         ];
+    }
+
+    /**
+     * @return float|int
+     */
+    protected function calculateColor()
+    {
+        return $this->rgb == '000000' ? 0 : hexdec('ff' . $this->rgb);
     }
 }

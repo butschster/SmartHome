@@ -19,11 +19,6 @@ abstract class Property implements DevicePropertyContract
     protected $commands = [];
 
     /**
-     * @var Client
-     */
-    protected $client;
-
-    /**
      * @var LoggerInterface
      */
     protected $logger;
@@ -34,12 +29,10 @@ abstract class Property implements DevicePropertyContract
     protected $deviceProperty;
 
     /**
-     * @param Client $client
      * @param LoggerInterface $logger
      */
-    public function __construct(Client $client, LoggerInterface $logger)
+    public function __construct(LoggerInterface $logger)
     {
-        $this->client = $client;
         $this->logger = $logger;
     }
 
@@ -64,7 +57,7 @@ abstract class Property implements DevicePropertyContract
      */
     public function runCommand(string $message): void
     {
-        $this->client->publish($this->createTopic($this->deviceProperty), $message);
+        //
     }
 
     /**
