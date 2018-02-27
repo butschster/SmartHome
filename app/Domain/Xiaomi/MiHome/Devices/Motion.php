@@ -4,7 +4,7 @@ namespace SmartHome\Domain\Xiaomi\MiHome\Devices;
 
 use SmartHome\App\Devices\Device;
 use SmartHome\Domain\Xiaomi\MiHome\Devices\Properties\{
-    Battery, Motion as MotionProperty
+    Battery, Motion as MotionProperty, NoMotionTimer
 };
 
 class Motion extends Device
@@ -14,6 +14,7 @@ class Motion extends Device
      */
     protected $properties = [
         'status' => MotionProperty::class,
+        'no_motion' => NoMotionTimer::class,
         'voltage' => Battery::class
     ];
 }

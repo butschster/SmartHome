@@ -9,14 +9,9 @@
 
 <script>
     import PropertyMixin from '../Mixins/Property';
-    import LogsMixin from '../Mixins/Logs';
-    import LineChart from '../Partials/LineChart';
 
     export default {
-        components: {
-            LineChart
-        },
-        mixins: [LogsMixin, PropertyMixin],
+        mixins: [PropertyMixin],
         computed: {
             batteryClass() {
                 let percentage = this.property.formatted_value;

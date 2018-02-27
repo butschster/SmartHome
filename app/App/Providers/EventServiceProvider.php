@@ -16,7 +16,10 @@ class EventServiceProvider extends ServiceProvider
      */
     protected $listen = [
         \SmartHome\Domain\Devices\Events\DeviceProperty\Changed::class => [
-            \SmartHome\Domain\Devices\Listeners\LogDevicePropertyValues::class
+            \SmartHome\Domain\Devices\Listeners\LogDevicePropertyValues::class,
+        ],
+        \SmartHome\Domain\Devices\Events\DeviceProperty\Set::class => [
+            \SmartHome\Domain\Devices\Listeners\FireDevicePropertyEvents::class,
         ],
         \SmartHome\Domain\Devices\Events\Device\Registered::class => [
             \SmartHome\Domain\Devices\Listeners\NotifyAboutNewDevice::class

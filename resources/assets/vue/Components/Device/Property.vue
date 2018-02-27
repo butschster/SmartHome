@@ -22,6 +22,7 @@
     import IlluminationProperty from './Property/Illumination';
     import MotionProperty from './Property/Motion';
     import RGBProperty from './Property/RGB';
+    import NoMotionTimerProperty from './Property/NoMotionTimer';
 
     export default {
         components: {
@@ -33,7 +34,8 @@
             BatteryProperty,
             IlluminationProperty,
             MotionProperty,
-            RGBProperty
+            RGBProperty,
+            NoMotionTimerProperty
         },
         mixins: [PropertyMixin],
         data() {

@@ -9,6 +9,7 @@ use SmartHome\App\Exceptions\UnknownDeviceException;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use SmartHome\App\Contracts\DeviceManager as DeviceManagerContract;
+use SmartHome\Domain\Devices\Events\DeviceProperty\Set;
 
 class Device extends Model
 {
@@ -31,14 +32,14 @@ class Device extends Model
             throw new UnknownDeviceException($type);
         }
 
-        $driver = $drivers[$type];
+        $driver = $manager->driver($type);
 
         return static::firstOrCreate([
             'key' => $key,
             'type' => $type
         ], [
-            'name' => array_get($driver, 'name'),
-            'description' => array_get($driver, 'description'),
+            'name' => $driver->name(),
+            'description' => $driver->description(),
             'last_activity' => now()
         ]);
     }
@@ -84,22 +85,47 @@ class Device extends Model
     {
         $driver = $this->driver();
 
+        $i = 0;
+
         foreach ($driver->properties() as $property => $class) {
+            $i++;
+
             if (!isset($data[$property])) {
                 continue;
             }
 
-            /** @var \SmartHome\App\Contracts\DeviceProperty $propertyObject */
-            $propertyObject = app($class);
-            $value = $propertyObject->transform(
-                array_get($data, $property)
-            );
-
-            $this->properties()->updateOrCreate(
-                ['key' => $property],
-                ['value' => $value]
-            );
+            $this->setProperty($class, $property, $data, $i);
         }
+    }
+
+    /**
+     * @param string $class
+     * @param string $property
+     * @param array $data
+     * @param int $position
+     * @return DeviceProperty
+     */
+    protected function setProperty(string $class, string $property, array $data, int $position): DeviceProperty
+    {
+        /** @var \SmartHome\App\Contracts\DeviceProperty $propertyObject */
+        $propertyObject = app($class);
+        $value = $propertyObject->transform(
+            array_get($data, $property)
+        );
+
+        $property = $this->properties()->updateOrCreate(
+            ['key' => $property],
+            [
+                'value' => $value,
+                'name' => $propertyObject->name(),
+                'description' => $propertyObject->description(),
+                'position' => $position
+            ]
+        );
+
+        event(new Set($property));
+
+        return $property;
     }
 
     /**
@@ -109,7 +135,7 @@ class Device extends Model
      */
     public function properties()
     {
-        return $this->hasMany(DeviceProperty::class);
+        return $this->hasMany(DeviceProperty::class)->orderBy('position');
     }
 
     /**

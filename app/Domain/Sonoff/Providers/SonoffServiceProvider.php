@@ -2,7 +2,7 @@
 
 namespace SmartHome\Domain\Sonoff\Providers;
 
-use Illuminate\Support\ServiceProvider;
+use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 use SmartHome\App\Contracts\DeviceManager;
 use SmartHome\Domain\Sonoff\Devices;
 
@@ -13,20 +13,14 @@ use SmartHome\Domain\Sonoff\Devices\{
 
 class SonoffServiceProvider extends ServiceProvider
 {
-    /**
-     * @param DeviceManager $manager
-     */
-    public function boot(DeviceManager $manager)
+    public function boot()
     {
-        $manager->register(Devices::TYPE_SONOFF_BASIC, [
-            'name' => 'Sonoff Basic',
-            'class' => BasicRelay::class,
-        ]);
+        $manager = $this->app[DeviceManager::class];
 
-        $manager->register(Devices::TYPE_SONOFF_DUAL, [
-            'name' => 'Sonoff Basic',
-            'class' => DualRelay::class,
-        ]);
+        $manager->register(Devices::TYPE_SONOFF_BASIC, BasicRelay::class);
+        $manager->register(Devices::TYPE_SONOFF_DUAL, DualRelay::class);
+
+        parent::boot();
     }
 
     /**

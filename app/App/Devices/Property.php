@@ -2,6 +2,7 @@
 
 namespace SmartHome\App\Devices;
 
+use SmartHome\App\Helpers\HasName;
 use SmartHome\Domain\Mqtt\Contracts\Client;
 use Illuminate\Validation\Concerns\ValidatesAttributes;
 use Psr\Log\LoggerInterface;
@@ -10,7 +11,7 @@ use SmartHome\Domain\Devices\Entities\DeviceProperty;
 
 abstract class Property implements DevicePropertyContract
 {
-    use ValidatesAttributes;
+    use ValidatesAttributes, HasName;
 
     /**
      * @var array
@@ -83,6 +84,10 @@ abstract class Property implements DevicePropertyContract
         return $value;
     }
 
+    public function event()
+    {
+    }
+
     /**
      * @param DeviceProperty $deviceProperty
      * @return string
@@ -103,5 +108,10 @@ abstract class Property implements DevicePropertyContract
     protected function log(string $message): void
     {
         $this->logger->debug(sprintf('Property [%s] %s', $this->deviceProperty->id, $message));
+    }
+
+    protected function getLangKey(): string
+    {
+        return 'properties';
     }
 }

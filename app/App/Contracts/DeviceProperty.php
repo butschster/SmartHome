@@ -10,6 +10,20 @@ interface DeviceProperty
     public function setDeviceProperty(\SmartHome\Domain\Devices\Entities\DeviceProperty $deviceProperty): void;
 
     /**
+     * Название датчика
+     *
+     * @return string
+     */
+    public function name(): string;
+
+    /**
+     * Описание датчика
+     *
+     * @return string/null
+     */
+    public function description();
+
+    /**
      * Преобразование значения к нужному виду
      *
      * @param mixed $value
@@ -34,6 +48,13 @@ interface DeviceProperty
      * @return array
      */
     public function commands(): array;
+
+    /**
+     * Событие, запускаемое при изменении данных
+     *
+     * @return string
+     */
+    public function event();
 
     /**
      * @param string $message

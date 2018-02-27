@@ -4,6 +4,7 @@ namespace SmartHome\Domain\Xiaomi\MiHome\Devices\Properties;
 
 use SmartHome\App\Devices\Property;
 use SmartHome\Domain\Devices\Contracts\DevicePropertyLoggable;
+use SmartHome\Domain\Xiaomi\MiHome\Devices\Events\MotionDetected;
 
 class Motion extends Property implements DevicePropertyLoggable
 {
@@ -31,6 +32,11 @@ class Motion extends Property implements DevicePropertyLoggable
      */
     public function format($value)
     {
-        return trans('device.motion.'.$value);
+        return trans('device.motion.' . $value);
+    }
+
+    public function event()
+    {
+        return MotionDetected::class;
     }
 }

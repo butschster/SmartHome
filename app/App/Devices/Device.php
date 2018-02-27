@@ -4,12 +4,15 @@ namespace SmartHome\App\Devices;
 
 use SmartHome\App\Contracts\Device as DeviceContract;
 use SmartHome\App\Contracts\DeviceProperty as DevicePropertyContract;
+use SmartHome\App\Helpers\HasName;
 use SmartHome\Domain\Devices\Entities\DeviceProperty;
 use SmartHome\Domain\Devices\Exceptions\DevicePropertyNotFoundException;
 use Illuminate\Contracts\Foundation\Application;
 
 abstract class Device implements DeviceContract
 {
+    use HasName;
+
     /**
      * @var array
      */
@@ -89,5 +92,10 @@ abstract class Device implements DeviceContract
     public function propertyClass(string $property): string
     {
         return array_get($this->properties(), $property);
+    }
+
+    protected function getLangKey(): string
+    {
+        return 'devices';
     }
 }

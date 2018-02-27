@@ -4,6 +4,7 @@ namespace SmartHome\Domain\Xiaomi\MiHome\Devices\Properties;
 
 use SmartHome\Domain\Devices\Contracts\DevicePropertyLoggable;
 use SmartHome\App\Devices\Property;
+use SmartHome\Domain\Xiaomi\MiHome\Devices\Events\ButtonPressed;
 
 class Action extends Property implements DevicePropertyLoggable
 {
@@ -30,5 +31,10 @@ class Action extends Property implements DevicePropertyLoggable
     public function format($value)
     {
         return trans('device.action.'.$value);
+    }
+
+    public function event()
+    {
+        return ButtonPressed::class;
     }
 }

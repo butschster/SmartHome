@@ -6,6 +6,19 @@ use SmartHome\Domain\Devices\Exceptions\DevicePropertyNotFoundException;
 
 interface Device
 {
+    /**
+     * Название датчика
+     *
+     * @return string
+     */
+    public function name(): string;
+
+    /**
+     * Описание датчика
+     *
+     * @return string/null
+     */
+    public function description();
 
     /**
      * Получение списка доступных датчиков

@@ -23,7 +23,7 @@ class DeviceProperty extends Model
     /**
      * @var array
      */
-    protected $fillable = ['key', 'value', 'name', 'description'];
+    protected $fillable = ['key', 'value', 'name', 'description', 'position'];
 
     /**
      * Получение списка доступных команд

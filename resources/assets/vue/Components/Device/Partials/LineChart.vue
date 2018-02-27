@@ -41,6 +41,7 @@
                         text: null
                     },
                     chart: {
+                        type: 'areaspline',
                         zoomType: 'x'
                     },
                     xAxis: {
