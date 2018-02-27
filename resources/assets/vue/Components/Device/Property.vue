@@ -1,13 +1,11 @@
 <template>
-    <div class="card" :style="style">
-        <div class="card-body">
-            <component v-bind:is="propertyComponent(property)" :property="property" v-on:updateStyle="updateStyle">
-                <h4>
-                    {{ property.name }}
-                </h4>
-                <small v-if="hasDescription" class="text-muted">{{ property.description }}</small>
-            </component>
-        </div>
+    <div class="card" :style="styles" :class="classes">
+        <component v-bind:is="propertyComponent(property)" :property="property" v-on:updateStyle="updateStyle" v-on:updateClasses="updateClasses">
+            <h4>
+                {{ property.name }}
+            </h4>
+            <small v-if="hasDescription" class="text-muted">{{ property.description }}</small>
+        </component>
     </div>
 </template>
 
@@ -40,7 +38,8 @@
         mixins: [PropertyMixin],
         data() {
             return {
-                style: {}
+                styles: {},
+                classes: {}
             }
         },
         mounted() {
@@ -54,7 +53,10 @@
                 return `${property.type}Property`;
             },
             updateStyle(style) {
-                this.style = style;
+                this.styles = style;
+            },
+            updateClasses(classes) {
+                this.classes = classes;
             }
         }
     }

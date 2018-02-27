@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="card-body">
         <el-switch
                 v-model="isOpen"
                 active-text="Открыто"

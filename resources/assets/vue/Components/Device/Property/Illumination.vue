@@ -1,15 +1,17 @@
 <template>
-    <div>
-        <div class="float-right text-right">
-            <small class="text-muted">Освещенность</small>
-            <br/>
-            <span class="badge badge-primary">{{ property.formatted_value }}</span>
+    <div class="row p-10">
+        <div class="col-lg-6">
+            <div class="counter text-left">
+                <div class="counter-number-group">
+                    <span class="counter-number">{{ property.formatted_value }}</span>
+                </div>
+                <div class="counter-label text-capitalize font-size-16">{{ property.name }}</div>
+            </div>
         </div>
-        <h4>
-            <i class="fas fa-hockey-puck"></i>
-            {{ property.name }}
-        </h4>
-        <small v-if="hasDescription" class="text-muted">{{ property.description }}</small>
+
+        <div class="col-lg-6 text-right">
+            <i class="fa-3x far fa-sun text-success"></i>
+        </div>
     </div>
 </template>
 

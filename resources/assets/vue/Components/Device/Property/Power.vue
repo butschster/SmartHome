@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="card-body">
         <button type="button" class="btn float-right" @click="toggle" :class="btnClasses">
             <i class="far fa-lightbulb fa-2x"></i>
         </button>

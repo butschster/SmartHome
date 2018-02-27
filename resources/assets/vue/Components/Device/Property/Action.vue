@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="card-body">
         <div class="float-right text-right">
             <small class="text-muted">Последнее действие</small>
             <br/>

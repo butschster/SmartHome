@@ -1,5 +1,5 @@
 <template>
-    <div v-if="this.property.value > 0">
+    <div v-if="this.property.value > 0" class="card-body">
         <h5 class="text-info">
             <i class="far fa-clock fa-lg fa-fw"></i>
             {{ this.property.formatted_value.humanize }}

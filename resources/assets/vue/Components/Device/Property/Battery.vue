@@ -1,9 +1,11 @@
 <template>
-    <div>
-        <h5 class="text-info">
-            <i class="fas fa-lg fa-fw" :class="batteryClass"></i>
-            {{ property.name }} <span class="label label-info">{{ property.formatted_value }}{{ property.meta.units }}</span>
-        </h5>
+    <div class="counter counter-inverse">
+        <div class="counter-number-group">
+            <span class="counter-number">{{ property.formatted_value }}{{ property.meta.units }}</span>
+            <span class="counter-icon ml-10">
+                <i class="fas fa-fw" :class="batteryClass"></i>
+            </span>
+        </div>
     </div>
 </template>
 
@@ -12,6 +14,19 @@
 
     export default {
         mixins: [PropertyMixin],
+        mounted() {
+            this.updateStyle();
+        },
+        watch: {
+            property() {
+                this.updateStyle();
+            }
+        },
+        methods: {
+            updateStyle() {
+                this.$emit('updateClasses', 'bg-blue-600');
+            }
+        },
         computed: {
             batteryClass() {
                 let percentage = this.property.formatted_value;

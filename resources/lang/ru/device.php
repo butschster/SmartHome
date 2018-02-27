@@ -80,6 +80,9 @@ return [
         ],
         Power::class => [
             'name' => 'Реле'
+        ],
+        \SmartHome\Domain\Xiaomi\MiHome\Devices\Properties\Illumination::class => [
+            'name' => 'Освещенность'
         ]
     ]
 ];

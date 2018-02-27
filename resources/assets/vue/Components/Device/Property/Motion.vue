@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="card-body">
         <div class="float-right text-right">
             <i class="fas fa-3x fa-fw" :class="motionsClass"></i>
         </div>

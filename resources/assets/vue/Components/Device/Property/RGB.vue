@@ -1,9 +1,11 @@
 <template>
-    <div>
-        <h5>
-            <i class="fas fa-lg fa-fw fa-lightbulb"></i>
-            {{ property.name }} <span class="label label-info">#{{ property.formatted_value.hex }}</span>
-        </h5>
+    <div class="counter p-10">
+        <div class="counter-number-group" :style="{color: textColor}">
+            <span class="counter-icon ml-10">
+                <i class="fas fa-lightbulb"></i>
+            </span>
+            <span class="counter-number">#{{ property.formatted_value.hex }}</span>
+        </div>
     </div>
 </template>
 
@@ -22,7 +24,7 @@
         },
         methods: {
             updateStyle() {
-                this.$emit('updateStyle', {'background-color': this.bgColor, color: this.textColor});
+                this.$emit('updateStyle', {'background-color': this.bgColor});
             }
         },
         computed: {

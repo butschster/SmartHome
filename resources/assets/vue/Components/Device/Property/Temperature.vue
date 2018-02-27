@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="card-body">
         <h5 class="text-primary">
             <i class="fas fa-lg fa-fw" :class="thermometerClass"></i>
             {{ property.name }} <span class="label label-info">{{ property.value }} {{ property.meta.units }}</span>
