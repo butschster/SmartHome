@@ -99,6 +99,24 @@ class Device extends Model
     }
 
     /**
+     * Получение зтекущего начения датчика
+     *
+     * @param string $name
+     * @param null $default
+     * @return mixed
+     */
+    public function property(string $name, $default = null)
+    {
+        $property = $this->properties()->where('key', $name)->first(['value']);
+
+        if ($property) {
+            return $property->value;
+        }
+
+        return $default;
+    }
+
+    /**
      * @param string $class
      * @param string $property
      * @param array $data

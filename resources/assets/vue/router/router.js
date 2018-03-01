@@ -4,6 +4,8 @@ import Breadcrumbs from 'Breadcrumbs';
 import RoomsRoutes from 'Pages/Rooms/routes';
 import DevicesRoutes from 'Pages/Devices/routes';
 import MqttLogsRoutes from 'Pages/MqttLogs/routes';
+import XiaomiLogsRoutes from 'Pages/XiaomiLogs/routes';
+import XiaomiGatewaysRoutes from 'Pages/XiaomiGateways/routes';
 
 import {
     DASHBOARD,
@@ -38,7 +40,9 @@ class Router {
 let router = new Router([
     RoomsRoutes,
     DevicesRoutes,
-    MqttLogsRoutes
+    MqttLogsRoutes,
+    XiaomiLogsRoutes,
+    XiaomiGatewaysRoutes
 ]);
 
 router.register([

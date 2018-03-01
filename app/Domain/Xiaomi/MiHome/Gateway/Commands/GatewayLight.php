@@ -28,15 +28,18 @@ class GatewayLight implements Command
 
     public function command(): array
     {
+        $rgb = $this->calculateRGB();
+
         return [
-            'rgb' => $this->calculateColor()
+            'rgb' => $rgb,
+            'illumination' => $this->illumination
         ];
     }
 
     /**
      * @return float|int
      */
-    protected function calculateColor()
+    protected function calculateRGB()
     {
         return $this->rgb == '000000' ? 0 : hexdec('ff' . $this->rgb);
     }

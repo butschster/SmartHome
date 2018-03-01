@@ -18,6 +18,8 @@ class CreateGatewaysTable extends Migration
 
             $table->ipAddress('ip')->unique();
             $table->string('token')->nullable();
+            $table->string('sid');
+
             $table->string('name')->nullable();
             $table->text('description')->nullable();
             $table->string('password', 30)->nullable();

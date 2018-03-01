@@ -1,7 +1,7 @@
 <template>
     <div class="card border">
         <div class="card-body">
-            <div class="float-right" role="group">
+            <div class="float-right" role="group" v-if="canDestroy">
                 <button class="btn btn-danger btn-sm" @click="destroy">
                     <i class="far fa-fw fa-trash-alt"></i>
                 </button>
@@ -30,6 +30,10 @@
             DeviceStatus
         },
         props: {
+            canDestroy: {
+                type: Boolean,
+                default: true
+            },
             device: {
                 required: true,
                 type: Object,

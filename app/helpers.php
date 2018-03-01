@@ -13,6 +13,7 @@ function response_ok(): JsonResponse
 }
 
 /**
+ * @param int $status
  * @return JsonResponse
  */
 function response_error(int $status = 404): JsonResponse
@@ -48,4 +49,12 @@ function notify(Notification $notification)
 function bot(): User
 {
     return User::bot();
+}
+
+function xiaomi_gateway_command(\SmartHome\Domain\Xiaomi\Entities\Gateway $gateway, \SmartHome\Domain\Xiaomi\Contracts\Mihome\Gateway\Command $command)
+{
+    dispatch(new \SmartHome\Domain\Xiaomi\MiHome\Jobs\SendCommand(
+        $command,
+        $gateway->ip, $gateway->sid, 'gateway'
+    ));
 }

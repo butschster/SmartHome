@@ -39,7 +39,7 @@ class DeviceManager
     public function processMessage(Message $message)
     {
         $gateway = $this->findOrCreateGateway(
-            $message->ip(), $message->token()
+            $message->ip(), $message->sid(), $message->token()
         );
 
         $this->registerDevice(
@@ -52,13 +52,16 @@ class DeviceManager
 
     /**
      * @param string $ip
+     * @param string $sid
      * @param string|null $token
      * @return Gateway
      */
-    private function findOrCreateGateway(string $ip, $token): Gateway
+    private function findOrCreateGateway(string $ip, string $sid, string $token = null): Gateway
     {
         $gateway = Gateway::firstOrCreate([
             'ip' => $ip
+        ], [
+            'sid' => $sid
         ]);
 
         if ($token) {

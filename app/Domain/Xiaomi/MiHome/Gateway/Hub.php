@@ -123,9 +123,6 @@ class Hub implements HubContract
         app()->instance(HubContract::class, $this);
     }
 
-    /**
-     * @throws SocketConnectionError
-     */
     public function listenMessages()
     {
         while (true) {
@@ -134,27 +131,35 @@ class Hub implements HubContract
                 continue;
             }
 
-            $job = $this->getNextCommandJob(
-                $this->queueManager->connection(config('queue.default')),
-                'xiaomi_commands'
-            );
+            $this->tick();
 
-            if ($job) {
-                $job->fire();
-            }
+            $this->stopIfNecessary();
+        }
+    }
 
-            if ($this->discoverDevicesTimer == 0) {
-                $this->sendCommand(new DiscoverDevices());
-                $this->resetDiscoverDevicesTimer();
-            }
+    protected function tick()
+    {
+        try {
+            // Запуск одной команды из очереди
+            $this->runQueuedCommand();
 
-            $this->discoverDevicesTimer--;
+            // Опрос устройств
+            $this->discoverDevices();
 
+            //
             $this->processMessage(
                 $this->listenMessage()
             );
 
-            $this->stopIfNecessary();
+        } catch (\Exception $e) {
+            $this->exceptions->report($e);
+            $this->writeStatus($e->getMessage(), 'error');
+
+            $this->stopWorkerIfLostConnection($e);
+        } catch (\Throwable $e) {
+            $this->exceptions->report($e = new FatalThrowableError($e));
+            $this->writeStatus($e->getMessage(), 'error');
+            $this->stopWorkerIfLostConnection($e);
         }
     }
 
@@ -196,7 +201,9 @@ class Hub implements HubContract
 
             $message = new Message($json);
 
-            $this->events->dispatch(new Events\MessageReceived($this->connection, $message));
+            $this->events->dispatch(new Events\MessageReceived(
+                $message, $remoteIp
+            ));
 
             return $message;
         }
@@ -204,30 +211,22 @@ class Hub implements HubContract
 
     /**
      * @param Message $message
+     * @throws SocketConnectionError
      */
     protected function processMessage($message)
     {
-        try {
-            if (!$message) {
-                return;
-            }
+        if (!$message) {
+            return;
+        }
 
-            if ($this->manager->isValidMessage($message)) {
-                $this->manager->processMessage($message);
-            }
+        if ($this->manager->isValidMessage($message)) {
+            $this->manager->processMessage($message);
+        }
 
-            if ($message->isTypeOf('get_id_list_ack')) {
-                $this->discoverDevices($message->parameters());
-            }
-        } catch (\Exception $e) {
-            $this->exceptions->report($e);
-            $this->writeStatus($e->getMessage(), 'error');
-
-            $this->stopWorkerIfLostConnection($e);
-        } catch (\Throwable $e) {
-            $this->exceptions->report($e = new FatalThrowableError($e));
-            $this->writeStatus($e->getMessage(), 'error');
-            $this->stopWorkerIfLostConnection($e);
+        if ($message->isTypeOf('get_id_list_ack')) {
+            $this->readDeviceInformation(
+                $message->parameters()
+            );
         }
     }
 
@@ -339,17 +338,6 @@ class Hub implements HubContract
     }
 
     /**
-     * @param array $sids
-     * @throws SocketConnectionError
-     */
-    protected function discoverDevices(array $sids)
-    {
-        foreach ($sids as $sid) {
-            $this->sendCommand(new ReadDevice($sid));
-        }
-    }
-
-    /**
      * Determine if the daemon should process on this iteration.
      *
      * @return bool
@@ -434,6 +422,39 @@ class Hub implements HubContract
             usleep($seconds * 1000000);
         } else {
             sleep($seconds);
+        }
+    }
+
+    protected function discoverDevices(): void
+    {
+        if ($this->discoverDevicesTimer == 0) {
+            $this->sendCommand(new DiscoverDevices());
+            $this->resetDiscoverDevicesTimer();
+        }
+
+        $this->discoverDevicesTimer--;
+    }
+
+    /**
+     * @param array $sids
+     * @throws SocketConnectionError
+     */
+    protected function readDeviceInformation(array $sids)
+    {
+        foreach ($sids as $sid) {
+            $this->sendCommand(new ReadDevice($sid));
+        }
+    }
+
+    protected function runQueuedCommand(): void
+    {
+        $job = $this->getNextCommandJob(
+            $this->queueManager->connection(config('queue.default')),
+            'xiaomi_commands'
+        );
+
+        if ($job) {
+            $job->fire();
         }
     }
 }

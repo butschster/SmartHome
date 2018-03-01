@@ -1,6 +1,6 @@
 <template>
-    <main-layout title="Устройства" v-loading="loading" :crumb="crumb">
-        <page-content>
+    <main-layout title="Устройства" icon="fas fa-microchip" class="app-work" v-loading="loading" :crumb="crumb">
+        <page-content class="page-content-table">
             <device v-for="device in devices" :device="device" :key="device.id" v-on:destroy="destroy"></device>
         </page-content>
     </main-layout>

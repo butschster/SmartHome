@@ -18,6 +18,7 @@ class Kernel extends ConsoleKernel
         \SmartHome\Domain\Mqtt\Console\Commands\PruneDatabaseLogs::class,
         \SmartHome\Domain\Mqtt\Console\Commands\Listener::class,
         \SmartHome\Domain\Xiaomi\Console\Commands\ListenGateway::class,
+        \SmartHome\Domain\Xiaomi\Console\Commands\PruneDatabaseLogs::class
     ];
 
     /**
@@ -31,6 +32,7 @@ class Kernel extends ConsoleKernel
         $schedule->command('weather:sync')->everyThirtyMinutes();
         $schedule->command('mqtt:prune-logs')->daily();
         $schedule->command('device:prune-logs')->daily();
+        $schedule->command('xiaomi:prune-logs')->daily();
     }
 
     /**

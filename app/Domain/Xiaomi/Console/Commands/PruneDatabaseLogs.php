@@ -1,9 +1,9 @@
 <?php
 
-namespace SmartHome\Domain\Mqtt\Console\Commands;
+namespace SmartHome\Domain\Xiaomi\Console\Commands;
 
 use Illuminate\Console\Command;
-use SmartHome\Domain\Mqtt\MqttLog;
+use SmartHome\Domain\Xiaomi\Entities\XiaomiLog;
 
 class PruneDatabaseLogs extends Command
 {
@@ -12,7 +12,7 @@ class PruneDatabaseLogs extends Command
      *
      * @var string
      */
-    protected $signature = 'mqtt:prune-logs';
+    protected $signature = 'xiaomi:prune-logs';
 
     /**
      * The console command description.
@@ -26,6 +26,6 @@ class PruneDatabaseLogs extends Command
      */
     public function handle()
     {
-        MqttLog::where('created_at', '<', now()->subDay())->delete();
+        XiaomiLog::where('created_at', '<', now()->subDay())->delete();
     }
 }

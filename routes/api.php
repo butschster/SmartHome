@@ -13,8 +13,18 @@ Route::group(['namespace' => 'Bot\Controllers', 'prefix' => 'voice'], function()
 
 Route::get('/weather/current', 'Weather\Controllers\WeatherController@show')->name('weather.current');
 
-
 Route::get('/mqtt/logs', 'Mqtt\Controllers\LogsController@index')->name('mqtt.logs');
+
+Route::group(['namespace' => 'Xiaomi\Controllers', 'prefix' => 'xiaomi/'], function() {
+
+    Route::get('logs', 'LogsController@index')->name('xiaomi.logs');
+    Route::get('gateway/{gateway}/devices', 'GatewayDevicesController@index')->name('xiaomi.gateway.devices');
+    Route::get('gateway/{gateway}', 'GatewayController@show')->name('xiaomi.gateway.show');
+    Route::post('gateway/{gateway}', 'GatewayController@update')->name('xiaomi.gateway.update');
+    Route::delete('gateway/{gateway}', 'GatewayController@destroy')->name('xiaomi.gateway.destroy');
+    Route::get('gateways', 'GatewayController@index')->name('xiaomi.gateways');
+
+});
 
 Route::group(['namespace' => 'Rooms\Controllers'], function() {
     /**

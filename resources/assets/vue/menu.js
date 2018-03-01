@@ -2,7 +2,9 @@ import {
     DASHBOARD,
     ROOMS_LIST,
     DEVICES_LIST,
-    MQTT_LOGS
+    MQTT_LOGS,
+    XIAOMI_LOGS,
+    XIAOMI_GATEWAY_LIST
 } from 'router/actions';
 
 export default [
@@ -20,6 +22,11 @@ export default [
                 route: {name: DEVICES_LIST}
             },
             {
+                title: 'Xiaomi Gateways',
+                icon: 'fas fa-plug',
+                route: {name: XIAOMI_GATEWAY_LIST}
+            },
+            {
                 title: 'Помещения',
                 icon: 'fas fa-cubes',
                 route: {name: ROOMS_LIST}
@@ -28,6 +35,11 @@ export default [
                 title: 'Логи MQTT',
                 icon: 'fas fa-archive',
                 route: {name: MQTT_LOGS}
+            },
+            {
+                title: 'Логи Xiaomi',
+                icon: 'fas fa-archive',
+                route: {name: XIAOMI_LOGS}
             }
         ]
     }

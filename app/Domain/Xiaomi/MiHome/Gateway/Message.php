@@ -2,7 +2,9 @@
 
 namespace SmartHome\Domain\Xiaomi\MiHome\Gateway;
 
-class Message
+use Illuminate\Contracts\Support\Jsonable;
+
+class Message implements Jsonable
 {
     /**
      * @var array
@@ -43,7 +45,7 @@ class Message
      */
     public function type(): string
     {
-        return $this->data['cmd'] ?: 'unknown';
+        return $this->data['cmd'] ?? 'unknown';
     }
 
     /**
@@ -53,7 +55,7 @@ class Message
      */
     public function model(): string
     {
-        return $this->data['model'] ?: 'unknown';
+        return $this->data['model'] ?? 'unknown';
     }
 
     /**
@@ -84,5 +86,16 @@ class Message
     public function parameters(): array
     {
         return json_decode(array_get($this->data, 'data'), true);
+    }
+
+    /**
+     * Convert the object to its JSON representation.
+     *
+     * @param  int $options
+     * @return string
+     */
+    public function toJson($options = 0)
+    {
+        return json_encode($this->data, $options);
     }
 }

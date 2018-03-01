@@ -5,6 +5,7 @@ namespace SmartHome\Domain\Xiaomi\MiHome\Devices\Properties;
 use SmartHome\App\Devices\Property;
 use SmartHome\Domain\Devices\Entities\DeviceProperty;
 use SmartHome\Domain\Xiaomi\Entities\Gateway;
+use SmartHome\Domain\Xiaomi\MiHome\Gateway\Commands\GatewayLight;
 
 class RGB extends Property
 {
@@ -37,10 +38,13 @@ class RGB extends Property
             $query->where('device_id', $property->device_id);
         })->first();
 
-        dispatch(new \SmartHome\Domain\Xiaomi\MiHome\Jobs\SendCommand(
-            new \SmartHome\Domain\Xiaomi\MiHome\Gateway\Commands\GatewayLight($color['hex'], 1000),
-            $gateway->ip, $property->device->key, 'gateway'
-        ));
+        xiaomi_gateway_command(
+            $gateway,
+            new GatewayLight(
+                $color['hex'],
+                $property->device->property('illumination', 1000)
+            )
+        );
     }
 
     /**

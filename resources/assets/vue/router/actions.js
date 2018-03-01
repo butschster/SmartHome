@@ -11,4 +11,8 @@ export const DEVICE_PROPERTY_SHOW = 'device.property.show';
 
 export const MQTT_LOGS = 'mqtt.logs';
 
+export const XIAOMI_LOGS = 'xiaomi.logs';
+export const XIAOMI_GATEWAY_LIST = 'xiaomi.gateways';
+export const XIAOMI_GATEWAY_SHOW = 'xiaomi.gateway.show';
+
 export const PAGE_NOT_FOUND = 'page-not-found';

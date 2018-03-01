@@ -6,9 +6,11 @@ use SmartHome\App\Contracts\DeviceManager;
 use SmartHome\Domain\Xiaomi\Devices;
 use Illuminate\Foundation\Support\Providers\EventServiceProvider as ServiceProvider;
 
+use SmartHome\Domain\Xiaomi\Listeners\LogReceivedMessages;
 use SmartHome\Domain\Xiaomi\MiHome\Devices\{
     Button, Events\MotionDetected, Events\NoMotions, Gateway, Listeners\ClearMotionTimer, Listeners\SetMotionToNoMotion, Magnet, Motion, Thermometer
 };
+use SmartHome\Domain\Xiaomi\MiHome\Gateway\Events\MessageReceived;
 
 class XiaomiServiceProvider extends ServiceProvider
 {
@@ -18,6 +20,9 @@ class XiaomiServiceProvider extends ServiceProvider
         ],
         NoMotions::class => [
             SetMotionToNoMotion::class
+        ],
+        MessageReceived::class => [
+            LogReceivedMessages::class
         ]
     ];
 

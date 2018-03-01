@@ -22,8 +22,8 @@ class DevicePropertyLogsController extends Controller
         ]);
 
         $logs = $property->logs()->whereBetween('created_at', [
-            $request->input('from', now()->startOfDay()->toDateTimeString()),
-            $request->input('to', now()->endOfDay()->toDateTimeString()),
+            $request->input('from', now()->subDay()->toDateTimeString()),
+            $request->input('to', now()),
         ])->get();
 
         return new DevicePropertyLogsCollection($logs);
