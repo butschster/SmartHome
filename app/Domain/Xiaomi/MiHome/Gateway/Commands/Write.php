@@ -49,6 +49,7 @@ class Write implements Command
         return [
             'cmd' => 'write',
             'short_id' => 0,
+            'model' => $this->model,
             'sid' => $this->sid,
             'data' => $data
         ];

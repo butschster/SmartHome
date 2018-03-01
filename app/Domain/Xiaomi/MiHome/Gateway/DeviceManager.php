@@ -38,37 +38,20 @@ class DeviceManager
      */
     public function processMessage(Message $message)
     {
-        $gateway = $this->findOrCreateGateway(
-            $message->ip(), $message->sid(), $message->token()
-        );
-
-        $this->registerDevice(
-            $gateway,
-            $message->sid(),
-            $message->model(),
-            $message->parameters()
-        );
-    }
-
-    /**
-     * @param string $ip
-     * @param string $sid
-     * @param string|null $token
-     * @return Gateway
-     */
-    private function findOrCreateGateway(string $ip, string $sid, string $token = null): Gateway
-    {
-        $gateway = Gateway::firstOrCreate([
-            'ip' => $ip
-        ], [
-            'sid' => $sid
-        ]);
-
-        if ($token) {
-            $gateway->update(['token' => $token]);
+        if ($message->isTypeOf('heartbeat') && $message->model() == 'gateway') {
+            $this->registerGateway($message->ip(), $message->sid(), $message->token());
         }
 
-        return $gateway;
+        $gateway = Gateway::where('ip', $message->ip())->first();
+
+        if ($gateway) {
+            $this->registerDevice(
+                $gateway,
+                $message->sid(),
+                $message->model(),
+                $message->parameters()
+            );
+        }
     }
 
     /**
@@ -98,5 +81,17 @@ class DeviceManager
                 $type
             ));
         }
+    }
+
+    /**
+     * @param string $ip
+     * @param string $sid
+     * @param string $token
+     */
+    private function registerGateway(string $ip, string $sid, string $token)
+    {
+        $gateway = Gateway::firstOrCreate(['ip' => $ip], ['sid' => $sid]);
+
+        $gateway->update(['token' => $token]);
     }
 }
