@@ -26,7 +26,7 @@ class PruneDatabaseLogs extends Command
      */
     public function handle()
     {
-        DeviceLog::where('created_at', '<', now()->subWeek())->delete();
+        DeviceLog::newQuery()->where('created_at', '<', now()->subWeek())->forceDelete();
 
         event(\SmartHome\Domain\Devices\Events\Device\LogsPruned::class);
     }

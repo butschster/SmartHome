@@ -26,6 +26,6 @@ class PruneDatabaseLogs extends Command
      */
     public function handle()
     {
-        XiaomiLog::where('created_at', '<', now()->subDay())->delete();
+        XiaomiLog::newQuery()->where('created_at', '<', now()->subDay())->forceDelete();
     }
 }

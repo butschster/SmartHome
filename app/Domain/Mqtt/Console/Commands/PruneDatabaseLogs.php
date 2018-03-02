@@ -26,6 +26,6 @@ class PruneDatabaseLogs extends Command
      */
     public function handle()
     {
-        MqttLog::where('created_at', '<', now()->subDay())->delete();
+        MqttLog::newQuery()->where('created_at', '<', now()->subDay())->forceDelete();
     }
 }
