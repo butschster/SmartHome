@@ -16,15 +16,11 @@ class DevicePropertyLogsController extends Controller
      */
     public function index(Request $request, DeviceProperty $property)
     {
-        $request->validate([
-            'from' => 'nullable|date',
-            'to' => 'nullable|date|after:from'
-        ]);
+        if (!$request->has('period')) {
+            $request->offsetSet('period', 'year');
+        }
 
-        $logs = $property->logs()->whereBetween('created_at', [
-            $request->input('from', now()->subDay()->toDateTimeString()),
-            $request->input('to', now()),
-        ])->get();
+        $logs = $property->logs()->filter($request)->get();
 
         return new DevicePropertyLogsCollection($logs);
     }

@@ -14,6 +14,7 @@ class DevicePropertyCommandController extends Controller
      * @param DeviceProperty $property
      * @param string $command
      * @return array
+     * @throws \SmartHome\Domain\Devices\Exceptions\DevicePropertyNotFoundException
      */
     public function invoke(Request $request, DeviceProperty $property, string $command)
     {

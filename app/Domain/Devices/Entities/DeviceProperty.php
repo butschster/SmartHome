@@ -51,15 +51,11 @@ class DeviceProperty extends Model
      * @param array $parameters
      * @return void
      * @throws DevicePropertyCommandNotFound
+     * @throws DevicePropertyNotFoundException
      */
     public function runCommand(string $command, ...$parameters): void
     {
-        $commands = $this->commands();
-
-        if (!isset($commands[$command])) {
-            throw new DevicePropertyCommandNotFound($command);
-        }
-
+        $this->findCommandOrFail($command);
         $this->deviceDriver()->runCommand($this, $command, ...$parameters);
 
         event(new \SmartHome\Domain\Devices\Events\DeviceProperty\CommandRun($this, $command));
@@ -161,5 +157,18 @@ class DeviceProperty extends Model
     public function getPrevValueAttribute()
     {
         return $this->prevValue();
+    }
+
+    /**
+     * @param string $command
+     * @throws DevicePropertyCommandNotFound
+     */
+    protected function findCommandOrFail(string $command): void
+    {
+        $commands = $this->commands();
+
+        if (!isset($commands[$command])) {
+            throw new DevicePropertyCommandNotFound($command);
+        }
     }
 }

@@ -2,6 +2,7 @@
 
 namespace SmartHome\App\Contracts;
 
+use SmartHome\Domain\Devices\Entities\DeviceProperty as DevicePropertyEntity;
 use SmartHome\Domain\Devices\Exceptions\DevicePropertyNotFoundException;
 
 interface Device
@@ -34,6 +35,14 @@ interface Device
      * @return array
      */
     public function commands(string $property): array;
+
+    /**
+     * @param DevicePropertyEntity $property
+     * @param string $method
+     * @param array ...$parameters
+     * @throws DevicePropertyNotFoundException
+     */
+    public function runCommand(DevicePropertyEntity $property, string $method, ...$parameters): void;
 
     /**
      * Получение названия класса датчика
