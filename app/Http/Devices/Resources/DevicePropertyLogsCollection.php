@@ -17,7 +17,7 @@ class DevicePropertyLogsCollection extends ResourceCollection
     {
         return $this->collection->map(function (DevicePropertyLog $log) {
             return [
-                'time' => (int) ($log->created_at->timestamp.'000'),
+                'time' => $log->created_at->timestamp * 1000,
                 'value' => $log->value
             ];
         })->toArray();
